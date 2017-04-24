@@ -1,0 +1,50 @@
+.form {
+
+  &__legend {
+    font-family: 'Slabo 27px';
+    font-size: 55px;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+  &__description {
+    font-style: italic;
+    font-size: 30px;
+  }
+  &__fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__formrow {
+    position: relative;
+    padding: 1.2vh 0;
+  }
+  &__label {
+    color: #033c6a;
+    font-family: 'Slabo 27px';
+    position: absolute;
+    left: 30px;
+    top: 2vh;
+    sup {
+      color: #f76259;
+    }
+  }
+  &__input {
+    height: 5.5009784736vh;
+    width: 100%;
+    border: none;
+    border-bottom: 5px solid #033c6a;
+  }
+  &__button {
+    background: #f86259;
+    color: #fff;
+    font-family: 'Slabo 27px';
+    font-size: 40px;
+    border: none;
+    border-bottom: 5px solid rgba(0,0,0,.17);
+    padding: 1.7vh 5vw;
+    margin-top: 2vh;
+  }
+}

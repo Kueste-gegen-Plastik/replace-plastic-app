@@ -1,0 +1,33 @@
+.step {
+  margin: 4.347826087vw 0 0 4.347826087vw;
+  padding: 0 10.0869565217vw;
+  position: relative;
+  &__number {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6.0869565217vw;
+    height: 6.0869565217vw;
+    border-radius: 50%;
+    color: #004d8e;
+    background: #fff;
+    text-align: center;
+    line-height: 6.0869565217vw;
+    font-size: 30px;
+  }
+  &__line {
+    position: absolute;
+    top: 5vh;
+    bottom: 0;
+    background: #fff;
+    width: 3px;
+    left: 25px;
+  }
+}
+.headline {
+  font-family: 'Slabo 27px';
+  font-weight: normal;
+  &--primary {
+    font-size: 55px;
+  }
+}
