@@ -26,7 +26,8 @@ export default {
     return {
       open: false,
       menuitems: [
-        'Über "Küste gegen Plastik e.V."',
+        'Über "ReplacePlastic"',
+        'Datenschutzerklärung',
         'Impressum',
       ],
     };
