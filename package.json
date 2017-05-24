@@ -23,8 +23,12 @@
     "typeface-slabo-13px": "0.0.22",
     "typeface-slabo-27px": "0.0.22",
     "vue": "^2.2.6",
+    "vue-animate": "0.0.4",
+    "vue-localstorage": "^0.2.0",
     "vue-router": "^2.3.1",
-    "vue-scrollto": "^2.6.7"
+    "vue-scrollto": "^2.6.7",
+    "vue-spinner": "^1.0.2",
+    "vuex": "^2.3.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

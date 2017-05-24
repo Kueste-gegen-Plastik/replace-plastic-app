@@ -1,18 +1,29 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue';
-import App from './App';
-import router from './router';
-import VueScrollTo from 'vue-scrollto';
 
+require('vue-animate/dist/vue-animate.min.css')
+require('typeface-slabo-13px');
+require('typeface-slabo-27px');
+require('typeface-lato');
+
+import Vue from 'vue';
+
+import VueScrollTo from 'vue-scrollto';
 Vue.use(VueScrollTo);
+
+import KgpApp from './KgpApp';
+import router from './router';
+import store from './store';
 
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
-new Vue({
+const ReplacePlasticApp = new Vue({
+  components: { KgpApp },
+  template: '<KgpApp/>',
   el: '#app',
-  router,
-  template: '<App/>',
-  components: { App },
+  store,
+  router
 });
+
+export default ReplacePlasticApp;

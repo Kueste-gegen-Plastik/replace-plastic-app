@@ -1,13 +1,19 @@
 <template>
-    <div class="step step--3" id="step_3">
+    <div class="step step--4" id="step_4">
         <div class="step__number">
-            3
+            4
         </div>
         <div class="step__line"></div>
         <h2 class="headline headline--primary">Geschafft</h2>
         <div class="step__inner">
             <div class="product">
-                <div class="product__content">
+                <div v-if="loading" class="product__loading">
+                    Beitrag wird eingereicht...
+                </div>
+                <div v-if="!loading && error" class="product__error">
+                    {{ error }}
+                </div>
+                <div v-if="!loading && !error" class="product__content">
                     <h3 class="headline headline--tertiary">Danke für Dein Feedback!</h3>
                     <div class="form__description">
                         <p>
@@ -17,19 +23,7 @@
                         </p>
                     </div>
                     <a class="form__button">
-                Ein weiteres Produkt scannen
-                </a>
-                </div>
-                <div class="product__content">
-                    <h3 class="headline headline--tertiary">Dieses Produkt ist leider noch nicht in der Datenbank</h3>
-                    <div class="form__description">
-                        <p>
-                            Du kannst uns helfen, die Daten zu verbessern, indem Du deinen Verbesserungswunsch trotzdem sendest. Über die Barcode-Nummer
-                            können wir das Produkt finden. Dein Wunsch wird trotzdem an den Hersteller gesendet.
-                        </p>
-                    </div>
-                    <a class="form__button">
-                        Verbesserungswunsch senden
+                        Ein weiteres Produkt scannen
                     </a>
                 </div>
             </div>
@@ -39,9 +33,23 @@
 
 
 <script>
+import Api from '../../api';
+import config from '../../config/env.js';
+
 export default {
-    name: 'kgp-product',
-    props: ['product']
+    name: 'kgp-submit',
+    props: ['products', 'user', 'barcode'],
+    data() {
+        return {
+            error: false,
+            loading: true
+        }
+    },
+    methods: {
+        submitEntry(ean){
+
+        }
+    }
 };
 </script>
 

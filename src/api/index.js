@@ -2,14 +2,13 @@ import axios from 'axios';
 
 const base = 'http://localhost:8888/'; // @TODO Move this to env-config
 
-export const HTTP = axios.create({
-  baseURL: base,
-});
+export const HTTP = axios.create({ baseURL: base });
+
 HTTP.interceptors.request.use((config) => {
-  const user = localStorage.getItem('rpp_userdata');
+  const token = localStorage.getItem('kgp_token');
   const retVal = config;
-  if (user) {
-    retVal.headers.Authorization = `Bearer${JSON.parse(user).token}`;
+  if (token) {
+      retVal.headers.Authorization = `Bearer ${token}`;
   }
   return retVal;
 }, (error) => Promise.reject(error));
@@ -25,7 +24,7 @@ class Api {
   }
 
   searchEan(ean) {
-    return HTTP.get(`/searchean/${ean}`).then(res => res.data);
+    return HTTP.get(`/product/${ean}`).then(res => res.data);
   }
 
 }

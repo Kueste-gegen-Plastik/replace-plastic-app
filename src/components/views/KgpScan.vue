@@ -31,16 +31,20 @@
             <div class="step__line"></div>
             <h2 class="headline headline--primary">Produkt scannen</h2>
             <div class="step__inner">
-                <form v-on:submit.prevent="handleFormBarcode" name="fallbackform" class="form" method="post">
-                    <div class="scan">
+                <form v-on:submit.prevent="handleBarcode" name="fallbackform" class="form" method="post">
+                    <div v-if="!permissionErr" class="scan">
                         <button class="scan__button" v-on:click="startScan">
                             <svg class="scan__icon" x="0px" y="0px" width="52" height="65" viewBox="0 0 52 65">
                                 <use xlink:href="#scan"></use>
                             </svg>
                         </button>
                     </div>
+                    <div v-if="permissionErr">
+                        {{ permissionErr }}
+                        <button>Berechtigung erteilen</button>
+                    </div>
                     <div class="scan__fallback">
-                        <h3 class="headline headline--tertiary">... oder selber eingeben:</h3>
+                        <h3 v-if="!permissionErr" class="headline headline--tertiary">... oder selber eingeben:</h3>
                         <p>
                             Geben Sie einfach die Zahlen unter dem Barcode in
                             das folgende Formularfeld ein und drücken anschließend auf "Absenden".
@@ -53,17 +57,17 @@
                                 Produkt suchen
                             </button>
                     </div>
-                    <div v-if="err.length" class="scan__error">
+                    <div v-if="err" class="scan__error">
                         <h3 class="headline headline--tertiary headline--error">Hoppla: Es ist ein Fehler aufgetreten:</h3>
                         <p>
-                            {{ error }}
+                            {{ err }}
                         </p>
                     </div>
                 </form>
             </div>
         </div>
         <div v-show="showScan" class="scan__container">
-            <button v-on:click.prevent="closeScan()" class="scan__close form__button">Scanner schließen</button>
+            <button v-on:click.prevent="closeWebAppScan()" class="scan__close form__button">Scanner schließen</button>
             <div class="scan__video" id="scan__video"></div>
         </div>
     </div>
@@ -71,15 +75,15 @@
 
 <script>
 import Quagga from 'quagga';
-import EventBus from '../lib/EventBus';
-import Api from '../api';
+import Api from '../../api';
 import Barcoder from 'barcoder';
 
 export default {
     name: 'kgp-scan',
     data() {
         return {
-            err: '',
+            err: false,
+            permissionErr: false,
             showScan: false,
             cantScan: false,
             isValidEan: false,
@@ -101,44 +105,41 @@ export default {
                             this.nativeScan();
                         } else {
                             // permission not granted. request it
-                            this.cantScan = true;
                             permissions.requestPermission(permission.CAMERA, () => {
                                 // permission granted
-                                this.cantScan = false;
                                 this.nativeScan();
                             }, () => {
                                 // permission rejected
-                                this.err = 'Sie haben der App keine Berechtigung zum Zugriff auf die Kamera erteilt.';
+                                this.permissionErr = 'Sie haben der App keine Berechtigung zum Zugriff auf die Kamera erteilt.';
                             });
                         }
                     }, (err) => {
                         // error while requesting permission status
-                        this.err = 'Sie haben der App keine Berechtigung zum Zugriff auf die Kamera erteilt.';
+                        this.permissionErr = 'Es gab einen Fehler beim Erteilen der Berechtigung für den Zugriff auf die Kamera.';
                     });
                 } else {
                     this.nativeScan();
                 }
-                this.err = 'Die Kamera kann nicht geöffnet werden';
-
             } else {
                 // handle webapp scanning
                 this.webappScan();
             }
         },
-        handleFormBarcode() {
+        handleBarcode() {
             if (Barcoder.validate(this.ean)) {
-                this.setBarcode(this.ean);
-                EventBus.$emit('setProduct', this.ean);
+                this.$store.dispatch('setBarcode', this.ean);
+                this.$router.push('/product');
                 return true;
             } else {
-                this.error = 'Der eingegebene Barcode ist keine gültige EAN-Nummer.';
+                this.err = 'Der eingegebene Barcode ist keine gültige EAN-Nummer.';
                 return false;
             }
         },
         nativeScan() {
             cordova.plugins.barcodeScanner.scan((result) => {
                 if (result.cancelled) return;
-                this.setBarcode(result.text);
+                this.ean = result.text;
+                this.handleBarcode()
             }, (error) => {
                 this.err = 'Das Scannen ist fehlgeschlagen:' + error;
             }, {
@@ -153,7 +154,7 @@ export default {
                 disableSuccessBeep: false // iOS
             });
         },
-        closeScan() {
+        closeWebAppScan() {
             Quagga.stop();
             this.showScan = false;
         },
@@ -161,14 +162,14 @@ export default {
             this.showScan = true;
             const errorHandler = (err) => {
                 if (err) {
-                    this.err = err;
+                    this.permissionErr = err;
                     return;
                 }
                 Quagga.start();
             };
             const onDetected = (data) => {
-                console.log(data);
-                this.setBarcode(data.codeResult.code);
+                this.ean = data.codeResult.code;
+                this.handleBarcode();
             };
             const onProcessed = (result) => {
                 const drawingCtx = Quagga.canvas.ctx.overlay;
