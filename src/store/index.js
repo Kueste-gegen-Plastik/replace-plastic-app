@@ -16,7 +16,8 @@ const state = {
         zip: '',
         password: ''
     },
-    step: 1
+    step: 1,
+    menuOpen: false
 };
 
 // mutations are operations that actually mutates the state.
@@ -26,7 +27,6 @@ const state = {
 // for debugging purposes.
 const mutations = {
     PRODUCTS(state, products) {
-       console.log("PRODUCTS", products);
        state.products = products;
     },
     ERRORS(state, errors) {
@@ -48,6 +48,9 @@ const mutations = {
     },
     TOKEN(state, token) {
         state.token = token;
+    },
+    MENUOPEN(state, isOpen) {
+        state.menuOpen = isOpen;
     }
 };
 
@@ -84,7 +87,10 @@ const actions = {
     setToken: ({ commit }, token) => {
         localStorage.setItem('kgp_token', token);
         commit('TOKEN', token);
-    }
+    },
+    menuOpen: ({ commit }, isOpen) => {
+        commit('MENUOPEN', isOpen);
+    },
 };
 
 const getters = {

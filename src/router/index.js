@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from '../store';
-import KgpForm from '@/components/views/KgpForm';
-import KgpScan from '@/components/views/KgpScan';
-import KgpProduct from '@/components/views/KgpProduct';
-import KgpSubmit from '@/components/views/KgpSubmit';
+import KgpForm from '@/components/views/KgpForm/KgpForm';
+import KgpScan from '@/components/views/KgpScan/KgpScan';
+import KgpProduct from '@/components/views/KgpProduct/KgpProduct';
+import KgpSubmit from '@/components/views/KgpSubmit/KgpSubmit';
 
 Vue.use(Router);
 

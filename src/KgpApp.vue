@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="app" v-bind:class="getStepClass()">
+    <div id="app" class="app" v-bind:class="{ 'app--step-1' : step == 1,  'app--step-2' : step == 2,  'app--step-3' : step == 3,  'app--step-4' : step == 4 }">
         <svg class="symbols" width="277.8px" height="246.61px" viewBox="0 0 277.8 246.61" enable-background="new 0 0 277.8 246.61">
             <symbol id="bildmarke" width="277.8px" height="246.61px" viewBox="0 0 277.8 246.61">
                 <path stroke-width="8" stroke-miterlimit="10" d="M196.017,7.008c5.35,0,11.916,3.786,14.593,8.419
@@ -76,13 +76,13 @@
             </symbol>
         </svg>
         <kgp-header></kgp-header>
-        <div class="main" id="main">
-            <div class="main__logo" v-bind:class="{ 'main__logo--hidden' : step > 1 }">
+        <div class="main" id="main" v-show="!menuOpen">
+            <div class="main__logo">
                 <svg alt="ReplacePlastic" class="main__wortmarke" width="481.89px" height="175.75px" viewBox="0 0 481.89 175.75">
                     <use xlink:href="#wortmarke"></use>
                 </svg>
             </div>
-            <transition :name="transitionName">
+            <transition :name="transition" mode="out-in">
                 <router-view></router-view>
             </transition>
         </div>
@@ -91,19 +91,22 @@
 </template>
 
 <script>
-import KgpHeader from '@/components/shared/KgpHeader';
+import KgpHeader from '@/components/shared/KgpHeader/KgpHeader';
 
 export default {
     components: { KgpHeader },
     name: 'KgpApp',
     data() {
         return {
-            transitionName : 'slideUp'
+            transition : 'slideUp'
         }
     },
     computed: {
         step() {
             return this.$store.state.step;
+        },
+        menuOpen() {
+            return this.$store.state.menuOpen;
         }
     },
     mounted() {
@@ -113,20 +116,15 @@ export default {
         }
         localStorage.removeItem('kgp_token');
     },
-    methods: {
-        getStepClass() {
-            var retVal = {};
-            retVal['app--step' + this.step] = true;
-            return retVal;
-        }
-    },
     watch: {
         '$route' (to, from) {
             if(to.name.indexOf('meta') <= -1) {
-                var routes = ['Main','Scan','Product','Submit'],
-                    tn = routes.indexOf(to.name) > routes.indexOf(from.name) ? 'slideUp' : 'slideDown';
-                this.transitionName = tn;
+                var routeNames = this.$router.options.routes.map(itm => {
+                    return itm.name;
+                });
+                this.transition = ['Main','Scan','Product','Submit'].indexOf(to.name) > routeNames.indexOf(from.name) ? 'slideRight' : 'slideLeft';
             } else {
+                this.transition = ['Impressum','Datenschutz','Ueber'].indexOf(to.name) ? 'slideLeft' : 'slideRight';
             }
         }
     }
@@ -134,29 +132,35 @@ export default {
 </script>
 
 <style lang="scss">
+body {
+    font-size: 100%;
+    overflow: hidden;
+}
+.symbols {
+    display: none;
+}
 .app {
-    background: url('./assets/bg.png') no-repeat;
-    background-size: 130%;
+    background: url('./KgpApp.png') no-repeat;
     background-size: cover;
     min-height: 100vh;
     font-family: 'Lato', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #fff;
-    padding-top: 12vh;
+    padding-top: 10vh;
     will-change: background-position;
-    transition: background-position .5s ease-in;
-    &--step2 {
-        background-position: 10% center;
-        padding-top: 0;
+    transition: all .5s ease-in;
+    &--step-2 {
+        background-position: 50% 50%;
     }
-    &--step3 {
-        background-position: 20% center;
-        padding-top: 0;
+    &--step-2 {
+        background-position: 30% 50%;
     }
-    &--step4 {
-        background-position: 30% center;
-        padding-top: 0;
+    &--step-3 {
+        background-position: 10% 50%;
+    }
+    &--step-4 {
+        background-position: 0% 50%;
     }
 }
 .main {
@@ -170,50 +174,29 @@ export default {
         transform: translate3D(0,-500px, 0);
         }
     }
-    &__scroll {
-        will-change: transform;
-        transition: transform .5s ease-out;
-        &--step-1 {
-            transform: translate3D(0,0,0);
-        }
-        &--step-2 {
-            transform: translate3D(0,-32%,0);
-        }
-        &--step-3 {
-            transform: translate3D(0,-64%,0);
-        }
-    }
     &__wortmarke {
         fill: #fff;
-        max-width: 13.4782608696vh;
+        max-width: 11vh;
         height: auto;
     }
 }
-body {
-    padding: 10px;
-    font-size: 40px;
-    overflow: hidden;
-}
-.symbols {
-    display: none;
-}
 .step {
-    position: relative;
     height: 74vh;
     overflow: hidden;
     margin-top: 2vh;
+    transition: all .2s ease-in;
     &--1,
     &--2 {
         height: 84vh;
     }
     &__inner {
         height: 100%;
-        margin: 4.347826087vw 0 0 4.347826087vw;
-        padding: 0 10.0869565217vw;
+        margin: 4vw;
+        padding: 0;
     }
     &__number {
         position: absolute;
-        top: 15px;
+        top: 0;
         left: 4.347826087vw;
         width: 6.0869565217vw;
         height: 6.0869565217vw;
@@ -222,52 +205,64 @@ body {
         background: #fff;
         text-align: center;
         line-height: 6.0869565217vw;
-        font-size: 30px;
+        font-size: 19px;
     }
     &__line {
         position: absolute;
-        top: 5vh;
+        top: 3vh;
         bottom: 0;
         background: #fff;
         width: 3px;
         left: 7.2vw;
     }
+   /* &.slideDown-enter {
 
-    .slide-up-enter-active & {
+    }
+    &.slideDown-enter-active {
         transform: translate3d(0%,-100%, 0%);
         transition-property: transform;
         will-change: transform;
         transition-duration: .5s;
     }
-    .slide-down-enter-active  {
-        transform: translate3d(0,-100vh, 0);
+
+    &.slideDown-leave {
+
+    }
+    &.slideDown-leave-active {
+        transform: translate3d(0%,-100%, 0%);
         transition-property: transform;
         will-change: transform;
         transition-duration: .5s;
-    }
-    .slide-up-enter {
-        transform: translate3d(0%,0%,0%);
-    }
+    }  */
 
 }
 .headline {
-  font-family: 'Slabo 27px';
-  font-weight: normal;
-  &--primary {
-    margin-left: 4.347826087vw;
-    padding-left: 10.0869565217vw;
-    margin-top: 1vh;
-    font-size: 55px;
-  }
-  &--secondary {
-    font-size: 48px;
-  }
-  &--tertiary {
-    font-size: 42px;
-  }
+    font-family: 'Slabo 27px';
+    font-weight: normal;
+    &--primary {
+        text-align: center;
+        font-family: 'Slabo 27px';
+        font-size: 23px;
+        border: none;
+        padding: 0 4vw;
+        margin: 0 auto;
+    }
+    &--secondary {
+        font-size: 20px;
+    }
+    &--tertiary {
+        font-size: 18px;
+    }
+    &__inner {
+        &--primary {
+            padding: 2px 5px;
+            background: rgba(3, 60, 106, 0.5);
+            color: #fff;
+        }
+    }
 }
 .foot-border {
-    height: 17px;
+    height: 10px;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -276,4 +271,38 @@ body {
     z-index: 3;
     background: #fff;
 }
+.slideRight-enter  {
+    z-index: 2;
+}
+.slideRight-enter-active {
+    transform: translate3d(100%, 0, 0);
+}
+.slideRight-enter-to {
+    transform: translate3d(0, 0, 0);
+}
+.slideRight-leave-active {
+    transform: translate3d(0, 0, 0);
+}
+.slideRight-leave-to {
+    transform: translate3d(-100%, 0, 0);
+}
+
+
+
+.slideLeft-enter  {
+    z-index: 2;
+}
+.slideLeft-enter-active {
+    transform: translate3d(-100%, 0, 0);
+}
+.slideLeft-enter-to {
+    transform: translate3d(0, 0, 0);
+}
+.slideLeft-leave-active {
+    transform: translate3d(0, 0, 0);
+}
+.slideLeft-leave-to {
+    transform: translate3d(100%, 0, 0);
+}
+
 </style>

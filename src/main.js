@@ -1,7 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
-require('vue-animate/dist/vue-animate.min.css')
 require('typeface-slabo-13px');
 require('typeface-slabo-27px');
 require('typeface-lato');
