@@ -3,6 +3,7 @@ node_modules/
 dist/
 src/config/**/*
 !src/config/env.example.js
+!src/config/index.js
 .idea
 www/
 npm-debug.log*
