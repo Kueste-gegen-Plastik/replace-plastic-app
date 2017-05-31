@@ -1,36 +1,32 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { errors } from '@/config/constants';
 Vue.use(Vuex);
 
-// root state object.
-// each Vuex instance is just a single state tree.
 const state = {
     products: [],
-    errors: [],
+    error: false,
     barcode: '',
     token: '',
     user: {
         firstname: '',
         name: '',
         email: '',
-        zip: '',
-        password: ''
+        zip: ''
     },
     step: 1,
     menuOpen: false
 };
 
-// mutations are operations that actually mutates the state.
-// each mutation handler gets the entire state tree as the
-// first argument, followed by additional payload arguments.
-// mutations must be synchronous and can be recorded by plugins
-// for debugging purposes.
 const mutations = {
     PRODUCTS(state, products) {
        state.products = products;
     },
-    ERRORS(state, errors) {
-        state.errors = errors;
+    ERROR(state, error) {
+        state.error = error;
+    },
+    RESETERROR(state, error) {
+        state.error = false;
     },
     BARCODE(state, barcode) {
         state.barcode = barcode;
@@ -58,8 +54,12 @@ const actions = {
     setProducts: ({ commit }, products) => {
         commit('PRODUCTS', products);
     },
-    setErrors: ({ commit }, errors) => {
-        commit('ERRORS', errors);
+    setError: ({ commit }, code) => {
+        const text = errors.hasOwnProperty['code_' + code] ? errors['code_' + code] : errors['code_4711'];
+        commit('ERROR', text);
+    },
+    resetErrors: ({ commit }) => {
+        commit('RESETERROR');
     },
     setUser: ({ commit }, val) => {
         localStorage.setItem('kgp_user', JSON.stringify(val));
@@ -112,8 +112,8 @@ const getters = {
     products: (state) => {
         return state.products;
     },
-    errors: (state) => {
-        return state.errors;
+    error: (state) => {
+        return state.error;
     },
     barcode: (state) => {
         return state.barcode;

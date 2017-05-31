@@ -183,6 +183,7 @@ body {
 .step {
     height: 74vh;
     overflow: hidden;
+    overflow-y: auto;
     margin-top: 2vh;
     transition: all .2s ease-in;
     &--1,
@@ -285,5 +286,4 @@ body {
 .slideLeft-leave-to {
     transform: translate3d(100%, 0, 0);
 }
-
 </style>

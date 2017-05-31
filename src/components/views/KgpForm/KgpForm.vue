@@ -86,6 +86,10 @@ export default {
                 type: 'password',
                 val: config.password
             });
+            this.$store.dispatch('setUserKey', {
+                type: 'username',
+                val: config.username
+            })
             this.$router.push('/scan');
         }
     }
@@ -105,7 +109,6 @@ export default {
 .form {
 
   &__legend {
-
     color: #fff;
     text-align: center;
     font-family: 'Slabo 27px';
@@ -185,6 +188,10 @@ export default {
     border-bottom: 5px solid rgba(0,0,0,.17);
     padding: 1.7vh 5vw;
     margin-top: 2vh;
+    &--error {
+        background: #fff;
+        color: #033c6a;
+    }
   }
 }
 </style>

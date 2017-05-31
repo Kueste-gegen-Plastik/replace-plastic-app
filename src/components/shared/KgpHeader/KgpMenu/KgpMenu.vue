@@ -6,7 +6,7 @@
       type="button"
       aria-controls="menu__items"
       v-bind:aria-label="'Menü ' + menuOpen ? 'schließen' : 'öffnen'"
-      v-bind:aria-expanded="open">
+      v-bind:aria-expanded="menuOpen">
       <span class="menu__button-box">
         <span class="menu__button-inner"></span>
       </span>

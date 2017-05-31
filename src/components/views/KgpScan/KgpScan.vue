@@ -4,7 +4,7 @@
             <symbol id="scan" x="0px" y="0px" width="52" height="65" viewBox="0 0 52 65">
                 <path d="M39.9183998,21H12.0815001C11.4853001,21,11,20.5146008,11,19.9188995V15c0-1.1026001,0.8969002-2,2-2h26    c1.1030006,0,2,0.8973999,2,2v4.9188995C41,20.5146008,40.5145988,21,39.9183998,21z M13,19h26v-4H13V19z"
                 />
-                <path d="M26,50c-3.8598995,0-7-3.1405983-7-7V29.3799l-7.7475996-8.7159004l1.4951-1.3281002L21,28.6201V43    c0,2.7568016,2.2430992,5,5,5c2.7567997,0,5-2.2431984,5-5V28.6201l8.2523994-9.2842007l1.4951019,1.3281002L33,29.3799V43    C33,46.8594017,29.8598003,50,26,50z"
+                <path d="M26,50c-3.8598995,0-7-3.1405983-7-7V29.3799l-7.7475996-8.7159004l1.4951-1.3281002L21,28.6201V43    c0,2.7568016,2.2430992,5,5,5c2.7567997,0,5-2.2431984,5-5V28.6201l8.2523994-9.2842'007'l1.4951019,1.3281002L33,29.3799V43    C33,46.8594017,29.8598003,50,26,50z"
                 />
                 <rect x="25" y="34" width="2" height="6" />
                 <rect x="13" y="9" width="2" height="2" />
@@ -31,20 +31,16 @@
         </h2>
         <div class="step__inner">
             <hr class="waves" />
-            <form v-on:submit.prevent="handleBarcode" name="fallbackform" class="form" method="post">
-                <div v-if="!permissionErr" class="scan">
+            <form v-on:submit.prevent="handleBarcodeSubmit" name="fallbackform" class="form" method="post">
+                <div v-if="!error" class="scan">
                     <button type="button" class="scan__button" v-on:click="startScan">
                         <svg class="scan__icon" x="0px" y="0px" width="52" height="65" viewBox="0 0 52 65">
                             <use xlink:href="#scan"></use>
                         </svg>
                     </button>
                 </div>
-                <div v-if="permissionErr">
-                    {{ permissionErr }}
-                    <button>Berechtigung erteilen</button>
-                </div>
                 <div class="scan__fallback">
-                    <h3 v-if="!permissionErr" class="headline headline--tertiary">
+                    <h3 v-if="!error" class="headline headline--tertiary">
                         <span class="headline__inner">
                             ... oder selber eingeben:
                         </span>
@@ -56,18 +52,13 @@
                         </p>
                     </div>
                     <div class="form__formrow">
-                        <label class="form__label" v-bind:class="{ 'form__label--filled' : ean.length }" for="ean">Barcode-Nummer<sup title="Pflichtfeld">*</sup></label>
-                        <input class="form__input" type="text" required="required" id="ean" v-model="ean" />
+                        <label class="form__label" v-bind:class="{ 'form__label--filled' : barcode.length }" for="ean">Barcode-Nummer<sup title="Pflichtfeld">*</sup></label>
+                        <input class="form__input" type="text" required="required" id="ean" :value="barcode" @input="updateBarcode" />
                     </div>
+                    <kgp-error v-on:reset="startScan"></kgp-error>
                     <button class="form__button" type="submit">
                         Produkt suchen
                     </button>
-                </div>
-                <div v-if="err" class="scan__error">
-                    <h3 class="headline headline--tertiary headline--error">Hoppla: Es ist ein Fehler aufgetreten:</h3>
-                    <p>
-                        {{ err }}
-                    </p>
                 </div>
             </form>
         </div>
@@ -82,23 +73,38 @@
 import Quagga from 'quagga';
 import Api from '@/api';
 import Barcoder from 'barcoder';
+import KgpError from '@/components/shared/KgpError/KgpError';
 
 export default {
     name: 'kgp-scan',
+    components: {
+        KgpError
+    },
     data() {
         return {
-            err: false,
-            permissionErr: false,
             showScan: false,
             cantScan: false,
-            isValidEan: false,
-            ean: ''
+            isValidEan: false
         };
     },
     beforeCreate() {
         this.$store.dispatch('setStep', 2);
     },
+    computed: {
+        barcode() {
+            return this.$store.getters.barcode;
+        },
+        error() {
+            return this.$store.getters.error;
+        }
+    },
     methods: {
+        handleError(code) {
+            this.$store.dispatch('setError', code);
+        },
+        updateBarcode(e) {
+            this.$store.dispatch('setBarcode', e.target.value);
+        },
         startScan() {
             this.err = false;
             // handle native app scanning
@@ -119,15 +125,15 @@ export default {
                                     this.nativeScan();
                                 }, () => {
                                     // permission rejected
-                                    this.permissionErr = 'Sie haben der App keine Berechtigung zum Zugriff auf die Kamera erteilt.';
+                                    this.handleError('007');
                                 });
                             } catch(err) {
-                                this.permissionErr = 'Es gab einen Fehler beim Erteilen der Berechtigung für den Zugriff auf die Kamera.';
+                                this.handleError('007');
                             }
                         }
                     }, (err) => {
                         // error while requesting permission status
-                        this.permissionErr = 'Es gab einen Fehler beim Erteilen der Berechtigung für den Zugriff auf die Kamera.';
+                        this.handleError('007');
                     });
                 } else {
                     this.nativeScan();
@@ -137,26 +143,22 @@ export default {
                 this.webappScan();
             }
         },
-        handleBarcode() {
-            if (Barcoder.validate(this.ean)) {
-                this.$store.dispatch('setBarcode', this.ean);
+        handleBarcodeSubmit() {
+            if (Barcoder.validate(this.barcode)) {
                 this.$router.push('/product');
                 return true;
             } else {
-                this.err = 'Der eingegebene Barcode ist keine gültige EAN-Nummer.';
+                this.handleError('0815');
                 return false;
             }
         },
         nativeScan() {
             cordova.plugins.barcodeScanner.scan((result) => {
-                console.log("RESULT1", result);
                 if (result.cancelled) return;
-                this.ean = result.text;
-                console.log("RESUL2", result);
-                this.handleBarcode()
+                this.$store.dispatch('setBarcode', result.text);
+                this.handleBarcodeSubmit()
             }, (error) => {
-                this.err = 'Das Scannen ist fehlgeschlagen:' + error;
-                console.log("RESUL2", error);
+                this.handleError('42');
             }, {
                 preferFrontCamera: false, // iOS and Android
                 showFlipCameraButton: true, // iOS and Android
@@ -177,14 +179,14 @@ export default {
             this.showScan = true;
             const errorHandler = (err) => {
                 if (err) {
-                    this.permissionErr = err;
+                    this.handleError('42');
                     return;
                 }
                 Quagga.start();
             };
             const onDetected = (data) => {
-                this.ean = data.codeResult.code;
-                this.handleBarcode();
+                this.$store.dispatch('setBarcode', data.codeResult.code);
+                this.handleBarcodeSubmit();
             };
             const onProcessed = (result) => {
                 const drawingCtx = Quagga.canvas.ctx.overlay;
@@ -251,6 +253,10 @@ export default {
         animation-duration: 3s;
         animation-iteration-count: infinite;
         transform-style: flat;
+        transition: background .2s ease-in;
+        &:active, &:focus {
+            background: #fff;
+        }
     }
     &__icon {
         fill: #fff;
@@ -303,7 +309,7 @@ export default {
         transform: scale3d(1,1,0);
     }
     50% {
-        transform: scale3d(1.1,1.1,0);
+        transform: scale3d(1.2,1.2,0);
     }
     100% {
         transform: scale(1,1,0);

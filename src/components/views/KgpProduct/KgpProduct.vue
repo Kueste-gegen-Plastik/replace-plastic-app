@@ -5,12 +5,12 @@
                 Einen kleinen Moment Geduld:
             </span>
         </h2>
-        <h2 class="headline headline--primary" v-if="!loading && products.length && !errors.length">
+        <h2 class="headline headline--primary" v-if="!loading && products.length && !error">
             <span class="headline__inner headline__inner--primary">
                 Wir haben folgend<span v-if="products.length>1">e</span> Produkte in unserer Datenbank gefunden:
             </span>
         </h2>
-        <div v-if="!loading && !products.length && !errors.length">
+        <div v-if="!loading && !products.length && !error">
             <h2 class="headline headline--primary" >
                 <span class="headline__inner headline__inner--primary">
                     Dieses Produkt ist leider noch nicht in unserer Datenbank
@@ -25,9 +25,7 @@
                     <bounce-loader :loading="loading" color="#fff"></bounce-loader>
                     {{ msg }}
                 </div>
-                <div v-if="!loading && errors.length" class="product__error">
-                    {{ errors }}
-                </div>
+                <kgp-error v-on:reset="loadProduct"></kgp-error>
                 <div v-if="!loading && products.length && !error" class="product__content">
                      <ul class="product-list">
                         <li class="product-list__item" v-for="product in products">
@@ -40,7 +38,7 @@
                         Ich wünsche mir diese<span v-if="products.length<2">s</span> Produkt<span v-if="products.length>1">e</span> in einer Verpackung ohne Plastik / mit weniger Plastik.
                     </p>
                 </div>
-                <div v-if="!loading && !products.length && !errors.length" class="product__content">
+                <div v-if="!loading && !products.length && !error" class="product__content">
                     <h3 class="headline headline--tertiary">Das macht aber nichts...</h3>
                     <div class="form__description">
                         <p>
@@ -52,7 +50,7 @@
                         </p>
                     </div>
                 </div>
-                <router-link to="submit" v-if="!loading" class="form__button">
+                <router-link to="submit" v-if="!loading && !error" class="form__button">
                     Verbesserungswunsch senden
                 </router-link>
             </div>
@@ -65,6 +63,7 @@
 import Api from '@/api';
 import config from '@/config';
 import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
+import KgpError from '@/components/shared/KgpError/KgpError';
 
 export default {
     name: 'kgp-product',
@@ -84,17 +83,20 @@ export default {
         products() {
             return this.$store.getters.products;
         },
-        errors() {
-            return this.$store.getters.errors;
-        },
         barcode() {
             return this.$store.getters.barcode;
+        },
+        error() {
+            return this.$store.getters.error;
         }
     },
     methods: {
         loadProduct(){
             this.msg = 'Melde mich am Server an...';
-            return Api.login(this.$store.state.user).then(res => {
+            return Api.login({
+                username: config.username,
+                password: config.password
+            }).then(res => {
                 this.$store.dispatch('setToken', res.data.token);
                 this.msg = 'Durchsuche die Produktdatenbank...';
                 return Api.searchEan(this.$store.state.barcode);
@@ -106,13 +108,14 @@ export default {
                 }
                 this.$store.dispatch('setProducts', retVal);
             }).catch(err => {
+                this.$store.dispatch('setError', err.hasOwnProperty('response') && err.response.data.hasOwnProperty('code') ? err.response.data.code : 4711);
                 this.loading = false;
-                this.error = err;
             });
         }
     },
     components: {
-        BounceLoader
+        BounceLoader,
+        KgpError
     }
 };
 </script>
