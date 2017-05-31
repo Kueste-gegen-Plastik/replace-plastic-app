@@ -63,7 +63,7 @@
 
 <script>
 import Api from '@/api';
-import config from '@/config/env.js';
+import config from '@/config';
 import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
 
 export default {

@@ -14,6 +14,7 @@
     <preference name="android-build-tool" value="gradle" />
     <preference name="AndroidWindowSoftInputMode" value="adjustPan"/>
     <preference name="AndroidConfigChanges" value="orientation|keyboardHidden"/>
+    <preference name="DisallowOverscroll" value="true"/>
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

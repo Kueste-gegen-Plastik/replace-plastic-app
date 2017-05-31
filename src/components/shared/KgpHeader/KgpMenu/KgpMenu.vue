@@ -13,7 +13,9 @@
     </button>
     <div v-bind:class="{ 'menu__items--open' : menuOpen }" id="menu__items" class="menu__items">
         <ul class="menu__nav">
-          <li v-for="menuitem in menuitems" class="menu__item">{{ menuitem }}</li>
+            <li v-for="menuitem in menuitems" class="menu__item">
+                <router-link v-bind:to="{ name: menuitem.name }">{{ menuitem.title }}</router-link>
+            </li>
         </ul>
     </div>
   </div>
@@ -25,9 +27,18 @@ export default {
     data() {
         return {
             menuitems: [
-                'Über "ReplacePlastic"',
-                'Datenschutzerklärung',
-                'Impressum',
+                {
+                    title: 'Über "ReplacePlastic"',
+                    name: ''
+                },
+                {
+                    title: 'Datenschutzerklärung"',
+                    name: ''
+                },
+                {
+                    title: 'Impressum',
+                    name: 'Impressum'
+                }
             ]
         };
     },

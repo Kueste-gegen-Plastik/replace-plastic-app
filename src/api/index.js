@@ -1,12 +1,11 @@
 import axios from 'axios';
+import config from '../config';
 
-const base = 'http://localhost:8888/'; // @TODO Move this to env-config
+export const HTTP = axios.create({ baseURL: config.endpoint });
 
-export const HTTP = axios.create({ baseURL: base });
-
-HTTP.interceptors.request.use((config) => {
+HTTP.interceptors.request.use((interceptorConfig) => {
   const token = localStorage.getItem('kgp_token');
-  const retVal = config;
+  const retVal = interceptorConfig;
   if (token) {
       retVal.headers.Authorization = `Bearer ${token}`;
   }

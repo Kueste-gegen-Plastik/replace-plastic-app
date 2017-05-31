@@ -30,7 +30,7 @@
 
 <script>
 import Api from '@/api';
-import config from '@/config/env.js';
+import config from '@/config';
 
 export default {
     name: 'kgp-submit',

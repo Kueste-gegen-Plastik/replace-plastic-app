@@ -215,25 +215,6 @@ body {
         width: 3px;
         left: 7.2vw;
     }
-   /* &.slideDown-enter {
-
-    }
-    &.slideDown-enter-active {
-        transform: translate3d(0%,-100%, 0%);
-        transition-property: transform;
-        will-change: transform;
-        transition-duration: .5s;
-    }
-
-    &.slideDown-leave {
-
-    }
-    &.slideDown-leave-active {
-        transform: translate3d(0%,-100%, 0%);
-        transition-property: transform;
-        will-change: transform;
-        transition-duration: .5s;
-    }  */
 
 }
 .headline {
@@ -242,7 +223,7 @@ body {
     &--primary {
         text-align: center;
         font-family: 'Slabo 27px';
-        font-size: 23px;
+        font-size: 28px;
         border: none;
         padding: 0 4vw;
         margin: 0 auto;

@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import config from '@/config/env.js';
+import config from '@/config';
 
 export default {
     name: 'kgp-form',
@@ -84,7 +84,7 @@ export default {
             e.preventDefault();
             this.$store.dispatch('setUserKey', {
                 type: 'password',
-                val: config.userPassword
+                val: config.password
             });
             this.$router.push('/scan');
         }

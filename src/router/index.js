@@ -5,6 +5,7 @@ import KgpForm from '@/components/views/KgpForm/KgpForm';
 import KgpScan from '@/components/views/KgpScan/KgpScan';
 import KgpProduct from '@/components/views/KgpProduct/KgpProduct';
 import KgpSubmit from '@/components/views/KgpSubmit/KgpSubmit';
+import KgpImprint from '@/components/views/Content/KgpImprint'
 
 Vue.use(Router);
 
@@ -29,6 +30,11 @@ const router = new Router({
       path: '/submit',
       name: 'Submit',
       component: KgpSubmit,
+    },
+    {
+      path: '/meta/impressum',
+      name: 'Impressum',
+      component: KgpImprint,
     },
   ],
 });
