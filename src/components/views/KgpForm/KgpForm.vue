@@ -71,7 +71,7 @@ export default {
        }
     },
     beforeCreate() {
-        this.$store.dispatch('setStep', 1);
+        this.$store.dispatch('setStep', 3);
     },
     methods: {
         updateUser(e, type) {
@@ -90,7 +90,7 @@ export default {
                 type: 'username',
                 val: config.username
             })
-            this.$router.push('/scan');
+            this.$router.push('/send');
         }
     }
 };

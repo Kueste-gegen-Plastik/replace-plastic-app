@@ -14,7 +14,7 @@
     <div v-bind:class="{ 'menu__items--open' : menuOpen }" id="menu__items" class="menu__items">
         <ul class="menu__nav">
             <li v-for="menuitem in menuitems" class="menu__item">
-                <router-link v-bind:to="{ name: menuitem.name }">{{ menuitem.title }}</router-link>
+                <router-link class="menu__link" v-bind:to="{ name: menuitem.name }">{{ menuitem.title }}</router-link>
             </li>
         </ul>
     </div>
@@ -164,6 +164,11 @@ export default {
     font-family: 'Slabo 27px', sans-serif;
     padding: 2.5vh 0;
     border-bottom: 1px solid #fff;
+  }
+  &__link {
+      color: #fff;
+      display: block;
+      text-decoration: none;
   }
 }
 .fade-enter-active, .fade-leave-active {

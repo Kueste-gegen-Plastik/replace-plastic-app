@@ -42,15 +42,9 @@
                 <div class="scan__fallback">
                     <h3 v-if="!error" class="headline headline--tertiary">
                         <span class="headline__inner">
-                            ... oder selber eingeben:
+                            ... oder selber den Barcode eingeben:
                         </span>
                     </h3>
-                    <div class="form__description">
-                        <p>
-                            Geben Sie einfach die Zahlen unter dem Barcode in
-                            das folgende Formularfeld ein und drücken anschließend auf "Absenden".
-                        </p>
-                    </div>
                     <div class="form__formrow">
                         <label class="form__label" v-bind:class="{ 'form__label--filled' : barcode.length }" for="ean">Barcode-Nummer<sup title="Pflichtfeld">*</sup></label>
                         <input class="form__input" type="text" required="required" id="ean" :value="barcode" @input="updateBarcode" />
@@ -70,7 +64,7 @@
 </template>
 
 <script>
-import Quagga from 'quagga';
+// import Quagga from 'quagga';
 import Api from '@/api';
 import Barcoder from 'barcoder';
 import KgpError from '@/components/shared/KgpError/KgpError';
@@ -88,7 +82,7 @@ export default {
         };
     },
     beforeCreate() {
-        this.$store.dispatch('setStep', 2);
+        this.$store.dispatch('setStep', 1);
     },
     computed: {
         barcode() {
@@ -139,8 +133,8 @@ export default {
                     this.nativeScan();
                 }
             } else {
-                // handle webapp scanning
-                this.webappScan();
+                // @TODO handle webapp scanning
+                //  this.webappScan();
             }
         },
         handleBarcodeSubmit() {
@@ -175,7 +169,7 @@ export default {
             Quagga.stop();
             this.showScan = false;
         },
-        webappScan() {
+        /*webappScan() {
             this.showScan = true;
             const errorHandler = (err) => {
                 if (err) {
@@ -231,7 +225,7 @@ export default {
                 onDetected,
                 errorHandler,
             });
-        },
+        },*/
     }
 };
 </script>
@@ -242,8 +236,8 @@ export default {
     margin-top: 10px;
     &__button {
         background: #f76259;
-        width: 30vw;
-        height: 30vw;
+        width: 40vw;
+        height: 40vw;
         border-radius: 50%;
         border: none;
         outline: none;
@@ -260,8 +254,8 @@ export default {
     }
     &__icon {
         fill: #fff;
-        width: 19vw;
-        height: 19vw;
+        width: 24vw;
+        height: 24vw;
         position: relative;
         top: 3vw;
     }

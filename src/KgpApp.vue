@@ -122,7 +122,7 @@ export default {
                 var routeNames = this.$router.options.routes.map(itm => {
                     return itm.name;
                 });
-                this.transition = ['Main','Scan','Product','Submit'].indexOf(to.name) > routeNames.indexOf(from.name) ? 'slideRight' : 'slideLeft';
+                this.transition = ['Scan','Product','Form','Submit'].indexOf(to.name) > routeNames.indexOf(from.name) ?  'slideLeft' : 'slideRight';
             } else {
                 this.transition = ['Impressum','Datenschutz','Ueber'].indexOf(to.name) ? 'slideLeft' : 'slideRight';
             }

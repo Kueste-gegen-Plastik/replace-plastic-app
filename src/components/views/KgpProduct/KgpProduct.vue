@@ -50,9 +50,9 @@
                         </p>
                     </div>
                 </div>
-                <router-link to="submit" v-if="!loading && !error" class="form__button">
+                <a v-if="!loading && !error" v-on:click.prevent="doSubmit" class="form__button">
                     Verbesserungswunsch senden
-                </router-link>
+                </a>
             </div>
         </div>
     </div>
@@ -77,7 +77,7 @@ export default {
         this.loadProduct();
     },
     beforeCreate() {
-        this.$store.dispatch('setStep', 3);
+        this.$store.dispatch('setStep', 2);
     },
     computed : {
         products() {
@@ -111,6 +111,9 @@ export default {
                 this.$store.dispatch('setError', err.hasOwnProperty('response') && err.response.data.hasOwnProperty('code') ? err.response.data.code : 4711);
                 this.loading = false;
             });
+        },
+        doSubmit() {
+            this.$router.push('/form');
         }
     },
     components: {
@@ -138,6 +141,15 @@ export default {
     }
     &__content {
         margin-bottom: 30px;
+    }
+    &__loading {
+        text-align: center;
+        .v-bounce {
+            margin: 0 auto;
+        }
+        .v-spinner {
+            margin-bottom: 10px;
+        }
     }
 }
 </style>

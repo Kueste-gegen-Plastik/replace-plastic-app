@@ -12,8 +12,8 @@ Vue.use(Router);
 const router = new Router({
   routes: [
     {
-      path: '/',
-      name: 'Main',
+      path: '/form',
+      name: 'Form',
       component: KgpForm,
     },
     {
@@ -27,8 +27,8 @@ const router = new Router({
       component: KgpProduct,
     },
     {
-      path: '/submit',
-      name: 'Submit',
+      path: '/send',
+      name: 'Send',
       component: KgpSubmit,
     },
     {
@@ -36,28 +36,25 @@ const router = new Router({
       name: 'Impressum',
       component: KgpImprint,
     },
+    {
+        path: '*',
+        redirect: '/Scan'
+    }
   ],
 });
 
 router.beforeEach(function(to, from, next) {
     switch(to.name) {
-        case 'Scan':
-            if(!store.getters.isUserValid) {
-                next({ name : 'Main' });
-                break;
-            };
-            next();
-        break;
         case 'Product':
-            if(!store.getters.isUserValid || !store.getters.barcode) {
+            if(!store.getters.barcode) {
                 next({ name : 'Scan' });
                 break;
             };
             next();
             break;
         case 'Submit':
-            if(!store.getters.isUserValid || !store.getters.barcode || !store.getters.products.length || !store.getters.products.isLoggedIn) {
-                next({ name : 'Product' });
+            if(!store.getters.isUserValid || !store.getters.barcode || !store.getters.products.length) {
+                next({ name : 'Form' });
                 break;
             };
             next();
