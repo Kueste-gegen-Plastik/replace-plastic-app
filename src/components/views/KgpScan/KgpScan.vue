@@ -243,10 +243,9 @@ export default {
         outline: none;
         border: 10px solid rgba(0, 0, 0, .17);
         margin: 2vh 0;
-        animation: BUBBLE;
+        /*animation: BUBBLE;
         animation-duration: 3s;
-        animation-iteration-count: infinite;
-        transform-style: flat;
+        animation-iteration-count: infinite;*/
         transition: background .2s ease-in;
         &:active, &:focus {
             background: #fff;
@@ -298,15 +297,44 @@ export default {
         }
     }
 }
-@keyframes BUBBLE {
+/*@keyframes BUBBLE {
     0% {
+        -webkit-transform: scale(1,1);
+        transform: scale(1,1);
+        -webkit-transform: scale3d(1,1,0);
         transform: scale3d(1,1,0);
     }
     50% {
+        -webkit-transform: scale(1.2, 1.2);
+        transform: scale(1.2, 1.2);
+        -webkit-transform: scale3d(1.2,1.2,0);
         transform: scale3d(1.2,1.2,0);
     }
     100% {
-        transform: scale(1,1,0);
+        -webkit-transform: scale(1,1);
+        transform: scale(1,1);
+        -webkit-transform: scale3d(1,1,0);
+        transform: scale3d(1,1,0);
     }
 }
+@-webkit-keyframes BUBBLE {
+    0% {
+        -webkit-transform: scale(1,1);
+        transform: scale(1,1);
+        -webkit-transform: scale3d(1,1,0);
+        transform: scale3d(1,1,0);
+    }
+    50% {
+        -webkit-transform: scale(1.2, 1.2);
+        transform: scale(1.2, 1.2);
+        -webkit-transform: scale3d(1.2,1.2,0);
+        transform: scale3d(1.2,1.2,0);
+    }
+    100% {
+        -webkit-transform: scale(1,1);
+        transform: scale(1,1);
+        -webkit-transform: scale3d(1,1,0);
+        transform: scale3d(1,1,0);
+    }
+}*/
 </style>

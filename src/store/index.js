@@ -15,7 +15,9 @@ const state = {
         zip: ''
     },
     step: 1,
-    menuOpen: false
+    userSet: false,
+    menuOpen: false,
+    showBack: false
 };
 
 const mutations = {

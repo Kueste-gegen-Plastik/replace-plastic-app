@@ -14,7 +14,7 @@
     <div v-bind:class="{ 'menu__items--open' : menuOpen }" id="menu__items" class="menu__items">
         <ul class="menu__nav">
             <li v-for="menuitem in menuitems" class="menu__item">
-                <router-link class="menu__link" v-bind:to="{ name: menuitem.name }">{{ menuitem.title }}</router-link>
+                <router-link class="menu__link" v-on:click="closeMenu" v-bind:to="{ name: menuitem.name }">{{ menuitem.title }}</router-link>
             </li>
         </ul>
     </div>
@@ -25,26 +25,42 @@
 export default {
     name: 'kgp-menu',
     data() {
+       const menuitems = [
+            {
+                title: 'Einstellungen',
+                name: 'Form'
+            },
+            {
+                title: 'Über "ReplacePlastic"',
+                name: 'Ueber'
+            },
+            {
+                title: 'Datenschutzerklärung',
+                name: 'Datenschutz'
+            },
+            {
+                title: 'Impressum',
+                name: 'Impressum'
+            }
+        ];
         return {
-            menuitems: [
-                {
-                    title: 'Über "ReplacePlastic"',
-                    name: ''
-                },
-                {
-                    title: 'Datenschutzerklärung"',
-                    name: ''
-                },
-                {
-                    title: 'Impressum',
-                    name: 'Impressum'
-                }
-            ]
+            menuitems: menuitems,
+            lastRoute: false
         };
     },
     methods: {
         toggleMenu() {
+            if(!this.menuOpen) {
+                // save the last state to jump back there later on
+                if(['Scan','Product','Form','Submit'].indexOf(this.$route.name) > -1) {
+                    this.lastRoute = this.$route.path;
+                }
+            }
             this.$store.dispatch('menuOpen', !this.menuOpen);
+        },
+        closeMenu() {
+            this.$store.dispatch('menuOpen', false);
+            this.$router.push(this.lastRoute);
         }
     },
     computed: {
@@ -72,7 +88,7 @@ export default {
     z-index: 11;
     outline: none;
     left: -30px;
-    top: 7px;
+    top: 3vh;
     width: 8vh;
     height: 8vh;
     padding: 15px 15px;
@@ -88,6 +104,9 @@ export default {
     border: 0;
     margin: 0;
     overflow: visible;
+    &--back {
+        left: -10px;
+    }
     &:hover {
       opacity: 0.7;
     }
@@ -133,6 +152,40 @@ export default {
       #{$context}--open & {
         transform: translate3d(6px, 0, 0) rotate(-45deg) scale(0.7, 1);
       }
+    }
+
+    &-back {
+      display: block;
+      top: 50%;
+      margin-top: -2px;
+    }
+    &-back,
+    &-back::before,
+    &-back::after {
+        width: 30px;
+        height: 3px;
+        background-color: #033c6a;
+        border-radius: 3px;
+        position: absolute;
+        transition-property: transform;
+        transition-duration: 0.15s;
+        transition-timing-function: ease;
+    }
+    &-back {
+        background-color: transparent;
+    }
+    &-back::before,
+    &-back::after {
+        content: "";
+        display: block;
+    }
+    &-back::before {
+        top: -7px;
+        transform: translate3d(6px, 0, 0) rotate(-45deg) scale(0.7, 1);
+    }
+    &-back::after {
+        bottom: -7px;
+        transform: translate3d(6px, 0, 0) rotate(45deg) scale(0.7, 1);
     }
   }
   &__bar {

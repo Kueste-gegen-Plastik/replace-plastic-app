@@ -5,7 +5,9 @@ import KgpForm from '@/components/views/KgpForm/KgpForm';
 import KgpScan from '@/components/views/KgpScan/KgpScan';
 import KgpProduct from '@/components/views/KgpProduct/KgpProduct';
 import KgpSubmit from '@/components/views/KgpSubmit/KgpSubmit';
-import KgpImprint from '@/components/views/Content/KgpImprint'
+import KgpImprint from '@/components/views/Content/KgpImprint';
+import KgpAbout from '@/components/views/Content/KgpAbout';
+import KgpPrivacy from '@/components/views/Content/KgpPrivacy';
 
 Vue.use(Router);
 
@@ -35,6 +37,16 @@ const router = new Router({
       path: '/meta/impressum',
       name: 'Impressum',
       component: KgpImprint,
+    },
+    {
+      path: '/meta/privacy',
+      name: 'Datenschutz',
+      component: KgpPrivacy,
+    },
+    {
+      path: '/meta/about',
+      name: 'Ueber',
+      component: KgpAbout,
     },
     {
         path: '*',

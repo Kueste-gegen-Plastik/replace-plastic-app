@@ -112,7 +112,7 @@ export default {
     mounted() {
         var usr = localStorage.getItem('kgp_user');
         if(usr) {
-            this.$store.dispatch('setUser', JSON.parse(usr))
+            this.$store.dispatch('setUser', JSON.parse(usr));
         }
         localStorage.removeItem('kgp_token');
     },
@@ -147,7 +147,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #fff;
-    padding-top: 10vh;
+    padding-top: 13vh;
     will-change: background-position;
     transition: all .5s ease-in;
     &--step-2 {
@@ -178,6 +178,7 @@ body {
         fill: #fff;
         max-width: 11vh;
         height: auto;
+        max-height: 100px;
     }
 }
 .step {
