@@ -17,12 +17,15 @@ const state = {
     step: 1,
     userSet: false,
     menuOpen: false,
-    showBack: false
+    lastRoute: ''
 };
 
 const mutations = {
     PRODUCTS(state, products) {
        state.products = products;
+    },
+    RESETPRODUCTS(state) {
+       state.products = [];
     },
     ERROR(state, error) {
         state.error = error;
@@ -32,6 +35,9 @@ const mutations = {
     },
     BARCODE(state, barcode) {
         state.barcode = barcode;
+    },
+    RESETBARCODE(state) {
+        state.barcode = '';
     },
     STEP(state, step) {
         state.step = step;
@@ -49,6 +55,9 @@ const mutations = {
     },
     MENUOPEN(state, isOpen) {
         state.menuOpen = isOpen;
+    },
+    LASTROUTE(state, route) {
+        state.lastRoute = route;
     }
 };
 
@@ -56,11 +65,13 @@ const actions = {
     setProducts: ({ commit }, products) => {
         commit('PRODUCTS', products);
     },
-    setError: ({ commit }, code) => {
-        const text = errors.hasOwnProperty['code_' + code] ? errors['code_' + code] : errors['code_4711'];
-        commit('ERROR', text);
+    resetProducts: ({ commit }) => {
+        commit('RESETPRODUCTS');
     },
-    resetErrors: ({ commit }) => {
+    setError: ({ commit }, code) => {
+        commit('ERROR', errors['code_' + code]);
+    },
+    resetError: ({ commit }) => {
         commit('RESETERROR');
     },
     setUser: ({ commit }, val) => {
@@ -80,8 +91,19 @@ const actions = {
             password: ''
         });
     },
+    resetState: ({ commit, state}) => {
+        state.products = [];
+        state.error = false;
+        state.barcode =  '';
+        state.step =  1;
+        state.userSet = false;
+        state.menuOpen = false;
+    },
     setBarcode: ({ commit }, barcode) => {
         commit('BARCODE', barcode);
+    },
+    resetBarcode: ({ commit }) => {
+        commit('RESETBARCODE');
     },
     setStep: ({ commit }, step) => {
         commit('STEP', step);
@@ -92,6 +114,9 @@ const actions = {
     },
     menuOpen: ({ commit }, isOpen) => {
         commit('MENUOPEN', isOpen);
+    },
+    setLastRoute: ({ commit }, route) => {
+        commit('LASTROUTE', route);
     },
 };
 
@@ -125,6 +150,9 @@ const getters = {
     },
     token: (state) => {
         return state.token;
+    },
+    lastRoute: (state) => {
+        return state.lastRoute;
     }
 };
 

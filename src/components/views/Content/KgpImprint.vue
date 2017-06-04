@@ -32,12 +32,16 @@
                     Geschäftsführender Vorstand
                 </h3>
 
-                <p>
-                    Jennifer Timrott, Vorsitzende:
-                    <a href="mailto:jennifer.timrott@kueste-gegen-plastik.de">jennifer.timrott@kueste-gegen-plastik.de</a><br>
-                    Andreas Halle, stellvertretender Vorsitzender:
-                    <a href="mailto:andreas.halle@kueste-gegen-plastik.de"> andreas.halle@kueste-gegen-plastik.de</a>
-                </p>
+                <ul>
+                    <li>
+                    Jennifer Timrott, Vorsitzende<br />
+                    <a href="mailto:jennifer.timrott@kueste-gegen-plastik.de">jennifer.timrott@kueste-gegen-plastik.de</a>
+                    </li>
+                    <li>
+                        Andreas Halle, stellvertretender Vorsitzender<br />
+                        <a href="mailto:andreas.halle@kueste-gegen-plastik.de"> andreas.halle@kueste-gegen-plastik.de</a>
+                    </li>
+                </ul>
 
                 <p>
                     Dr. Thomas Daußmann, Kassenwart

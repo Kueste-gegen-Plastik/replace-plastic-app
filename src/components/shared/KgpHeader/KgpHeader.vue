@@ -1,18 +1,16 @@
 <template>
-  <div class="header">
-    <svg v-on:click="goHome()" class="header__logo" v-bind:class="{ 'header__logo--open' : menuOpen }" width="277.8px" height="246.61px" viewBox="0 0 277.8 246.61">
-      <use xlink:href="#bildmarke"></use>
-    </svg>
-    <button @click="goBack()"
-      class="menu__button menu__button--back"
-      type="button">
-      <span class="menu__button-box">
-        <span class="menu__button-back"></span>
-      </span>
-    </button>
-    <kgp-menu></kgp-menu>
-    <div class="header__border"></div>
-  </div>
+    <div class="header">
+        <svg v-on:click="goHome()" class="header__logo" v-bind:class="{ 'header__logo--open' : menuOpen }" width="277.8px" height="246.61px" viewBox="0 0 277.8 246.61">
+            <use xlink:href="#bildmarke"></use>
+        </svg>
+        <button @click="goBack()" v-if="showBack" class="menu__button menu__button--back" type="button">
+            <span class="menu__button-box">
+                <span class="menu__button-back"></span>
+            </span>
+        </button>
+        <kgp-menu></kgp-menu>
+        <div class="header__border"></div>
+    </div>
 </template>
 
 
@@ -21,6 +19,11 @@ import KgpMenu from './KgpMenu/KgpMenu';
 
 export default {
     name: 'kgp-header',
+    data() {
+        return {
+            showBack: true
+        }
+    },
     components: {
         KgpMenu
     },
@@ -29,17 +32,69 @@ export default {
             this.$router.push('/');
         },
         goBack() {
-            window.history.back(-1);
+            let to = '';
+            switch(this.$route.name) {
+                case 'Form':
+                    if(localStorage.getItem('kgp_user')) {
+                        to = this.$store.getters.lastRoute;
+                    } else {
+                        if (navigator.app) {
+                            navigator.app.exitApp();
+                        } else if (navigator.device) {
+                            navigator.device.exitApp();
+                        } else {
+                            window.close();
+                        }
+                    }
+                break;
+                case 'Scan':
+                    if(localStorage.getItem('kgp_user')) {
+                        if (navigator.app) {
+                            navigator.app.exitApp();
+                        } else if (navigator.device) {
+                            navigator.device.exitApp();
+                        } else {
+                            window.close();
+                        }
+                    } else {
+                        to = 'Form';
+                    }
+                break;
+                case 'Product':
+                    to = 'Scan';
+                break;
+                case 'Send':
+                    to = 'Scan';
+                break;
+                default:
+                    if(this.$store.getters.lastRoute) {
+                        to = this.$store.getters.lastRoute;
+                    } else {
+                        if(localStorage.getItem('kgp_user')) {
+                            to = 'Scan';
+                        } else {
+                            to = 'Form';
+                        }
+                     }
+                break;
+            }
+            this.$router.push(to);
         }
     },
     computed: {
         menuOpen() {
             return this.$store.state.menuOpen;
-        },
-        showBack() {
-            return this.$store.state.showBack;
         }
     },
+    watch: {
+        '$route' (to, from) {
+            if(to.name == 'Send') {
+                this.showBack = false;
+            } else {
+                this.showBack = true;
+            }
+        }
+    }
 };
 </script>
 

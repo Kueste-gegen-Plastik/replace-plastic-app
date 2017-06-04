@@ -14,15 +14,15 @@
                 </div>
                 <kgp-error v-on:reset="submitEntry"></kgp-error>
                 <div v-if="!loading && !error" class="product__content">
-                    <h3 class="headline headline--tertiary">Danke für Dein Feedback!</h3>
+                    <h3 class="headline headline--secondary">Danke für Dein Feedback!</h3>
                     <p>
                         Gemeinsam schaffen wir eine spürbare Nachfrage nach plastikfreien Verpackungen, die auch bei den Herstellern ankommt. Wir
                         geben Deinen Wunsch an den Hersteller weiter. Der Hersteller wird spätestens nach vier Wochen benachrichtigt,
                         oder wenn 20 weitere Personen dieses Produkt mit der ReplacePlastic-App gescannt haben.
                     </p>
-                    <a class="form__button">
+                    <button type="button" v-on:click.prevent="restartApp" class="form__button">
                         Ein weiteres Produkt scannen
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -66,10 +66,16 @@ export default {
                 barcode: this.barcode
             })).then(res => {
                 this.loading = false;
+                this.$store.dispatch('resetProducts');
+                this.$store.dispatch('resetBarcode');
             }).catch(err => {
                 this.$store.dispatch('setError', err.hasOwnProperty('response') && err.response.data.hasOwnProperty('code') ? err.response.data.code : 4711);
                 this.loading = false;
             })
+        },
+        restartApp() {
+            this.$store.dispatch('resetState');
+            this.$router.push('/');
         }
     },
     components: {

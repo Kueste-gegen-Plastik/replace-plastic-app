@@ -11,6 +11,7 @@ import KgpPrivacy from '@/components/views/Content/KgpPrivacy';
 
 Vue.use(Router);
 
+
 const router = new Router({
   routes: [
     {
@@ -50,30 +51,31 @@ const router = new Router({
     },
     {
         path: '*',
-        redirect: '/Scan'
+        redirect: localStorage.getItem('kgp_user') ? '/scan' : '/form'
     }
   ],
 });
-
 router.beforeEach(function(to, from, next) {
+    window.scrollTo(0, 0)
     switch(to.name) {
         case 'Product':
             if(!store.getters.barcode) {
-                next({ name : 'Scan' });
+                next({ name : localStorage.getItem('kgp_user') ? '/scan' : '/form' });
                 break;
             };
             next();
             break;
-        case 'Submit':
+        case 'Send':
             if(!store.getters.isUserValid || !store.getters.barcode || !store.getters.products.length) {
-                next({ name : 'Form' });
+                next({ path : localStorage.getItem('kgp_user') ? '/scan' : '/form' });
                 break;
             };
             next();
             break;
         default:
             next();
+            break;
     }
-})
+});
 
 export default router;

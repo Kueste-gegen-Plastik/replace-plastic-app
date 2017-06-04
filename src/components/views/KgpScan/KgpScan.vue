@@ -32,7 +32,7 @@
         <div class="step__inner">
             <hr class="waves" />
             <form v-on:submit.prevent="handleBarcodeSubmit" name="fallbackform" class="form" method="post">
-                <div v-if="!error" class="scan">
+                <div class="scan">
                     <button type="button" class="scan__button" v-on:click="startScan">
                         <svg class="scan__icon" x="0px" y="0px" width="52" height="65" viewBox="0 0 52 65">
                             <use xlink:href="#scan"></use>
@@ -40,7 +40,7 @@
                     </button>
                 </div>
                 <div class="scan__fallback">
-                    <h3 v-if="!error" class="headline headline--tertiary">
+                    <h3 class="headline headline--tertiary">
                         <span class="headline__inner">
                             ... oder selber den Barcode eingeben:
                         </span>

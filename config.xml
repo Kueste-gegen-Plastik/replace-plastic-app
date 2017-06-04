@@ -12,22 +12,48 @@
     <content src="index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <preference name="android-build-tool" value="gradle" />
-    <preference name="AndroidWindowSoftInputMode" value="adjustPan"/>
-    <preference name="AndroidConfigChanges" value="orientation|keyboardHidden"/>
-    <preference name="DisallowOverscroll" value="true"/>
+    <preference name="AndroidWindowSoftInputMode" value="adjustPan" />
+    <preference name="AndroidConfigChanges" value="orientation|keyboardHidden" />
+    <preference name="DisallowOverscroll" value="true" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="mailto:*" />
+    <preference name="SplashScreen" value="screen" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <splash density="land-hdpi" src="res/screens/android/screen-hdpi-landscape.png" />
+        <splash density="land-ldpi" src="res/screens/android/screen-ldpi-landscape.png" />
+        <splash density="land-mdpi" src="res/screens/android/screen-mdpi-landscape.png" />
+        <splash density="land-xhdpi" src="res/screens/android/screen-xhdpi-landscape.png" />
+        <splash density="land-xxhdpi" src="res/screens/android/screen-xxhdpi-landscape.png" />
+        <splash density="land-xxxhdpi" src="res/screens/android/screen-xxxhdpi-landscape.png" />
+        <splash density="port-hdpi" src="res/screens/android/screen-hdpi-portrait.png" />
+        <splash density="port-ldpi" src="res/screens/android/screen-ldpi-portrait.png" />
+        <splash density="port-mdpi" src="res/screens/android/screen-mdpi-portrait.png" />
+        <splash density="port-xhdpi" src="res/screens/android/screen-xhdpi-portrait.png" />
+        <splash density="port-xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png" />
+        <splash density="port-xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <splash height="1136" src="res/screens/ios/screen-iphone-568h-2x.png" width="640" />
+        <splash height="480" src="res/screens/ios/screen-iphone-portrait.png" width="320" />
+        <splash height="960" src="res/screens/ios/screen-iphone-portrait-2x.png" width="640" />
+        <splash height="1334" src="res/screens/ios/screen-iphone-portrait-667h.png" width="750" />
+        <splash height="2208" src="res/screens/ios/screen-iphone-portrait-736h.png" width="1242" />
+        <splash height="1242" src="res/screens/ios/screen-iphone-landscape-736h.png" width="2208" />
+        <splash height="1024" src="res/screens/ios/screen-ipad-portrait.png" width="768" />
+        <splash height="2048" src="res/screens/ios/screen-ipad-portrait-2x.png" width="1536" />
+        <splash height="768" src="res/screens/ios/screen-ipad-landscape.png" width="1024" />
+        <splash height="1536" src="res/screens/ios/screen-ipad-landscape-2x.png" width="2048" />
+        <splash height="2048" src="res/screens/ios/screen-ipad-landscape-ipadpro.png" width="2732" />
+        <splash height="2732" src="res/screens/ios/screen-ipad-portrait-ipadpro.png" width="2048" />
     </platform>
     <plugin name="phonegap-plugin-barcodescanner" spec="~6.0.6" />
     <plugin name="cordova-plugin-android-permissions" spec="~0.11.0" />
     <plugin name="cordova-plugin-secure-storage" spec="~2.6.5" />
     <plugin name="cordova-plugin-device" spec="~1.1.6" />
+    <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
 </widget>

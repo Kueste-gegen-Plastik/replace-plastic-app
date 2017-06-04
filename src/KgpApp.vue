@@ -86,7 +86,7 @@
                 <router-view></router-view>
             </transition>
         </div>
-        <div class="foot-border"></div>
+        <div v-if="!keyboardShown" class="foot-border"></div>
     </div>
 </template>
 
@@ -98,7 +98,8 @@ export default {
     name: 'KgpApp',
     data() {
         return {
-            transition : 'slideUp'
+            transition : 'slideUp',
+            keyboardShown : false
         }
     },
     computed: {
@@ -115,9 +116,17 @@ export default {
             this.$store.dispatch('setUser', JSON.parse(usr));
         }
         localStorage.removeItem('kgp_token');
+        window.addEventListener('native.keyboardshow', () => {
+            this.keyboardShown = true;
+        });
+        window.addEventListener('native.keyboardhide', () => {
+            this.keyboardShown = false;
+        });
+
     },
     watch: {
         '$route' (to, from) {
+            this.$store.dispatch('resetError');
             if(to.name.indexOf('meta') <= -1) {
                 var routeNames = this.$router.options.routes.map(itm => {
                     return itm.name;

@@ -50,9 +50,25 @@
                         </p>
                     </div>
                 </div>
-                <a v-if="!loading && !error" v-on:click.prevent="doSubmit" class="form__button">
+                <div  v-if="!loading && !error">
+                    <h2 class="headline headline--secondary">
+                        Diese Mail wird der Hersteller erhalten:
+                    </h2>
+                    <h3 class="headline headline--tertiary">Sehr geehrte Damen und Herren,</h3>
+                    <p>
+                        wir wenden uns heute an Sie, weil die das Produkt "(PRODUKTNAME)" herstellen.<br />
+                        (ANZAHL DER EINSENDUNGEN) Verbraucher haben über unsere App ReplacePlastic angegeben, dass sie sich Ihr Produkt "(PRODUKTNAME)" in einer Verpackung ohne Plastik/mit w eniger Plastik wünschen.
+                        Plastikmüll in den Meeren stellt ein großes Problem dar, weshalb immer mehr Verbraucher ein Bewusstsein für dieses Thema zeigen. Viele Menschen wünschen sich plastikfreie Verpackungen. Aus diesem Grund sendn wir Ihnen heute die Wünsche der Verbraucher zu Ihrem Produkt.
+                        Wir hoffen, dass Ihnen diese Informationen über die Wünsche und Werte Ihrer Zielgruppen hilft, für Ihre Kunden bessere Lösungen zu verwirklichen.
+                        Für mehr Informationen zu unserem Projekt besuchen Sie gern unsere Website ReplacePlastic.de
+                        Sie möchten sich Anregungen für gute Verpackungen holen? In unserem Blog kueste-gegen-plastik.de/blog berichten wir auch über gute Besipiele.<br /><br />
+                        Mit freundlichen Grüßen,<br />
+                        <i>das Team vom Verein Küste gegen Plastik e.V.</i>
+                    </p>
+                </div>
+                <button v-if="!loading && !error" v-on:click.prevent="doSubmit" class="form__button">
                     Verbesserungswunsch senden
-                </a>
+                </button>
             </div>
         </div>
     </div>
@@ -93,6 +109,7 @@ export default {
     methods: {
         loadProduct(){
             this.msg = 'Melde mich am Server an...';
+            this.$store.dispatch('resetProducts');
             return Api.login({
                 username: config.username,
                 password: config.password
@@ -108,12 +125,13 @@ export default {
                 }
                 this.$store.dispatch('setProducts', retVal);
             }).catch(err => {
-                this.$store.dispatch('setError', err.hasOwnProperty('response') && err.response.data.hasOwnProperty('code') ? err.response.data.code : 4711);
+                var msg = err.hasOwnProperty('response') && err.response && err.response.hasOwnProperty('data') && err.response.data.hasOwnProperty('code') ? err.response.data.code : 4711;
+                this.$store.dispatch('setError', msg);
                 this.loading = false;
             });
         },
         doSubmit() {
-            this.$router.push('/form');
+            this.$router.push('/send');
         }
     },
     components: {

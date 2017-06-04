@@ -13,8 +13,10 @@
     </button>
     <div v-bind:class="{ 'menu__items--open' : menuOpen }" id="menu__items" class="menu__items">
         <ul class="menu__nav">
-            <li v-for="menuitem in menuitems" class="menu__item">
-                <router-link class="menu__link" v-on:click="closeMenu" v-bind:to="{ name: menuitem.name }">{{ menuitem.title }}</router-link>
+            <li v-for="menuitem in menuitems"  v-on:click="closeMenu" class="menu__item">
+                <router-link class="menu__link" v-bind:to="{ name : menuitem.name }">
+                    {{ menuitem.title }}
+                </router-link>
             </li>
         </ul>
     </div>
@@ -44,8 +46,7 @@ export default {
             }
         ];
         return {
-            menuitems: menuitems,
-            lastRoute: false
+            menuitems: menuitems
         };
     },
     methods: {
@@ -53,14 +54,16 @@ export default {
             if(!this.menuOpen) {
                 // save the last state to jump back there later on
                 if(['Scan','Product','Form','Submit'].indexOf(this.$route.name) > -1) {
-                    this.lastRoute = this.$route.path;
+                    this.$store.dispatch('setLastRoute', this.$route.path);
                 }
             }
             this.$store.dispatch('menuOpen', !this.menuOpen);
+            if(!this.menuOpen) {
+                this.$router.push(this.$store.getters.lastRoute);
+            }
         },
         closeMenu() {
             this.$store.dispatch('menuOpen', false);
-            this.$router.push(this.lastRoute);
         }
     },
     computed: {

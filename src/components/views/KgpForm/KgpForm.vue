@@ -90,7 +90,7 @@ export default {
                 type: 'username',
                 val: config.username
             })
-            this.$router.push('/send');
+            this.$router.push('/scan');
         }
     }
 };
