@@ -42,6 +42,9 @@
                     <button class="form__button" type="submit">
                         Speichern und weiter
                     </button>
+                    <button v-if="isUserValid" v-on:click.prevent="resetUser" class="form__button form__button--delete" type="reset">
+                        Daten löschen
+                    </button>
                 </div>
             </fieldset>
         </form>
@@ -68,6 +71,9 @@ export default {
        },
        zip() {
            return this.$store.getters.user.zip || '';
+       },
+       isUserValid() {
+           return this.$store.getters.isUserValid;
        }
     },
     beforeCreate() {
@@ -79,6 +85,10 @@ export default {
                 type,
                 val: e.target.value
             });
+        },
+        resetUser() {
+            this.$store.dispatch('removeUser');
+            this.$store.dispatch('resetHistory');
         },
         handleSubmit(e) {
             e.preventDefault();
@@ -186,11 +196,14 @@ export default {
     border: none;
     text-decoration: none;
     border-bottom: 5px solid rgba(0,0,0,.17);
-    padding: 1.7vh 5vw;
+    padding: 1.7vh 4vw;
     margin-top: 2vh;
     &--error {
         background: #fff;
         color: #033c6a;
+    }
+    &--delete {
+        background: #ccc;
     }
   }
 }

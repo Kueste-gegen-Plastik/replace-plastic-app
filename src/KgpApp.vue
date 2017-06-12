@@ -111,17 +111,15 @@ export default {
         }
     },
     mounted() {
-        var usr = localStorage.getItem('kgp_user');
+        var usr = localStorage.getItem('kgp_user'),
+            history = localStorage.getItem('kgp_history');
         if(usr) {
             this.$store.dispatch('setUser', JSON.parse(usr));
         }
+        if(history) {
+            this.$store.dispatch('setHistory', JSON.parse(history));
+        }
         localStorage.removeItem('kgp_token');
-        window.addEventListener('native.keyboardshow', () => {
-            this.keyboardShown = true;
-        });
-        window.addEventListener('native.keyboardhide', () => {
-            this.keyboardShown = false;
-        });
 
     },
     watch: {

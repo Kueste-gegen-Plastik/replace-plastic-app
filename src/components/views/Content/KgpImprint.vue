@@ -125,6 +125,15 @@
                 <p>
                     Dieser Muster-Disclaimer wurde erstellt von der Anwaltskanzlei Viola Lachenmann.
                 </p>
+
+                <h2 class="headline headline--secondary">
+                    Bildnachweise
+                </h2>
+                <ul>
+                    <li><a href="https://thenounproject.com/search/?q=barcode&i=954367">"Barcode-Reader" by Dinosoft Labs from the Noun Project</a></li>
+                    <li><a href="https://thenounproject.com/search/?q=checkmark&i=857966">"Check" by Storm Icons from the Noun Project</a></li>
+                </ul>
+
             </div>
         </div>
     </div>

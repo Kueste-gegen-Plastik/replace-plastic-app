@@ -5,6 +5,7 @@ import KgpForm from '@/components/views/KgpForm/KgpForm';
 import KgpScan from '@/components/views/KgpScan/KgpScan';
 import KgpProduct from '@/components/views/KgpProduct/KgpProduct';
 import KgpSubmit from '@/components/views/KgpSubmit/KgpSubmit';
+import KgpHistory from '@/components/views/KgpHistory/KgpHistory';
 import KgpImprint from '@/components/views/Content/KgpImprint';
 import KgpAbout from '@/components/views/Content/KgpAbout';
 import KgpPrivacy from '@/components/views/Content/KgpPrivacy';
@@ -50,8 +51,16 @@ const router = new Router({
       component: KgpAbout,
     },
     {
+      path: '/history',
+      name: 'History',
+      component: KgpHistory,
+    },
+    {
         path: '*',
-        redirect: localStorage.getItem('kgp_user') ? '/scan' : '/form'
+        redirect: () => {
+            console.log(store.getters.isUserValid);
+            return localStorage.getItem('kgp_user') && store.getters.isUserValid ? '/scan' : '/form'
+        }
     }
   ],
 });
@@ -60,14 +69,14 @@ router.beforeEach(function(to, from, next) {
     switch(to.name) {
         case 'Product':
             if(!store.getters.barcode) {
-                next({ name : localStorage.getItem('kgp_user') ? '/scan' : '/form' });
+                next({ name : localStorage.getItem('kgp_user') && store.getters.isUserValid ? '/scan' : '/form' });
                 break;
             };
             next();
             break;
         case 'Send':
-            if(!store.getters.isUserValid || !store.getters.barcode || !store.getters.products.length) {
-                next({ path : localStorage.getItem('kgp_user') ? '/scan' : '/form' });
+            if(!store.getters.isUserValid || !store.getters.barcode) {
+                next({ path : localStorage.getItem('kgp_user') && store.getters.isUserValid ? '/scan' : '/form' });
                 break;
             };
             next();

@@ -29,8 +29,12 @@ export default {
     data() {
        const menuitems = [
             {
-                title: 'Einstellungen',
+                title: 'Persönliche Daten',
                 name: 'Form'
+            },
+            {
+                title: 'Gescannte Produkte',
+                name: 'History'
             },
             {
                 title: 'Über "ReplacePlastic"',

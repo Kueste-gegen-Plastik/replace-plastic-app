@@ -7,7 +7,7 @@
         </h2>
         <h2 class="headline headline--primary" v-if="!loading && products.length && !error">
             <span class="headline__inner headline__inner--primary">
-                Wir haben folgend<span v-if="products.length>1">e</span> Produkte in unserer Datenbank gefunden:
+                Wir haben Produkte in unserer Datenbank gefunden:
             </span>
         </h2>
         <div v-if="!loading && !products.length && !error">
@@ -27,48 +27,72 @@
                 </div>
                 <kgp-error v-on:reset="loadProduct"></kgp-error>
                 <div v-if="!loading && products.length && !error" class="product__content">
-                     <ul class="product-list">
-                        <li class="product-list__item" v-for="product in products">
+                    <p>
+                        <em>"Ich wünsche mir diese<span v-if="products.length<2">s</span> Produkt<span v-if="products.length>1">e</span> in einer Verpackung ohne Plastik / mit weniger Plastik":</em>
+                    </p>
+                    <transition-group name="product-list" tag="ul" class="product-list">
+                        <li class="product-list__item" v-for="product in products" v-bind:key="product.barcode">
                             <strong>Name:</strong> {{ product.name }}<span v-if="product.detailname">: {{ product.detailname }}</span><br />
                             <strong>Hersteller:</strong> {{ product.vendor }}<br />
                             <strong>Barcode:</strong> {{ barcode }}
                         </li>
-                    </ul>
+                    </transition-group>
+                </div>
+                <div v-if="!loading &&  !error && !products.length">
+                    <h3 class="headline headline--tertiary">Das macht aber nichts...</h3>
                     <p>
-                        Ich wünsche mir diese<span v-if="products.length<2">s</span> Produkt<span v-if="products.length>1">e</span> in einer Verpackung ohne Plastik / mit weniger Plastik.
+                        Du kannst uns helfen, die Daten zu verbessern, indem Du deinen Verbesserungswunsch trotzdem sendest. Über die Barcode-Nummer <strong>{{ barcode }}</strong>
+                        können wir das Produkt finden.
+                    </p>
+                    <p>
+                        Dein Wunsch wird natürlich trotzdem an den Hersteller gesendet.
                     </p>
                 </div>
-                <div v-if="!loading && !products.length && !error" class="product__content">
-                    <h3 class="headline headline--tertiary">Das macht aber nichts...</h3>
-                    <div class="form__description">
+                <a v-if="!loading && !error" class="product-list__mail-link" @click.prevent="toggleMail">{{ showMail ? '▲' : '►' }} Beispiel E-Mail {{ showMail ? 'ausblenden' : 'ansehen' }}</a>
+
+                <div v-on:click.prevent="toggleMail" class="letter" v-bind:class="{ 'letter--open' : showMail }" v-if="!loading && !error">
+                    <div class="letter__inner">
+                        <h3 class="headline headline--tertiary">Sehr geehrte Damen und Herren,</h3>
                         <p>
-                            Du kannst uns helfen, die Daten zu verbessern, indem Du deinen Verbesserungswunsch trotzdem sendest. Über die Barcode-Nummer <strong>{{ barcode }}</strong>
-                            können wir das Produkt finden.
+                            wir wenden uns heute an Sie, weil Sie
+                            <span v-if="products && products.length">
+                                <span v-if="products.length === 1">das Produkt</span><span v-if="products.length > 1">die Produkte</span>"<strong v-for="product in products"> {{ product.name }}
+                                    <span v-if="product.detailname">: {{ product.detailname }}</span>
+                                </strong>"
+                            </span>
+                            <span v-if="!products || !products.length">
+                                Das Produkt mit dem Barcode {{ barcode }}
+                            </span> herstellen.
                         </p>
                         <p>
-                            Dein Wunsch wird natürlich trotzdem an den Hersteller gesendet.
+                            Viele Verbraucher haben über unsere App ReplacePlastic angegeben, dass sie sich Ihr
+                            <span v-if="products && products.length">
+                                <span v-if="products.length === 1">
+                                    das Produkt
+                                </span>
+                                <span v-if="products.length > 1">
+                                    die Produkte
+                                </span>
+                            </span><span v-if="!products">Ihr Produkt</span> in einer Verpackung ohne Plastik/mit weniger Plastik wünschen.<br /><br />
+                            Plastikmüll in den Meeren stellt ein großes Problem dar, weshalb immer mehr Verbraucher ein Bewusstsein für dieses Thema zeigen.
+                            Viele Menschen wünschen sich plastikfreie Verpackungen.
+                            Aus diesem Grund senden wir Ihnen heute die Wünsche der Verbraucher zu Ihrem Produkt.
+                            Wir hoffen, dass Ihnen diese Informationen über die Wünsche und Werte Ihrer Zielgruppen hilft, für Ihre Kunden bessere Lösungen zu verwirklichen.
+                        </p>
+                        <p>
+                            Für mehr Informationen zu unserem Projekt besuchen Sie gern unsere Website <u>ReplacePlastic.de.</u><br /><br />
+                            Sie möchten sich Anregungen für gute Verpackungen holen? In unserem Blog <u>kueste-gegen-plastik.de/blog</u> berichten wir auch über gute Besipiele.<br /><br />
+                            Mit freundlichen Grüßen,<br />
+                            <i>das Team vom Verein Küste gegen Plastik e.V.</i>
                         </p>
                     </div>
                 </div>
-                <div  v-if="!loading && !error">
-                    <h2 class="headline headline--secondary">
-                        Diese Mail wird der Hersteller erhalten:
-                    </h2>
-                    <h3 class="headline headline--tertiary">Sehr geehrte Damen und Herren,</h3>
-                    <p>
-                        wir wenden uns heute an Sie, weil die das Produkt "(PRODUKTNAME)" herstellen.<br />
-                        (ANZAHL DER EINSENDUNGEN) Verbraucher haben über unsere App ReplacePlastic angegeben, dass sie sich Ihr Produkt "(PRODUKTNAME)" in einer Verpackung ohne Plastik/mit w eniger Plastik wünschen.
-                        Plastikmüll in den Meeren stellt ein großes Problem dar, weshalb immer mehr Verbraucher ein Bewusstsein für dieses Thema zeigen. Viele Menschen wünschen sich plastikfreie Verpackungen. Aus diesem Grund sendn wir Ihnen heute die Wünsche der Verbraucher zu Ihrem Produkt.
-                        Wir hoffen, dass Ihnen diese Informationen über die Wünsche und Werte Ihrer Zielgruppen hilft, für Ihre Kunden bessere Lösungen zu verwirklichen.
-                        Für mehr Informationen zu unserem Projekt besuchen Sie gern unsere Website ReplacePlastic.de
-                        Sie möchten sich Anregungen für gute Verpackungen holen? In unserem Blog kueste-gegen-plastik.de/blog berichten wir auch über gute Besipiele.<br /><br />
-                        Mit freundlichen Grüßen,<br />
-                        <i>das Team vom Verein Küste gegen Plastik e.V.</i>
-                    </p>
-                </div>
+
                 <button v-if="!loading && !error" v-on:click.prevent="doSubmit" class="form__button">
                     Verbesserungswunsch senden
                 </button>
+
+
             </div>
         </div>
     </div>
@@ -86,6 +110,7 @@ export default {
     data() {
         return {
             loading: true,
+            showMail: false,
             msg: ''
         }
     },
@@ -107,6 +132,9 @@ export default {
         }
     },
     methods: {
+        toggleMail() {
+            this.showMail = !this.showMail;
+        },
         loadProduct(){
             this.msg = 'Melde mich am Server an...';
             this.$store.dispatch('resetProducts');
@@ -131,6 +159,16 @@ export default {
             });
         },
         doSubmit() {
+            if(!this.$store.getters.products.length) {
+                this.$store.dispatch('setProducts', [
+                    {
+                        barcode: this.$store.getters.barcode,
+                        vendor: 'Unbekannt',
+                        name: 'Unbekannt',
+                        descr: 'Unbekannt',
+                    }
+                ]);
+            }
             this.$router.push('/send');
         }
     },
@@ -149,16 +187,42 @@ export default {
         margin: 20px 0 0 0;
         padding: 0;
         &__item {
+            position: relative;
             background: rgba(0,99,176,.29);
             color: #fff;
             border: 1px solid rgba(255,255,255,.5);
             padding: 1rem;
             margin-bottom: .5rem;
             box-shadow: 0 0 5px rgba(0,0,0,.3);
+            &-enter-active, &-leave-active {
+                transition: all .5s;
+            }
+            &-enter, &-leave-to {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+        &__delete {
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: #033c6a;
+            font-size: 13px;
+            background: rgba(#fff,.7);
+            border: none;
+            width: 24px;
+            height: 24px;
+        }
+        &__mail-link {
+            text-align: right;
+            background: rgba(#000, .05);
+            padding: 3px 5px;
+            display: inline-block;
+            font-size: 13px;
         }
     }
     &__content {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
     &__loading {
         text-align: center;
@@ -169,5 +233,78 @@ export default {
             margin-bottom: 10px;
         }
     }
+}
+.letter {
+    $context: &;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    margin: 26px auto 0;
+    padding: 0;
+    position: relative;
+    color: #033c6a;
+    margin: 0 10px;
+    font-style: italic;
+    font-size: 14px;
+    max-height: 0;
+    transition: max-height .2s ease-in;
+
+    &:before,
+    &:after {
+        content: "";
+        height: 98%;
+        position: absolute;
+        width: 100%;
+        z-index: 0;
+    }
+    &:before {
+        background: #fafafa;
+        box-shadow: 0 0 8px rgba(0,0,0,0.2);
+        left: 5px;
+        top: 2px;
+        transform: rotate(-1.5deg);
+    }
+    &:after {
+        background: #f6f6f6;
+        box-shadow: 0 0 3px rgba(0,0,0,0.2);
+        right: -3px;
+        top: 1px;
+        transform: rotate(1.4deg);
+    }
+
+    &--open {
+        padding: 24px;
+        max-height: 2000px;
+    }
+    &__preview {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        line-height: 90px;
+        font-size: 18px;
+        color: #d00;
+        z-index: 2;
+        text-align: center;
+        #{$context}--open & {
+            opacity: 0;
+        }
+    }
+    &__inner {
+        opacity: .2;
+        position: relative;
+        z-index: 2;
+        overflow: hidden;
+        max-height: 0;
+        #{$context}--open & {
+            opacity: 1;
+            max-height: 2000px;
+        }
+    }
+    &--open {
+        max-height: 1500px;
+    }
+
 }
 </style>
