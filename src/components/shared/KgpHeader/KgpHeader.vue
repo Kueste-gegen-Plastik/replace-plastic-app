@@ -29,6 +29,7 @@ export default {
     },
     methods: {
         goHome() {
+            this.$store.dispatch('menuOpen', false);
             this.$router.push('/');
         },
         goBack() {
@@ -116,6 +117,7 @@ export default {
         &--open {
             z-index: 999;
             stroke: #fff;
+            position: relative;
         }
     }
     &__border {

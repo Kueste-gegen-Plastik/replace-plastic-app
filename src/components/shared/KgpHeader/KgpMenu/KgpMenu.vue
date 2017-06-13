@@ -15,7 +15,7 @@
         <ul class="menu__nav">
             <li v-for="menuitem in menuitems"  v-on:click="closeMenu" class="menu__item">
                 <router-link class="menu__link" v-bind:to="{ name : menuitem.name }">
-                    {{ menuitem.title }}
+                    {{ menuitem.title }} <span class="menu__counter" v-if="menuitem.name == 'History' && historyCount > 0">{{ historyCount }}</span>
                 </router-link>
             </li>
         </ul>
@@ -73,6 +73,9 @@ export default {
     computed: {
         menuOpen() {
             return this.$store.state.menuOpen;
+        },
+        historyCount() {
+            return this.$store.state.history.length;
         }
     }
 };
@@ -214,7 +217,8 @@ export default {
     }
   }
   &__nav {
-    border-top: 1px solid #fff;
+    background: url('../../../views/KgpForm/waves.svg') top left repeat-x;
+    background-size: 12%;
     list-style: none;
     padding: 0;
     margin: 0 40px;
@@ -222,13 +226,25 @@ export default {
   &__item {
     text-transform: uppercase;
     font-family: 'Slabo 27px', sans-serif;
-    padding: 2.5vh 0;
-    border-bottom: 1px solid #fff;
+    padding: 3.5vh 0;
+    // border-bottom: 1px solid #fff;
+    background: url('../../../views/KgpForm/waves.svg') bottom left repeat-x;
+    background-size: 12%;
   }
   &__link {
       color: #fff;
       display: block;
       text-decoration: none;
+  }
+  &__counter {
+      display: inline-block;
+      background: #fff;
+      width: 20px;
+      height: 20px;
+      line-height: 18px;
+      border-radius: 50%;
+      color: rgba(0, 77, 142, 0.95);
+      margin-left: 5px;
   }
 }
 .fade-enter-active, .fade-leave-active {
