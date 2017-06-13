@@ -202,6 +202,12 @@ export default {
         background: #fff;
         color: #033c6a;
     }
+    &--error-outline {
+        background: transparent;
+        color: #fff;
+        border: 1px solid #fff;
+        border-bottom: 5px solid rgba(255,255,255,.17);
+    }
     &--delete {
         background: #ccc;
     }

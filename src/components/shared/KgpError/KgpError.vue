@@ -6,6 +6,7 @@
             <p>{{ error }}</p>
             <div class="error__buttonwrap">
                 <button class="form__button form__button--error" v-on:click.prevent="resetError" type="button">Noch mal versuchen</button>
+                <button class="form__button form__button--error form__button--error-outline" v-on:click.prevent="closeError" type="button">Schließen</button>
             </div>
         </div>
     </div>

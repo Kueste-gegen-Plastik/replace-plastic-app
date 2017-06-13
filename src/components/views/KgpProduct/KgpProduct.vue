@@ -62,10 +62,10 @@
                             </span>
                             <span v-if="!products || !products.length">
                                 Das Produkt mit dem Barcode {{ barcode }}
-                            </span> herstellen.
+                            </span> anbieten.
                         </p>
                         <p>
-                            Viele Verbraucher haben über unsere App ReplacePlastic angegeben, dass sie sich Ihr
+                            Viele Verbraucher haben über unsere App ReplacePlastic angegeben, dass sie sich
                             <span v-if="products && products.length">
                                 <span v-if="products.length === 1">
                                     das Produkt
@@ -73,17 +73,27 @@
                                 <span v-if="products.length > 1">
                                     die Produkte
                                 </span>
-                            </span><span v-if="!products">Ihr Produkt</span> in einer Verpackung ohne Plastik/mit weniger Plastik wünschen.<br /><br />
-                            Plastikmüll in den Meeren stellt ein großes Problem dar, weshalb immer mehr Verbraucher ein Bewusstsein für dieses Thema zeigen.
-                            Viele Menschen wünschen sich plastikfreie Verpackungen.
-                            Aus diesem Grund senden wir Ihnen heute die Wünsche der Verbraucher zu Ihrem Produkt.
-                            Wir hoffen, dass Ihnen diese Informationen über die Wünsche und Werte Ihrer Zielgruppen hilft, für Ihre Kunden bessere Lösungen zu verwirklichen.
+                            </span><span v-if="!products">Ihr Produkt</span> in einer Verpackung ohne Plastik/mit weniger Plastik wünschen.
+                        </p>
+                        <p>
+                            Plastikmüll in den Meeren stellt ein großes Problem dar, weshalb immer mehr Verbraucher ein
+                            Bewusstsein für dieses Thema zeigen. Viele Menschen wünschen sich plastikfreie Verpackungen.
+                            Aus diesem Grund senden wir Ihnen heute die Wünsche der Verbraucher zu Ihrem Produkt.
+                        </p>
+                        <p>
+                            Wir hoffen, dass diese Information über die Wünsche und Werte Ihrer Zielgruppen
+                            Sie hilfreich ist, um bessere Lösungen für Ihre Kunden zu verwirklichen.
                         </p>
                         <p>
                             Für mehr Informationen zu unserem Projekt besuchen Sie gern unsere Website <u>ReplacePlastic.de.</u><br /><br />
-                            Sie möchten sich Anregungen für gute Verpackungen holen? In unserem Blog <u>kueste-gegen-plastik.de/blog</u> berichten wir auch über gute Besipiele.<br /><br />
-                            Mit freundlichen Grüßen,<br />
-                            <i>das Team vom Verein Küste gegen Plastik e.V.</i>
+                            <i>Mit freundlichen Grüßen, das Team vom Verein Küste gegen Plastik e.V.</i><br /><br />
+                        </p>
+                        <p>
+                            Küste gegen Plastik e.V.<br />
+                            Reimersbude 12<br />
+                            25889 Witzwort<br />
+                            Tel.:  0176 68280364 (Jennifer Timrott, Vorsitzende)<br />
+                            Mail: <i>post@kueste-gegen-plastik.de</i>
                         </p>
                     </div>
                 </div>

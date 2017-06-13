@@ -25,7 +25,7 @@
 
             <div v-if="!history.length">
                 <p>
-                    Sobald du Produkte gescannt und eingesendet hast, tauchen Sie hier in deinem Verlauf auf.
+                    Sobald du Produkte gescannt und eingesendet hast, tauchen Sie hier auf.
                 </p>
                 <button v-if="!history.length" type="button" v-on:click.prevent="goHome" class="form__button">
                     Jetzt loslegen und Produkte scannen

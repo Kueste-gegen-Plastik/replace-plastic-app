@@ -12,6 +12,17 @@ import KgpPrivacy from '@/components/views/Content/KgpPrivacy';
 
 Vue.use(Router);
 
+const isUserValid = (usr) => {
+    let isValid = false;
+    do {
+        if(!usr.firstname || usr.firstname == '' ||  usr.firstname.length < 2) break;
+        if(!usr.name || usr.name == '' ||  usr.name.length < 2)  break;
+        if(!usr.email || usr.email == '' ||  usr.email.indexOf('@') < 0)  break;
+        if(!usr.zip || usr.zip == '' ||  (usr.zip + '').length < 4)  break;
+        isValid = true;
+    } while(false);
+    return isValid;
+}
 
 const router = new Router({
   routes: [
@@ -58,8 +69,9 @@ const router = new Router({
     {
         path: '*',
         redirect: () => {
-            console.log(store.getters.isUserValid);
-            return localStorage.getItem('kgp_user') && store.getters.isUserValid ? '/scan' : '/form'
+            var storedUser = localStorage.getItem('kgp_user');
+            if(!storedUser) return '/form';
+            return isUserValid(JSON.parse(storedUser)) ? '/scan' : '/form'
         }
     }
   ],
