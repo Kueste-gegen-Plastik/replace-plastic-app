@@ -4,6 +4,7 @@ dist/
 src/config/**/*
 !src/config/env.example.js
 !src/config/index.js
+!src/config/constants.js
 .idea
 res/
 www/

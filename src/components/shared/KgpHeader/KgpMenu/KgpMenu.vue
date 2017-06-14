@@ -217,8 +217,7 @@ export default {
     }
   }
   &__nav {
-    background: url('../../../views/KgpForm/waves.svg') top left repeat-x;
-    background-size: 12%;
+    border-top: 1px solid #fff;
     list-style: none;
     padding: 0;
     margin: 0 40px;
@@ -227,9 +226,7 @@ export default {
     text-transform: uppercase;
     font-family: 'Slabo 27px', sans-serif;
     padding: 3.5vh 0;
-    // border-bottom: 1px solid #fff;
-    background: url('../../../views/KgpForm/waves.svg') bottom left repeat-x;
-    background-size: 12%;
+    border-bottom: 1px solid #fff;
   }
   &__link {
       color: #fff;
