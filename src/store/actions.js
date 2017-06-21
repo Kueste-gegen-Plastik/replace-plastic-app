@@ -1,0 +1,95 @@
+import { errors } from '@/config/constants';
+
+export const actions = {
+    setProducts: ({ commit }, products) => {
+        commit('PRODUCTS', products);
+    },
+    resetProducts: ({ commit }) => {
+        commit('RESETPRODUCTS');
+    },
+    setError: ({ commit }, code) => {
+        commit('ERROR', errors['code_' + code]);
+    },
+    resetError: ({ commit }) => {
+        commit('RESETERROR');
+    },
+    setUser: ({ commit }, val) => {
+        localStorage.setItem('kgp_user', JSON.stringify(val));
+        commit('USER', val);
+    },
+    setUserKey: ({ commit, state }, val) => {
+        localStorage.setItem('kgp_user', JSON.stringify(state.user));
+        commit('USERKEY', val);
+    },
+    removeUser: ({ commit }) => {
+        commit('USER', {
+            firstname: '',
+            name: '',
+            email: '',
+            zip: '',
+            password: ''
+        });
+        localStorage.removeItem('kgp_user');
+    },
+    setHistory: ({ commit, state}, history) => {
+        commit('SETHISTORY', history);
+    },
+    resetHistory: ({ commit, state}) => {
+        commit('RESETHISTORY');
+        localStorage.setItem('kgp_history', JSON.stringify([]));
+    },
+    addHistory: ({ commit, state}, entry) => {
+        var history = localStorage.getItem('kgp_history');
+        if(history) {
+            history = JSON.parse(history);
+        } else {
+            history = [];
+        }
+        entry.forEach((itm) => {
+            history.push(itm);
+        });
+        localStorage.setItem('kgp_history', JSON.stringify(history));
+        commit('ADDHISTORY', history);
+    },
+    removeHistory: ({ commit, state}, entry) => {
+        var history = localStorage.getItem('kgp_history');
+        if(history) {
+            history = JSON.parse(history);
+            history = history.filter((itm) => {
+                return itm.barcode !== entry.barcode;
+            })
+            localStorage.setItem('kgp_history', JSON.stringify(history));
+        }
+        commit('REMOVEHISTORY', entry);
+    },
+    resetState: ({ commit, state}) => {
+        state.products = [];
+        state.error = false;
+        state.barcode =  '';
+        state.step =  1;
+        state.userSet = false;
+        state.menuOpen = false;
+    },
+    setBarcode: ({ commit }, barcode) => {
+        commit('BARCODE', barcode);
+    },
+    resetBarcode: ({ commit }) => {
+        commit('RESETBARCODE');
+    },
+    setStep: ({ commit }, step) => {
+        commit('STEP', step);
+    },
+    setToken: ({ commit }, token) => {
+        localStorage.setItem('kgp_token', token);
+        commit('TOKEN', token);
+    },
+    menuOpen: ({ commit }, isOpen) => {
+        commit('MENUOPEN', isOpen);
+    },
+    nagscreen: ({ commit }, isOpen) => {
+        commit('NAGSCREEN', isOpen);
+    },
+    setLastRoute: ({ commit }, route) => {
+        commit('LASTROUTE', route);
+    },
+};
