@@ -148,6 +148,7 @@ export default {
         loadProduct(){
             this.msg = 'Melde mich am Server an...';
             this.$store.dispatch('resetProducts');
+            localStorage.removeItem('kgp_token');
             return Api.login({
                 username: config.username,
                 password: config.password

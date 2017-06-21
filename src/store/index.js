@@ -21,6 +21,7 @@ const state = {
     history: [],
     userSet: false,
     menuOpen: false,
+    nagscreen: false,
     lastRoute: ''
 };
 

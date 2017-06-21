@@ -8,6 +8,7 @@ import KgpSubmit from '@/components/views/KgpSubmit/KgpSubmit';
 import KgpHistory from '@/components/views/KgpHistory/KgpHistory';
 import KgpImprint from '@/components/views/Content/KgpImprint';
 import KgpAbout from '@/components/views/Content/KgpAbout';
+import KgpThankYou from '@/components/views/Content/KgpThankYou';
 import KgpPrivacy from '@/components/views/Content/KgpPrivacy';
 
 Vue.use(Router);
@@ -65,6 +66,11 @@ const router = new Router({
       path: '/history',
       name: 'History',
       component: KgpHistory,
+    },
+    {
+      path: '/thankyou',
+      name: 'Thankyou',
+      component: KgpThankYou,
     },
     {
         path: '*',

@@ -76,7 +76,8 @@
             </symbol>
         </svg>
         <kgp-header></kgp-header>
-        <div class="main" id="main" v-show="!menuOpen">
+        <kgp-nagscreen></kgp-nagscreen>
+        <div class="main" id="main" v-show="!menuOpen && !nagscreen">
             <div class="main__logo">
                 <svg alt="ReplacePlastic" class="main__wortmarke" width="481.89px" height="175.75px" viewBox="0 0 481.89 175.75">
                     <use xlink:href="#wortmarke"></use>
@@ -92,14 +93,16 @@
 
 <script>
 import KgpHeader from '@/components/shared/KgpHeader/KgpHeader';
+import KgpNagscreen from '@/components/shared/KgpNagscreen/KgpNagscreen';
 
 export default {
-    components: { KgpHeader },
+    components: { KgpHeader, KgpNagscreen },
     name: 'KgpApp',
     data() {
         return {
             transition : 'slideUp',
-            keyboardShown : false
+            keyboardShown : false,
+            hasSeenNagscreen : true
         }
     },
     computed: {
@@ -108,6 +111,9 @@ export default {
         },
         menuOpen() {
             return this.$store.state.menuOpen;
+        },
+        nagscreen() {
+            return this.$store.getters.nagscreen;
         }
     },
     mounted() {
@@ -120,7 +126,6 @@ export default {
             this.$store.dispatch('setHistory', JSON.parse(history));
         }
         localStorage.removeItem('kgp_token');
-
     },
     watch: {
         '$route' (to, from) {

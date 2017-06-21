@@ -7,9 +7,6 @@
         </h2>
         <div class="step__inner">
             <div class="content">
-                <h2 class="headline headline--secondary">
-                    Einführung
-                </h2>
                 <p>
                     Der Plastikmüll im Meer hat dramatische Ausmaße angenommen.
                     Jede Verpackung und jedes Stück Plastik,  das in die Umwelt gelangt, kann dort Jahrhunderte überdauern.
@@ -28,30 +25,6 @@
                     Mit der App kannst du Produkte scannen, die du verwendest oder kaufen würdest,
                     um mitzuteilen, dass du dir für diese Produkte Verpackungen ohne Plastik wünschst.
                     Dieses Feedback wird an die Produzenten weitergeleitet.
-                </p>
-                <h2 class="headline headline--secondary">
-                    Über replacePlastic
-                </h2>
-                <p>
-                    Das Konzept zu dieser Smartphone-App ist im Rahmen des Wissenschaftsjahres Meere und
-                    Ozeane bei der Ozeanwerkstatt Kiel auf der MS Wissenschaft entstanden.
-                    Inspiriert durch einen Kurzvortrag unseres Vereins und unsere Idee,
-                    mit einer App durch einen Barcode-Scan die Stimme des Kunden zum Hersteller zu bringen,
-                    fand sich auf dem Schiff ein Team, das die Idee voranbringen wollte und zwei Tage
-                    lang ein Konzept ausgearbeitet hat.
-                    Für das vorgestellte Konzept haben wir bei der Ozeanwerkstatt den ersten Preis, die Goldene Kieler Sprotte, gewonnen.
-                </p>
-                <p>
-                    Wir danken: Nils Ehnert, Carola Fichtner, Tanja Lücker, Stephan Schakulat, Mike Schindler, Klara Aylin Wenten.
-                </p>
-                <p>
-                    Dank an alle, die an der Realisierung dieser App mitgewirkt haben, die es ermöglicht den Herstellern von Produkten schnell und einfach Feedback zu ihren Plastikverpackungen zu geben:
-                </p>
-                <p>
-                    Thomas Daußmann, HALasersystems, Claudia Kerpa, Ralph Kerpa, Michael Pfeiffer-Härtl,  Achim Schmacks, Frank Timrott, Jennifer Timrott, Felix Wahner, neuwaerts GmbH.
-                </p>
-                <p>
-                    Mehr Informationen unter: <a href="http://www.replaceplastic.de">replaceplastic.de</a>
                 </p>
             </div>
         </div>

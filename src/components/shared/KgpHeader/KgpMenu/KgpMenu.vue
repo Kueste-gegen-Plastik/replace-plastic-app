@@ -41,6 +41,10 @@ export default {
                 name: 'Ueber'
             },
             {
+                title: 'Dankeschön',
+                name: 'Thankyou'
+            },
+            {
                 title: 'Datenschutzerklärung',
                 name: 'Datenschutz'
             },
