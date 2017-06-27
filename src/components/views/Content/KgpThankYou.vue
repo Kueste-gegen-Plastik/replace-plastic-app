@@ -8,7 +8,7 @@
         <div class="step__inner">
             <div class="content">
                 <p>
-                    Großer Dank an alle, die an der Umsetzung dieser App mitgewirkt haben, die es ermöglicht
+                    Großer Dank an alle, die an der Umsetzung dieser App mitgewirkt haben, die es ermöglicht,
                     den Herstellern von Produkten schnell und einfach Feedback zu ihren Plastikverpackungen zu geben:
                 </p>
                 <p>
@@ -25,7 +25,7 @@
                     ersten Preis, die Goldene Kieler Sprotte, gewonnen.
                 </p>
                 <p>
-                     Wir danken: Nils Ehnert, Carola Fichtner,  Tanja Lücker, Stephan Schakulat, Mike Schindler, Klara Aylin Wenten.
+                     Wir danken: Nils Ehnert, Carola Fichtner, Tanja Lücker, Stephan Schakulat, Mike Schindler, Klara Aylin Wenten.
                 </p>
             </div>
         </div>

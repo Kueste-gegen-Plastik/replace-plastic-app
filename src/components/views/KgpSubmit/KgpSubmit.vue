@@ -43,7 +43,7 @@
 <script>
 import Api from '@/api';
 import config from '@/config';
-import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
+import BounceLoader from 'vue-spinner/src/BounceLoader';
 import KgpError from '@/components/shared/KgpError/KgpError';
 
 export default {
@@ -99,7 +99,7 @@ export default {
 <style lang="scss">
 .submit {
     &__icon {
-        width: 26vw;
+        width: 20vw;
         height: auto;
         margin: 0 auto;
         fill: #fff;

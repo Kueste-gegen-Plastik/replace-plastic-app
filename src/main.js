@@ -5,6 +5,8 @@ require('typeface-slabo-13px');
 require('typeface-slabo-27px');
 require('typeface-lato');
 
+import "babel-polyfill";
+
 import Vue from 'vue';
 
 import VueScrollTo from 'vue-scrollto';

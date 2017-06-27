@@ -54,15 +54,10 @@
                 </div>
             </form>
         </div>
-        <!-- div v-show="showScan" class="scan__container">
-            <button v-on:click.prevent="closeWebAppScan()" class="scan__close form__button">Scanner schließen</button>
-            <div class="scan__video" id="scan__video"></div>
-        </div -->
     </div>
 </template>
 
 <script>
-// import Quagga from 'quagga';
 import Api from '@/api';
 import Barcoder from 'barcoder';
 import KgpError from '@/components/shared/KgpError/KgpError';
@@ -130,9 +125,6 @@ export default {
                 } else {
                     this.nativeScan();
                 }
-            } else {
-                // @TODO handle webapp scanning
-                //  this.webappScan();
             }
         },
         handleBarcodeSubmit() {
@@ -173,68 +165,7 @@ export default {
                 disableAnimations: true, // iOS
                 disableSuccessBeep: false // iOS
             });
-        },
-        closeWebAppScan() {
-            Quagga.stop();
-            this.showScan = false;
-        },
-        /*webappScan() {
-            this.showScan = true;
-            const errorHandler = (err) => {
-                if (err) {
-                    this.handleError('42');
-                    return;
-                }
-                Quagga.start();
-            };
-            const onDetected = (data) => {
-                this.$store.dispatch('setBarcode', data.codeResult.code);
-                this.handleBarcodeSubmit();
-            };
-            const onProcessed = (result) => {
-                const drawingCtx = Quagga.canvas.ctx.overlay;
-                const drawingCanvas = Quagga.canvas.dom.overlay;
-                if (result) {
-                    if (result.boxes) {
-                        drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute('width'), 10), parseInt(drawingCanvas.getAttribute('height'), 10));
-                        result.boxes.filter(box => box !== result.box).forEach((box) => {
-                            Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, { color: 'green', lineWidth: 2 });
-                        });
-                    }
-                    if (result.box) {
-                        Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: '#00F', lineWidth: 2 });
-                    }
-                    if (result.codeResult && result.codeResult.code) {
-                        Quagga.ImageDebug.drawPath(result.line, { x: 'x', y: 'y' }, drawingCtx, { color: 'red', lineWidth: 3 });
-                    }
-                }
-            };
-            Quagga.onDetected(onDetected);
-            Quagga.onProcessed(onProcessed);
-            Quagga.init({
-                inputStream: {
-                    name: 'Barcode scannen',
-                    type: 'LiveStream',
-                    target: document.querySelector('#scan__video'),
-                },
-                locator: {
-                    patchSize: 'medium',
-                    halfSample: true,
-                },
-                numOfWorkers: 1, //@TODO: implement https://github.com/oftn-oswg/core-estimator
-                locate: true,
-                decoder: {
-                    readers: ['ean_reader'],
-                    debug: {
-                        drawBoundingBox: true,
-                        drawScanline: true,
-                        showPattern: true,
-                    },
-                },
-                onDetected,
-                errorHandler,
-            });
-        },*/
+        }
     }
 };
 </script>
@@ -244,7 +175,7 @@ export default {
     text-align: center;
     margin-top: 10px;
     &__button {
-        background: #f76259;
+        background-color: #f76259;
         width: 40vw;
         height: 40vw;
         border-radius: 50%;
@@ -252,12 +183,9 @@ export default {
         outline: none;
         border: 10px solid rgba(0, 0, 0, .17);
         margin: 2vh 0;
-        /*animation: BUBBLE;
-        animation-duration: 3s;
-        animation-iteration-count: infinite;*/
-        transition: background .2s ease-in;
+        transition: background-color .2s ease-in;
         &:active, &:focus {
-            background: #fff;
+            background-color: #fff;
         }
     }
     &__icon {
@@ -302,48 +230,6 @@ export default {
             right: 0;
             z-index: 999;
         }
-        canvas {
-        }
     }
 }
-/*@keyframes BUBBLE {
-    0% {
-        -webkit-transform: scale(1,1);
-        transform: scale(1,1);
-        -webkit-transform: scale3d(1,1,0);
-        transform: scale3d(1,1,0);
-    }
-    50% {
-        -webkit-transform: scale(1.2, 1.2);
-        transform: scale(1.2, 1.2);
-        -webkit-transform: scale3d(1.2,1.2,0);
-        transform: scale3d(1.2,1.2,0);
-    }
-    100% {
-        -webkit-transform: scale(1,1);
-        transform: scale(1,1);
-        -webkit-transform: scale3d(1,1,0);
-        transform: scale3d(1,1,0);
-    }
-}
-@-webkit-keyframes BUBBLE {
-    0% {
-        -webkit-transform: scale(1,1);
-        transform: scale(1,1);
-        -webkit-transform: scale3d(1,1,0);
-        transform: scale3d(1,1,0);
-    }
-    50% {
-        -webkit-transform: scale(1.2, 1.2);
-        transform: scale(1.2, 1.2);
-        -webkit-transform: scale3d(1.2,1.2,0);
-        transform: scale3d(1.2,1.2,0);
-    }
-    100% {
-        -webkit-transform: scale(1,1);
-        transform: scale(1,1);
-        -webkit-transform: scale3d(1,1,0);
-        transform: scale3d(1,1,0);
-    }
-}*/
 </style>

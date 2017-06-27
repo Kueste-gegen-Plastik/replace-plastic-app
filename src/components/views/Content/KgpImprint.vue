@@ -11,12 +11,12 @@
                     Kontaktdaten
                 </h2>
                 <p>
-                    Küste gegen Plastik e.V.<br />
-                    Reimersbude 12<br />
-                    25889 Witzwort<br />
+                    Küste gegen Plastik e.V.<br>
+                    Reimersbude 12<br>
+                    25889 Witzwort<br>
                 </p>
                 <p>
-                    Tel.: 0176 68280364 (Jennifer Timrott, Vorsitzende)<br />
+                    Tel.: 0176 68280364 (Jennifer Timrott, Vorsitzende)<br>
                     Mail: <a href="mailto:post@kueste-gegen-plastik.de">post@kueste-gegen-plastik.de</a>
                 </p>
                 <p>
@@ -31,20 +31,18 @@
                 </h3>
                 <ul>
                     <li>
-                    Jennifer Timrott, Vorsitzende<br />
-                    <a href="mailto:jennifer.timrott@kueste-gegen-plastik.de">jennifer.timrott@kueste-gegen-plastik.de</a>
+                        Jennifer Timrott, Vorsitzende<br>
+                        <a href="mailto:jennifer.timrott@kueste-gegen-plastik.de">jennifer.timrott@kueste-gegen-plastik.de</a>
                     </li>
                     <li>
-                        Andreas Halle, stellvertretender Vorsitzender<br />
+                        Andreas Halle, stellvertretender Vorsitzender<br>
                         <a href="mailto:andreas.halle@kueste-gegen-plastik.de"> andreas.halle@kueste-gegen-plastik.de</a>
                     </li>
+                    <li>
+                        Dr. Thomas Daußmann, Kassenwart
+                        <a href="mailto:thomas.daussmann@kueste-gegen-plastik.de">thomas.daussmann@kueste-gegen-plastik.de</a>
+                    </li>
                 </ul>
-                <p>
-                    Dr. Thomas Daußmann, Kassenwart
-                </p>
-                <p>
-                    <a href="mailto:thomas.daussmann@kueste-gegen-plastik.de">thomas.daussmann@kueste-gegen-plastik.de</a>
-                </p>
                 <p>
                     Gerichtliche und außergerichtliche Vertretung durch zwei Mitglieder des Vorstandes.
                 </p>
@@ -140,6 +138,9 @@ export default {
 .content {
     a {
         color: #fff;
+    }
+    p, ul {
+        font-size: 14px;
     }
 }
 </style>

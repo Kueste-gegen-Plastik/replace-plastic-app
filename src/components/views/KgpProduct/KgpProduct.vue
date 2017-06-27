@@ -19,7 +19,7 @@
         </div>
 
         <div class="step__inner">
-            <hr class="waves" />
+            <hr class="waves">
             <div class="product">
                 <div v-if="loading" class="product__loading">
                     <bounce-loader :loading="loading" color="#fff"></bounce-loader>
@@ -32,31 +32,38 @@
                     </p>
                     <transition-group name="product-list" tag="ul" class="product-list">
                         <li class="product-list__item" v-for="product in products" v-bind:key="product.barcode">
-                            <strong>Name:</strong> {{ product.name }}<span v-if="product.detailname">: {{ product.detailname }}</span><br />
-                            <strong>Hersteller:</strong> {{ product.vendor }}<br />
+                            <strong>Name:</strong> {{ product.name }}<span v-if="product.detailname">: {{ product.detailname }}</span><br>
+                            <strong>Hersteller:</strong> {{ product.vendor }}<br>
                             <strong>Barcode:</strong> {{ barcode }}
                         </li>
                     </transition-group>
                 </div>
                 <div v-if="!loading &&  !error && !products.length">
-                    <h3 class="headline headline--tertiary">Das macht aber nichts...</h3>
-                    <p>
-                        Du kannst uns helfen, die Daten zu verbessern, indem Du deinen Verbesserungswunsch trotzdem sendest. Über die Barcode-Nummer <strong>{{ barcode }}</strong>
-                        können wir das Produkt finden.
-                    </p>
-                    <p>
-                        Dein Wunsch wird natürlich trotzdem an den Hersteller gesendet.
-                    </p>
+                    <div class="product__content">
+                        <h3 class="headline headline--tertiary">Das macht aber nichts...</h3>
+                        <p>
+                            Du kannst uns helfen, die Daten zu verbessern, indem Du deinen Verbesserungswunsch trotzdem sendest. Über die Barcode-Nummer <strong>{{ barcode }}</strong>
+                            können wir das Produkt finden.
+                        </p>
+                        <p>
+                            Dein Wunsch wird natürlich trotzdem an den Hersteller gesendet.
+                        </p>
+                    </div>
                 </div>
                 <a v-if="!loading && !error" class="product-list__mail-link" @click.prevent="toggleMail">{{ showMail ? '▲' : '►' }} Beispiel E-Mail {{ showMail ? 'ausblenden' : 'ansehen' }}</a>
 
                 <div v-on:click.prevent="toggleMail" class="letter" v-bind:class="{ 'letter--open' : showMail }" v-if="!loading && !error">
                     <div class="letter__inner">
+                        <h2 class="headline">
+                            <span class="headline__inner">
+                                Diese E-Mail wird der Hersteller erhalten:
+                            </span>
+                        </h2>
                         <h3 class="headline headline--tertiary">Sehr geehrte Damen und Herren,</h3>
                         <p>
                             wir wenden uns heute an Sie, weil Sie
                             <span v-if="products && products.length">
-                                <span v-if="products.length === 1">das Produkt</span><span v-if="products.length > 1">die Produkte</span>"<strong v-for="product in products"> {{ product.name }}
+                                <span v-if="products.length === 1">das Produkt</span><span v-if="products.length > 1">die Produkte</span>"<strong v-for="product in products" v-bind:key="product.name"> {{ product.name }}
                                     <span v-if="product.detailname">: {{ product.detailname }}</span>
                                 </strong>"
                             </span>
@@ -64,17 +71,17 @@
                                 Das Produkt mit dem Barcode {{ barcode }}
                             </span> anbieten.
                         </p>
-                        <p>
-                            Viele Verbraucher haben über unsere App ReplacePlastic angegeben, dass sie sich
-                            <span v-if="products && products.length">
-                                <span v-if="products.length === 1">
-                                    das Produkt
-                                </span>
-                                <span v-if="products.length > 1">
-                                    die Produkte
-                                </span>
-                            </span><span v-if="!products">Ihr Produkt</span> in einer Verpackung ohne Plastik/mit weniger Plastik wünschen.
-                        </p>
+                        <h3 class="headline">
+                                20 Verbraucher haben über unsere App ReplacePlastic angegeben, dass sie sich
+                                <span v-if="products && products.length">
+                                    <span v-if="products.length === 1">
+                                        das Produkt
+                                    </span>
+                                    <span v-if="products.length > 1">
+                                        die Produkte
+                                    </span>
+                                </span><span v-if="!products">Ihr Produkt</span> in einer Verpackung ohne Plastik/mit weniger Plastik wünschen.
+                        </h3>
                         <p>
                             Plastikmüll in den Meeren stellt ein großes Problem dar, weshalb immer mehr Verbraucher ein
                             Bewusstsein für dieses Thema zeigen. Viele Menschen wünschen sich plastikfreie Verpackungen.
@@ -85,14 +92,14 @@
                             Sie hilfreich ist, um bessere Lösungen für Ihre Kunden zu verwirklichen.
                         </p>
                         <p>
-                            Für mehr Informationen zu unserem Projekt besuchen Sie gern unsere Website <u>ReplacePlastic.de.</u><br /><br />
-                            <i>Mit freundlichen Grüßen, das Team vom Verein Küste gegen Plastik e.V.</i><br /><br />
+                            Für mehr Informationen zu unserem Projekt besuchen Sie gern unsere Website <u>ReplacePlastic.de.</u><br><br>
+                            <i>Mit freundlichen Grüßen, das Team vom Verein Küste gegen Plastik e.V.</i><br><br>
                         </p>
                         <p>
-                            Küste gegen Plastik e.V.<br />
-                            Reimersbude 12<br />
-                            25889 Witzwort<br />
-                            Tel.:  0176 68280364 (Jennifer Timrott, Vorsitzende)<br />
+                            Küste gegen Plastik e.V.<br>
+                            Reimersbude 12<br>
+                            25889 Witzwort<br>
+                            Tel.:  0176 68280364 (Jennifer Timrott, Vorsitzende)<br>
                             Mail: <i>post@kueste-gegen-plastik.de</i>
                         </p>
                     </div>
@@ -112,7 +119,7 @@
 <script>
 import Api from '@/api';
 import config from '@/config';
-import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
+import BounceLoader from 'vue-spinner/src/BounceLoader';
 import KgpError from '@/components/shared/KgpError/KgpError';
 
 export default {
@@ -171,14 +178,12 @@ export default {
         },
         doSubmit() {
             if(!this.$store.getters.products.length) {
-                this.$store.dispatch('setProducts', [
-                    {
-                        barcode: this.$store.getters.barcode,
-                        vendor: 'Unbekannt',
-                        name: 'Unbekannt',
-                        descr: 'Unbekannt',
-                    }
-                ]);
+                this.$store.dispatch('setProducts', [{
+                    barcode: this.$store.getters.barcode,
+                    vendor: 'Unbekannt',
+                    name: 'Unbekannt',
+                    descr: 'Unbekannt',
+                }]);
             }
             this.$router.push('/send');
         }
@@ -234,6 +239,9 @@ export default {
     }
     &__content {
         margin-bottom: 20px;
+        p {
+            font-size: 14px;
+        }
     }
     &__loading {
         text-align: center;

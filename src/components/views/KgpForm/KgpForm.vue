@@ -6,7 +6,7 @@
                     Persönliche Daten eingeben
                 </legend>
                 <div class="step__inner">
-                    <hr class="waves" />
+                    <hr class="waves">
                     <div class="form__description">
                         <p>
                             Wir benötigen Deine persönlichen Angaben, damit wir den Herstellern
@@ -21,23 +21,23 @@
                     <div class="form__formrow form__formrow--wrap" >
                         <div class="form__formrow form__formrow--half">
                             <label class="form__label" v-bind:class="{ 'form__label--filled' : firstname.length }" for="firstname">Vorname<sup title="Pflichtfeld">*</sup></label>
-                            <input class="form__input" type="text" required="required" id="firstname" :value="firstname" @input="updateUser($event, 'firstname')" />
+                            <input class="form__input" type="text" required="required" id="firstname" :value="firstname" @input="updateUser($event, 'firstname')">
                         </div>
                         <div class="form__formrow form__formrow--half">
                             <label class="form__label" v-bind:class="{ 'form__label--filled' : name.length }" for="name">
                                 Nachname
                                 <sup title="Pflichtfeld">*</sup>
                             </label>
-                            <input class="form__input" type="text" required="required" id="name" :value="name"  @input="updateUser($event, 'name')"/>
+                            <input class="form__input" type="text" required="required" id="name" :value="name"  @input="updateUser($event, 'name')">
                         </div>
                     </div>
                     <div class="form__formrow">
                         <label class="form__label" v-bind:class="{ 'form__label--filled' : email.length }" for="email">E-Mail<sup title="Pflichtfeld">*</sup></label>
-                        <input class="form__input" type="email" required="required" id="email" :value="email" @input="updateUser($event, 'email')" />
+                        <input class="form__input" type="email" required="required" id="email" :value="email" @input="updateUser($event, 'email')">
                     </div>
                     <div class="form__formrow">
                         <label class="form__label" v-bind:class="{ 'form__label--filled' : zip.length }" for="zip">PLZ<sup title="Pflichtfeld">*</sup></label>
-                        <input class="form__input" type="text" required="required" id="zip" :value="zip" @input="updateUser($event, 'zip')" />
+                        <input class="form__input" type="text" required="required" id="zip" :value="zip" @input="updateUser($event, 'zip')">
                     </div>
                     <button class="form__button" type="submit">
                         Speichern und weiter
@@ -53,6 +53,18 @@
 
 <script>
 import config from '@/config';
+
+const isUserValid = (usr) => {
+    let isValid = false;
+    do {
+        if(!usr.firstname || usr.firstname == '' ||  usr.firstname.length < 2) break;
+        if(!usr.name || usr.name == '' ||  usr.name.length < 2)  break;
+        if(!usr.email || usr.email == '' ||  usr.email.indexOf('@') < 0)  break;
+        if(!usr.zip || usr.zip == '' ||  (usr.zip + '').length < 4)  break;
+        isValid = true;
+    } while(false);
+    return isValid;
+}
 
 export default {
     name: 'kgp-form',
@@ -92,6 +104,7 @@ export default {
         },
         handleSubmit(e) {
             e.preventDefault();
+
             this.$store.dispatch('setUserKey', {
                 type: 'password',
                 val: config.password
@@ -100,7 +113,9 @@ export default {
                 type: 'username',
                 val: config.username
             })
-            this.$router.push('/scan');
+            var storedUser = localStorage.getItem('kgp_user');
+            var nextRoute = !storedUser || !isUserValid(JSON.parse(storedUser)) ? '/scan' : '/send';
+            this.$router.push(nextRoute);
         }
     }
 };

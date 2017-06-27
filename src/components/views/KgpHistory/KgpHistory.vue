@@ -9,14 +9,14 @@
             </span>
         </h2>
         <div class="step__inner">
-            <hr class="waves" />
+            <hr class="waves">
             <div class="product">
                 <div v-if="history.length" class="product__content">
                      <ul class="product-list">
-                        <li class="product-list__item" v-for="product in history">
+                        <li class="product-list__item" v-for="product in history" v-bind:key="product.barcode">
                             <button title="Eintrag löschen" class="product-list__delete" type="button" @click.prevent="deleteEntry(product)">X</button>
-                            <strong>Name:</strong> {{ product.name }}<span v-if="product.detailname">: {{ product.detailname }}</span><br />
-                            <strong>Hersteller:</strong> {{ product.vendor }}<br />
+                            <strong>Name:</strong> {{ product.name }}<span v-if="product.detailname">: {{ product.detailname }}</span><br>
+                            <strong>Hersteller:</strong> {{ product.vendor }}<br>
                             <strong>Barcode:</strong> {{ product.barcode }}
                         </li>
                     </ul>

@@ -74,11 +74,7 @@ const router = new Router({
     },
     {
         path: '*',
-        redirect: () => {
-            var storedUser = localStorage.getItem('kgp_user');
-            if(!storedUser) return '/form';
-            return isUserValid(JSON.parse(storedUser)) ? '/scan' : '/form'
-        }
+        redirect: '/scan'
     }
   ],
 });

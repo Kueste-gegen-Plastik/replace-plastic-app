@@ -194,19 +194,14 @@ body {
     }
 }
 .step {
-    height: 74vh;
+    height: 84vh;
     overflow: hidden;
     overflow-y: auto;
     margin-top: 2vh;
     transition: all .2s ease-in;
-    &--1,
-    &--2 {
-        height: 84vh;
-    }
     &__inner {
-        height: 100%;
         margin: 4vw;
-        padding: 0;
+        padding: 0 0 30px 0;
     }
     &__number {
         position: absolute;
@@ -237,7 +232,7 @@ body {
     &--primary {
         text-align: center;
         font-family: 'Slabo 27px';
-        font-size: 28px;
+        font-size: 25px;
         border: none;
         padding: 0 4vw;
         margin: 0 auto;

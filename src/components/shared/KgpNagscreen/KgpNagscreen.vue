@@ -8,7 +8,7 @@
             <h2 class="headline headline--secondary">
                 Darum geht's:
             </h2>
-            <carousel perPage="1" paginationActiveColor="#033c6a">
+            <carousel :perPage="1" paginationActiveColor="#033c6a">
                 <slide>
                     Plastikmüll im Meer verursacht enorme Probleme. Ein großer Teil gelangt vom Land her über die Flüsse ins Meer.
                 </slide>
@@ -19,7 +19,7 @@
                     Es gibt zu viele Plastikverpackungen für Produkte des täglichen Bedarfs.
                 </slide>
                 <slide>
-                    Hersteller sagen: „Der Verbraucher will es so.“<br />
+                    Hersteller sagen: „Der Verbraucher will es so.“<br>
                     Das sehen wir anders.
                 </slide>
                 <slide>

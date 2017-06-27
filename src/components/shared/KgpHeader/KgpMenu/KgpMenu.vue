@@ -226,16 +226,14 @@ export default {
     padding: 0;
     margin: 0 40px;
   }
-  &__item {
+  &__link {
+    color: #fff;
+    display: block;
     text-transform: uppercase;
     font-family: 'Slabo 27px', sans-serif;
     padding: 3.5vh 0;
     border-bottom: 1px solid #fff;
-  }
-  &__link {
-      color: #fff;
-      display: block;
-      text-decoration: none;
+    text-decoration: none;
   }
   &__counter {
       display: inline-block;
