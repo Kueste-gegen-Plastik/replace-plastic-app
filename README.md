@@ -65,3 +65,5 @@ src --> The apps source files
 │
 store --> generated resources (splash/icons) for the app
 ```
+
+This project was built and is maintained with ❤ by [neuwaerts GmbH](http://www.neuwaerts.de) for "Küste gegen Plastik".
