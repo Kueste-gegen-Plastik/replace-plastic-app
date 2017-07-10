@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.kuestegegenplastik.replaceplastic" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.kuestegegenplastik.replaceplastic" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>ReplacePlastic</name>
     <description>
       Mit dieser App wollen wir den Herstellern von Produkten sagen, dass wir uns andere Verpackungen wünschen.
@@ -23,6 +23,8 @@
     <preference name="SplashMaintainAspectRatio" value="true" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <preference name="android-minSdkVersion" value="19" />
+        <preference name="LoadingDialog" value="ReplacePlastic lädt..."/>
         <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png" />
         <icon density="mdpi" src="res/icons/android/icon-48-mdpi.png" />
         <icon density="hdpi" src="res/icons/android/icon-72-hdpi.png" />

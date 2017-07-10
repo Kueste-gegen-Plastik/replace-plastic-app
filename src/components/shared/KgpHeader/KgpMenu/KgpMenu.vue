@@ -206,7 +206,7 @@ export default {
 
   }
   &__items {
-    transform: translate3d(100vw,0,0);
+    transform: translate3d(100%,0,0);
     transition: all .2s ease-out;
     position: absolute;
     height: 100vh;
@@ -217,7 +217,7 @@ export default {
     bottom: 0;
     background: rgba(#004d8e,.95);
     &--open {
-      transform: translate3d(0,0,0);
+      transform: translate3d(0%,0,0);
     }
   }
   &__nav {

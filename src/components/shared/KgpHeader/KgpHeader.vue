@@ -121,7 +121,7 @@ export default {
         }
     }
     &__border {
-        background: url('img/header-border.png') 0 0 repeat-x;
+        background: url('img/header-border.svg') 0 0 repeat-x;
         position: absolute;
         bottom: -16px;
         width: 100%;

@@ -152,29 +152,48 @@ export default {
         toggleMail() {
             this.showMail = !this.showMail;
         },
-        loadProduct(){
-            this.msg = 'Melde mich am Server an...';
-            this.$store.dispatch('resetProducts');
-            localStorage.removeItem('kgp_token');
+        login(retry = false) {
             return Api.login({
                 username: config.username,
                 password: config.password
             }).then(res => {
                 this.$store.dispatch('setToken', res.data.token);
                 this.msg = 'Durchsuche die Produktdatenbank...';
-                return Api.searchEan(this.$store.state.barcode);
-            }).then(res => {
+                return this.searchEan();
+            });
+        },
+        searchEan() {
+            return Api.searchEan(this.$store.state.barcode).then(res => {
                 this.loading = false;
                 let retVal = [];
                 for(var key in res) {
                     retVal.push(res[key]);
                 }
                 this.$store.dispatch('setProducts', retVal);
-            }).catch(err => {
-                var msg = err.hasOwnProperty('response') && err.response && err.response.hasOwnProperty('data') && err.response.data.hasOwnProperty('code') ? err.response.data.code : 4711;
-                this.$store.dispatch('setError', msg);
-                this.loading = false;
-            });
+            })
+        },
+        handleErr(err) {
+            var msg = err.hasOwnProperty('response') && err.response && err.response.hasOwnProperty('data') && err.response.data.hasOwnProperty('code') ? err.response.data.code : 4711;
+            this.$store.dispatch('setError', msg);
+            this.loading = false;
+        },
+        loadProduct(){
+            this.msg = 'Melde mich am Server an...';
+            this.$store.dispatch('resetProducts');
+            if(localStorage.getItem('kgp_token')) {
+                this.searchEan(this.$store.state.barcode).then(res => {
+
+                }).catch(err => {
+                    if(err.hasOwnProperty('response') && err.response.hasOwnProperty('status') && err.response.status === 401) {
+                        localStorage.removeItem('kgp_token');
+                        return this.login();
+                    } else {
+                        this.handleErr(err)
+                    }
+                });
+            } else {
+                return this.login().catch(this.handleErr.bind(this));
+            }
         },
         doSubmit() {
             if(!this.$store.getters.products.length) {
