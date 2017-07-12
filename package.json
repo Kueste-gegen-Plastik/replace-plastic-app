@@ -8,7 +8,7 @@
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js && cp -R www/img/ www/css/img/ && cp -R www/fonts/ www/css/fonts/",
-    "build-ios": "cross-env BUILD_OS=ios npm run build && cordova build ios",
+    "build-ios": "cross-env BUILD_OS=ios npm run build && cordova build --release ios",
     "build-android": "cross-env BUILD_OS=android npm run build && cordova build --release android",
     "release-android" : "~/Library/Android/sdk/build-tools/25.0.3/zipalign -v -p 4 ./platforms/android/build/outputs/apk/android-release-unsigned.apk ./platforms/android/build/outputs/apk/android-release-unsigned-aligned.apk && ~/Library/Android/sdk/build-tools/25.0.3/apksigner sign --ks ./platforms/android/build/outputs/apk/replaceplastic.jks --out ./platforms/android/build/outputs/apk/replaceplastic-release.apk ./platforms/android/build/outputs/apk/android-release-unsigned-aligned.apk",
     "resources": "splashicon-generator --imagespath='resources/'"
