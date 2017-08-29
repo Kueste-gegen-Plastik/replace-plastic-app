@@ -25,7 +25,7 @@
                     ersten Preis, die Goldene Kieler Sprotte, gewonnen.
                 </p>
                 <p>
-                     Wir danken: Nils Ehnert, Carola Fichtner, Tanja Lücker, Stephan Schakulat, Mike Schindler, Klara Aylin Wenten.
+                     Wir danken: Tanja Lücker, Stephan Schakulat, Mike Schindler, Klara Aylin Wenten.
                 </p>
             </div>
         </div>
