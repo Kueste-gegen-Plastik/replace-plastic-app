@@ -179,6 +179,9 @@ body {
     overflow: hidden;
     height: 100%;
     width: 100%;
+    max-width: 980px;
+    position: relative;
+    margin: 0 auto;
     &__logo {
         text-align: center;
         transition: transform .5s ease-out;

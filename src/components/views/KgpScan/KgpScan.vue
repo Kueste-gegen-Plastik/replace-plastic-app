@@ -54,10 +54,15 @@
                 </div>
             </form>
         </div>
+        <div v-show="webScanActive" class="scan__container">
+            <button v-on:click.prevent="closeWebAppScan()" class="scan__close form__button">Scanner schließen</button>
+            <div class="scan__video" id="scan__video"></div>
+        </div>
     </div>
 </template>
 
 <script>
+import Quagga from 'quagga';
 import Api from '@/api';
 import Barcoder from 'barcoder';
 import KgpError from '@/components/shared/KgpError/KgpError';
@@ -69,9 +74,10 @@ export default {
     },
     data() {
         return {
-            showScan: false,
             cantScan: false,
-            isValidEan: false
+            isValidEan: false,
+            isWeb: false,
+            webScanActive: false
         };
     },
     beforeCreate() {
@@ -91,6 +97,10 @@ export default {
         },
         updateBarcode(e) {
             this.$store.dispatch('setBarcode', e.target.value);
+        },
+        closeWebAppScan() {
+            Quagga.stop();
+            this.showScan = false;
         },
         startScan() {
             this.err = false;
@@ -125,7 +135,80 @@ export default {
                 } else {
                     this.nativeScan();
                 }
+            } else {
+                if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
+                    this.isWeb = true;
+                    this.webScanActive = true;
+                    this.webScan();
+                } else {
+                    this.cantScan = true;
+                }
             }
+        },
+        webScan() {
+            let detectionHash = {};
+            const errorHandler = (err) => {
+                if (err) {
+                    console.log("ERRR!!!");
+                    this.handleError('42');
+                    return;
+                }
+                Quagga.start();
+            };
+            const onDetected = (result) => {
+                if(!detectionHash.hasOwnProperty(result.codeResult.code)) {
+                    detectionHash[result.codeResult.code] = 1;
+                } else {
+                    detectionHash[result.codeResult.code]++;
+                }
+                if(detectionHash[result.codeResult.code] >= 8) {
+                    detectionHash = {};
+                    this.$store.dispatch('setBarcode', result.codeResult.code);
+                    Quagga.stop()
+                    this.handleBarcodeSubmit();
+                }
+            };
+            const onProcessed = (result) => {
+                const drawingCtx = Quagga.canvas.ctx.overlay;
+                const drawingCanvas = Quagga.canvas.dom.overlay;
+                if (result) {
+                    if (result.boxes) {
+                        drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute('width'), 10), parseInt(drawingCanvas.getAttribute('height'), 10));
+                        result.boxes.filter(box => box !== result.box).forEach((box) => {
+                            Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, { color: 'green', lineWidth: 2 });
+                        });
+                    }
+                    if (result.box) {
+                        Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: '#00F', lineWidth: 2 });
+                    }
+                    if (result.codeResult && result.codeResult.code) {
+                        Quagga.ImageDebug.drawPath(result.line, { x: 'x', y: 'y' }, drawingCtx, { color: 'red', lineWidth: 3 });
+                    }
+                }
+            };
+            Quagga.onDetected(onDetected);
+            Quagga.onProcessed(onProcessed);
+            Quagga.init({
+                inputStream: {
+                    name: 'Barcode scannen',
+                    type: 'LiveStream',
+                    target: document.querySelector('#scan__video'),
+                },
+                locator: {
+                    patchSize: 'medium',
+                    halfSample: true,
+                },
+                numOfWorkers: window.navigator.hardwareConcurrency || 1,
+                locate: true,
+                decoder: {
+                    readers: ['ean_reader', 'ean_8_reader'],
+                    debug: {
+                        drawBoundingBox: true,
+                        drawScanline: true,
+                        showPattern: true,
+                    },
+                }
+            }, errorHandler);
         },
         handleBarcodeSubmit() {
             if (Barcoder.validate(this.barcode)) {
@@ -204,7 +287,6 @@ export default {
         position: fixed;
         width: 100%;
         height: 100%;
-        top: 35%;
         left: 0;
         bottom: 0;
         right: 0;
