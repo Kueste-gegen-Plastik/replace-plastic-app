@@ -1,76 +1,92 @@
 <template>
-    <div class="step step--2" id="step_2">
-        <svg class="symbols" width="52" height="65" version="1.1" x="0px" y="0px" viewBox="0 0 52 65">
-            <symbol id="scan" x="0px" y="0px" width="52" height="65" viewBox="0 0 52 65">
-                <path d="M39.9183998,21H12.0815001C11.4853001,21,11,20.5146008,11,19.9188995V15c0-1.1026001,0.8969002-2,2-2h26    c1.1030006,0,2,0.8973999,2,2v4.9188995C41,20.5146008,40.5145988,21,39.9183998,21z M13,19h26v-4H13V19z"/>
-                <path d="M26,50c-3.8598995,0-7-3.1405983-7-7V29.3799l-7.7475996-8.7159004l1.4951-1.3281002L21,28.6201V43    c0,2.7568016,2.2430992,5,5,5c2.7567997,0,5-2.2431984,5-5V28.6201l8.2523994-9.2842007l1.4951019,1.3281002L33,29.3799V43    C33,46.8594017,29.8598003,50,26,50z"/>
-                <rect x="25" y="34" width="2" height="6" />
-                <rect x="13" y="9" width="2" height="2" />
-                <rect x="17" y="9" width="2" height="2" />
-                <rect x="21" y="9" width="2" height="2" />
-                <rect x="25" y="9" width="2" height="2" />
-                <rect x="29" y="9" width="2" height="2" />
-                <rect x="33" y="9" width="2" height="2" />
-                <rect x="37" y="9" width="2" height="2" />
-                <rect x="13" y="2" width="2" height="4" />
-                <rect x="17" y="2" width="2" height="4" />
-                <rect x="21" y="2" width="2" height="4" />
-                <rect x="25" y="2" width="2" height="4" />
-                <rect x="29" y="2" width="2" height="4" />
-                <rect x="33" y="2" width="2" height="4" />
-                <rect x="37" y="2" width="2" height="4" />
-                <rect x="10" y="8" width="32" height="2" />
-            </symbol>
-        </svg>
-        <h2 class="headline headline--primary">
-            <span class="headline__inner headline__inner--primary">
-                Produkt scannen
-            </span>
-        </h2>
-        <div class="step__inner">
+    <div class="step step--2 step--flex" id="step_2">
+        <div class="top">
+            <svg class="symbols" width="52" height="65" version="1.1" x="0px" y="0px" viewBox="0 0 52 65">
+                <symbol id="scan" x="0px" y="0px" width="52" height="65" viewBox="0 0 52 65">
+                    <path d="M39.9183998,21H12.0815001C11.4853001,21,11,20.5146008,11,19.9188995V15c0-1.1026001,0.8969002-2,2-2h26    c1.1030006,0,2,0.8973999,2,2v4.9188995C41,20.5146008,40.5145988,21,39.9183998,21z M13,19h26v-4H13V19z"/>
+                    <path d="M26,50c-3.8598995,0-7-3.1405983-7-7V29.3799l-7.7475996-8.7159004l1.4951-1.3281002L21,28.6201V43    c0,2.7568016,2.2430992,5,5,5c2.7567997,0,5-2.2431984,5-5V28.6201l8.2523994-9.2842007l1.4951019,1.3281002L33,29.3799V43    C33,46.8594017,29.8598003,50,26,50z"/>
+                    <rect x="25" y="34" width="2" height="6" />
+                    <rect x="13" y="9" width="2" height="2" />
+                    <rect x="17" y="9" width="2" height="2" />
+                    <rect x="21" y="9" width="2" height="2" />
+                    <rect x="25" y="9" width="2" height="2" />
+                    <rect x="29" y="9" width="2" height="2" />
+                    <rect x="33" y="9" width="2" height="2" />
+                    <rect x="37" y="9" width="2" height="2" />
+                    <rect x="13" y="2" width="2" height="4" />
+                    <rect x="17" y="2" width="2" height="4" />
+                    <rect x="21" y="2" width="2" height="4" />
+                    <rect x="25" y="2" width="2" height="4" />
+                    <rect x="29" y="2" width="2" height="4" />
+                    <rect x="33" y="2" width="2" height="4" />
+                    <rect x="37" y="2" width="2" height="4" />
+                    <rect x="10" y="8" width="32" height="2" />
+                </symbol>
+            </svg>
             <hr class="waves" />
-            <form v-on:submit.prevent="handleBarcodeSubmit" name="fallbackform" class="form" method="post">
-                <div class="scan">
-                    <button type="button" class="scan__button" v-on:click="startScan">
-                        <svg class="scan__icon" x="0px" y="0px" width="52" height="65" viewBox="0 0 52 65">
-                            <use xlink:href="#scan"></use>
-                        </svg>
-                    </button>
-                </div>
-                <div class="scan__fallback">
-                    <h3 class="headline headline--tertiary">
-                        <span class="headline__inner">
-                            ... oder selber den Barcode eingeben:
-                        </span>
-                    </h3>
-                    <div class="form__formrow">
-                        <label class="form__label" v-bind:class="{ 'form__label--filled' : barcode.length }" for="ean">Barcode-Nummer<sup title="Pflichtfeld">*</sup></label>
-                        <input class="form__input" type="text" required="required" id="ean" :value="barcode" @input="updateBarcode" />
-                    </div>
-                    <kgp-error v-on:reset="startScan"></kgp-error>
-                    <button class="form__button" type="submit">
-                        Produkt suchen
-                    </button>
-                </div>
-            </form>
         </div>
-        <div v-show="webScanActive" class="scan__container">
-            <button v-on:click.prevent="closeWebAppScan()" class="scan__close form__button">Scanner schließen</button>
-            <div class="scan__video" id="scan__video"></div>
+        <div class="left">
+            <div class="step__inner step__inner--scan">
+                <h2 class="headline headline--primary">
+                    <span class="headline__inner headline__inner--primary">
+                        Produkt scannen
+                    </span>
+                </h2>
+                <form v-on:submit.prevent="handleBarcodeSubmit" name="fallbackform" class="form" method="post">
+                    <div class="scan">
+                        <button type="button" class="scan__button" v-on:click="startScan">
+                            <svg class="scan__icon" x="0px" y="0px" width="52" height="65" viewBox="0 0 52 65">
+                                <use xlink:href="#scan"></use>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="scan__fallback">
+                        <h3 class="headline headline--tertiary">
+                            <span class="headline__inner">
+                                ... oder selber den Barcode eingeben:
+                            </span>
+                        </h3>
+                        <div class="form__formrow">
+                            <label class="form__label" v-bind:class="{ 'form__label--filled' : barcode.length }" for="ean">Barcode-Nummer<sup title="Pflichtfeld">*</sup></label>
+                            <input class="form__input" type="text" required="required" id="ean" :value="barcode" @input="updateBarcode" />
+                        </div>
+                        <kgp-error v-on:reset="startScan"></kgp-error>
+                        <button class="form__button" type="submit">
+                            Produkt suchen
+                        </button>
+                        <mq-layout :mq="['small','medium']">
+                            <router-link class="form__button  form__button--delete" v-bind:to="{ name : 'Statistiken' }">
+                                Statistiken ansehen
+                            </router-link>
+                        </mq-layout>
+                    </div>
+                </form>
+            </div>
+            <div v-show="webScanActive" class="scan__container">
+                <button v-on:click.prevent="closeWebAppScan()" class="scan__close form__button">Scanner schließen</button>
+                <div class="scan__video" id="scan__video"></div>
+            </div>
+        </div>
+        <div class="right">
+            <mq-layout :mq="['large','xlarge']">
+                <kgp-statistics></kgp-statistics>
+            </mq-layout>
         </div>
     </div>
 </template>
 
 <script>
-import Quagga from 'quagga';
-import Api from '@/api';
-import Barcoder from 'barcoder';
-import KgpError from '@/components/shared/KgpError/KgpError';
+import Quagga from 'quagga'
+import Api from '@/api'
+import Barcoder from 'barcoder'
+import KgpError from '@/components/shared/KgpError/KgpError'
+import KgpStatistics from '@/components/shared/KgpStatistics/KgpStatistics'
 
 export default {
     name: 'kgp-scan',
     components: {
-        KgpError
+        KgpError,
+        KgpStatistics
     },
     data() {
         return {
@@ -81,26 +97,26 @@ export default {
         };
     },
     beforeCreate() {
-        this.$store.dispatch('setStep', 1);
+        this.$store.dispatch('setStep', 1)
     },
     computed: {
         barcode() {
-            return this.$store.getters.barcode;
+            return this.$store.getters.barcode
         },
         error() {
-            return this.$store.getters.error;
+            return this.$store.getters.error
         }
     },
     methods: {
         handleError(code) {
-            this.$store.dispatch('setError', code);
+            this.$store.dispatch('setError', code)
         },
         updateBarcode(e) {
-            this.$store.dispatch('setBarcode', e.target.value);
+            this.$store.dispatch('setBarcode', e.target.value)
         },
         closeWebAppScan() {
-            Quagga.stop();
-            this.showScan = false;
+            Quagga.stop()
+            this.webScanActive = false
         },
         startScan() {
             this.err = false;
@@ -130,6 +146,7 @@ export default {
                         }
                     }, (err) => {
                         // error while requesting permission status
+                        console.log(err);
                         this.handleError('007');
                     });
                 } else {
@@ -231,12 +248,12 @@ export default {
             }
         },
         nativeScan() {
-            cordova.plugins.barcodeScanner.scan((result) => {
-                if (result.cancelled) return;
-                this.$store.dispatch('setBarcode', result.text);
+            window.cordova.plugins.barcodeScanner.scan((result) => {
+                if (result.cancelled) return
+                this.$store.dispatch('setBarcode', result.text)
                 this.handleBarcodeSubmit()
             }, (error) => {
-                this.handleError('42');
+                this.handleError('42')
             }, {
                 preferFrontCamera: false, // iOS and Android
                 showFlipCameraButton: true, // iOS and Android
@@ -261,6 +278,8 @@ export default {
         background-color: #f76259;
         width: 40vw;
         height: 40vw;
+        max-width: 360px;
+        max-height: 360px;
         border-radius: 50%;
         border: none;
         outline: none;
@@ -275,6 +294,8 @@ export default {
         fill: #fff;
         width: 24vw;
         height: 24vw;
+        max-width: 320px;
+        max-height: 320px;
         position: relative;
         top: 3vw;
     }
@@ -312,6 +333,14 @@ export default {
             right: 0;
             z-index: 999;
         }
+    }
+}
+.top {
+    width: 100%;
+}
+.left, .right {
+    @include bp(medium) {
+        width: 50%;
     }
 }
 </style>

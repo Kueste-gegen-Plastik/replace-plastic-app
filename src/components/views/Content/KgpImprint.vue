@@ -117,6 +117,9 @@
                 <ul>
                     <li><a href="https://thenounproject.com/search/?q=barcode&i=954367">"Barcode-Reader" by Dinosoft Labs from the Noun Project</a></li>
                     <li><a href="https://thenounproject.com/search/?q=checkmark&i=857966">"Check" by Storm Icons from the Noun Project</a></li>
+                    <li><a href="https://thenounproject.com/search/?q=postcards&i=1080191">"postcard" by artworkbean from the Noun Project</a></li>
+                    <li><a href="https://thenounproject.com/search/?q=envelope&i=1071783">"envelope" by Icon Depot from the Noun Project</a></li>
+                    <li><a href="https://thenounproject.com/search/?q=factory&i=1778310">Factory Building by iconsphere from the Noun Project</a></li>
                 </ul>
 
             </div>

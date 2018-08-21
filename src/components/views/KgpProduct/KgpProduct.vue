@@ -30,8 +30,8 @@
                     <p>
                         <em>"Ich wünsche mir diese<span v-if="products.length<2">s</span> Produkt<span v-if="products.length>1">e</span> in einer Verpackung ohne Plastik / mit weniger Plastik":</em>
                     </p>
-                    <transition-group name="product-list" tag="ul" class="product-list">
-                        <li class="product-list__item" v-for="product in products" v-bind:key="product.barcode">
+                    <transition-group name="item-list" tag="ul" class="item-list">
+                        <li class="item-list__item" v-for="product in products" v-bind:key="product.barcode">
                             <strong>Name:</strong> {{ product.name }}<span v-if="product.detailname">: {{ product.detailname }}</span><br>
                             <strong>Hersteller:</strong> {{ product.vendor }}<br>
                             <strong>Barcode:</strong> {{ barcode }}
@@ -50,7 +50,7 @@
                         </p>
                     </div>
                 </div>
-                <a v-if="!loading && !error" class="product-list__mail-link" @click.prevent="toggleMail">{{ showMail ? '▲' : '►' }} Beispiel E-Mail {{ showMail ? 'ausblenden' : 'ansehen' }}</a>
+                <a v-if="!loading && !error" class="item-list__mail-link" @click.prevent="toggleMail">{{ showMail ? '▲' : '►' }} Beispiel E-Mail {{ showMail ? 'ausblenden' : 'ansehen' }}</a>
 
                 <div v-on:click.prevent="toggleMail" class="letter" v-bind:class="{ 'letter--open' : showMail }" v-if="!loading && !error">
                     <div class="letter__inner">
@@ -108,7 +108,6 @@
                 <button v-if="!loading && !error" v-on:click.prevent="doSubmit" class="form__button">
                     Verbesserungswunsch senden
                 </button>
-
 
             </div>
         </div>
@@ -215,7 +214,7 @@ export default {
 </script>
 
 <style lang="scss">
-.product {
+.item {
     &-list {
         list-style: none;
         border-top: 1px solid rgba(255,255,255,.5);
@@ -236,6 +235,41 @@ export default {
                 opacity: 0;
                 transform: translateY(30px);
             }
+            &--date {
+                display: flex;
+                flex-wrap: nowrap;
+            }
+        }
+        &__product {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        &__icon {
+            position: relative;
+            top: 7px;
+        }
+        &__date {
+            width: 22%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: middle;
+            text-align: center;
+            background: rgba(255,255,255,.1);
+            padding: 5px;
+            margin-right: 5%;
+        }
+        &__time {
+            width: 100%;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        &__dmy {
+            width: 100%;
+            font-size: .75rem;
+        }
+        &__content {
+            width: 83%;
         }
         &__delete {
             position: absolute;

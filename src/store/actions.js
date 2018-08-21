@@ -1,95 +1,134 @@
-import { errors } from '@/config/constants';
+import {
+    errors
+} from '@/config/constants';
 
 export const actions = {
-    setProducts: ({ commit }, products) => {
-        commit('PRODUCTS', products);
+    setProducts: ({
+        commit
+    }, products) => {
+        commit('PRODUCTS', products)
     },
-    resetProducts: ({ commit }) => {
-        commit('RESETPRODUCTS');
+    resetProducts: ({
+        commit
+    }) => {
+        commit('RESETPRODUCTS')
     },
-    setError: ({ commit }, code) => {
-        commit('ERROR', errors['code_' + code]);
+    setError: ({
+        commit
+    }, code) => {
+        commit('ERROR', errors['code_' + code])
     },
-    resetError: ({ commit }) => {
-        commit('RESETERROR');
+    resetError: ({
+        commit
+    }) => {
+        commit('RESETERROR')
     },
-    setUser: ({ commit }, val) => {
-        localStorage.setItem('kgp_user', JSON.stringify(val));
-        commit('USER', val);
+    setUser: ({
+        commit
+    }, val) => {
+        localStorage.setItem('kgp_user', JSON.stringify(val))
+        commit('USER', val)
     },
-    setUserKey: ({ commit, state }, val) => {
-        localStorage.setItem('kgp_user', JSON.stringify(state.user));
-        commit('USERKEY', val);
+    setUserKey: ({
+        commit,
+        state
+    }, val) => {
+        localStorage.setItem('kgp_user', JSON.stringify(state.user))
+        commit('USERKEY', val)
     },
-    removeUser: ({ commit }) => {
+    removeUser: ({
+        commit
+    }) => {
         commit('USER', {
             firstname: '',
             name: '',
             email: '',
             zip: '',
             password: ''
-        });
-        localStorage.removeItem('kgp_user');
+        })
+        localStorage.removeItem('kgp_user')
     },
-    setHistory: ({ commit, state}, history) => {
-        commit('SETHISTORY', history);
+    setHistory: ({
+        commit
+    }, history) => {
+        commit('SETHISTORY', history)
     },
-    resetHistory: ({ commit, state}) => {
-        commit('RESETHISTORY');
-        localStorage.setItem('kgp_history', JSON.stringify([]));
+    resetHistory: ({
+        commit
+    }) => {
+        commit('RESETHISTORY')
+        localStorage.setItem('kgp_history', JSON.stringify([]))
     },
-    addHistory: ({ commit, state}, entry) => {
-        var history = localStorage.getItem('kgp_history');
-        if(history) {
-            history = JSON.parse(history);
+    addHistory: ({
+        commit
+    }, entry) => {
+        var history = localStorage.getItem('kgp_history')
+        if (history) {
+            history = JSON.parse(history)
         } else {
-            history = [];
+            history = []
         }
-        entry.forEach((itm) => {
-            history.push(itm);
-        });
-        localStorage.setItem('kgp_history', JSON.stringify(history));
-        commit('ADDHISTORY', history);
+        entry.forEach(itm => history.push(itm))
+        localStorage.setItem('kgp_history', JSON.stringify(history))
+        commit('ADDHISTORY', history)
     },
-    removeHistory: ({ commit, state}, entry) => {
-        var history = localStorage.getItem('kgp_history');
-        if(history) {
-            history = JSON.parse(history);
-            history = history.filter((itm) => {
-                return itm.barcode !== entry.barcode;
+    removeHistory: ({
+        commit
+    }, entry) => {
+        var history = localStorage.getItem('kgp_history')
+        if (history) {
+            history = JSON.parse(history)
+            history = history.filter(itm => {
+                return itm.barcode !== entry.barcode
             })
-            localStorage.setItem('kgp_history', JSON.stringify(history));
+            localStorage.setItem('kgp_history', JSON.stringify(history))
         }
-        commit('REMOVEHISTORY', entry);
+        commit('REMOVEHISTORY', entry)
     },
-    resetState: ({ commit, state}) => {
-        state.products = [];
-        state.error = false;
-        state.barcode =  '';
-        state.step =  1;
-        state.userSet = false;
-        state.menuOpen = false;
+    resetState: ({
+        state
+    }) => {
+        state.products = []
+        state.error = false
+        state.barcode = ''
+        state.step = 1
+        state.userSet = false
+        state.menuOpen = false
     },
-    setBarcode: ({ commit }, barcode) => {
-        commit('BARCODE', barcode);
+    setBarcode: ({
+        commit
+    }, barcode) => {
+        commit('BARCODE', barcode)
     },
-    resetBarcode: ({ commit }) => {
-        commit('RESETBARCODE');
+    resetBarcode: ({
+        commit
+    }) => {
+        commit('RESETBARCODE')
     },
-    setStep: ({ commit }, step) => {
-        commit('STEP', step);
+    setStep: ({
+        commit
+    }, step) => {
+        commit('STEP', step)
     },
-    setToken: ({ commit }, token) => {
-        localStorage.setItem('kgp_token', token);
-        commit('TOKEN', token);
+    setToken: ({
+        commit
+    }, token) => {
+        localStorage.setItem('kgp_token', token)
+        commit('TOKEN', token)
     },
-    menuOpen: ({ commit }, isOpen) => {
-        commit('MENUOPEN', isOpen);
+    menuOpen: ({
+        commit
+    }, isOpen) => {
+        commit('MENUOPEN', isOpen)
     },
-    nagscreen: ({ commit }, isOpen) => {
-        commit('NAGSCREEN', isOpen);
+    nagscreen: ({
+        commit
+    }, isOpen) => {
+        commit('NAGSCREEN', isOpen)
     },
-    setLastRoute: ({ commit }, route) => {
-        commit('LASTROUTE', route);
-    },
-};
+    setLastRoute: ({
+        commit
+    }, route) => {
+        commit('LASTROUTE', route)
+    }
+}

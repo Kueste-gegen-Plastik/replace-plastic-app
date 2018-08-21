@@ -147,6 +147,9 @@ export default {
 body {
     font-size: 100%;
     overflow: hidden;
+    @include bp(medium) {
+        overflow: visible;
+    }
 }
 .symbols {
     display: none;
@@ -179,14 +182,16 @@ body {
     overflow: hidden;
     height: 100%;
     width: 100%;
-    max-width: 980px;
     position: relative;
     margin: 0 auto;
+    @include bp(medium) {
+        overflow: visible;
+    }
     &__logo {
         text-align: center;
         transition: transform .5s ease-out;
         &--hidden {
-        transform: translate3D(0,-500px, 0);
+            transform: translate3D(0,-500px, 0);
         }
     }
     &__wortmarke {
@@ -201,7 +206,17 @@ body {
     overflow: hidden;
     overflow-y: auto;
     margin-top: 2vh;
+    @include bp(medium) {
+        overflow: visible;
+        overflow-y: visible;
+    }
     transition: all .2s ease-in;
+    &--flex {
+        @include bp(medium) {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
     &__inner {
         margin: 4vw;
         padding: 0 0 30px 0;
@@ -252,6 +267,9 @@ body {
             background: rgba(3, 60, 106, 0.5);
             color: #fff;
         }
+    }
+    &--centered {
+        text-align: center;
     }
 }
 .foot-border {
