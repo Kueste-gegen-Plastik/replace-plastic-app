@@ -12,10 +12,10 @@
                 :vendor-count="vendor_count">
             </kgp-total-numbers>
 
-            <div class="stats-container">
+            <div class="stats-container" v-if="vendorData.length">
                 <hr class="waves" />
-                <h2 class="headline headline--secondary headline--centered">Top-10-Hersteller nach Einsendungen</h2>
-                <kgp-doughnut :chart-data="vendorData" :options="chartOptions"></kgp-doughnut>
+                <h2 class="headline headline--secondary headline--centered">An diese Anbieter wird viel Feedback gesendet:</h2>
+                <kgp-word-cloud :data="vendorData"></kgp-word-cloud>
             </div>
 
             <div class="stats-container">
@@ -37,6 +37,7 @@
 import Api from '@/api'
 import KgpTotalNumbers from './KgpTotalNumbers/KgpTotalNumbers'
 import KgpDoughnut from './charts/KgpDoughnut/KgpDoughnut'
+import KgpWordCloud from './KgpWordCloud/KgpWordCloud'
 import KgpLatestProducts from './KgpLatestProducts/KgpLatestProducts'
 import KgpLatestMails from './KgpLatestMails/KgpLatestMails'
 import { handleError } from '@/mixins/handleError'
@@ -66,40 +67,10 @@ export default {
     },
     computed: {
         vendorData() {
-
-            if(this.top_vendors === null) return null;
-
-            let cnt = 0;
-            let dataRetVal = this.top_vendors.map(itm => {
-                cnt+= parseInt(itm.count);
-                return parseInt(itm.count);
-            }).slice(0,9);
-            dataRetVal.push(this.entry_count-cnt);
-
-            let labelRetVal = this.top_vendors.map(itm => {
-                    return itm.data;
-            }).slice(0,9);
-            labelRetVal.push('Rest');
-
-            return {
-                datasets: [{
-                    data: dataRetVal,
-                    backgroundColor: [
-                        '#156D9C',
-                        '#2c7ba6',
-                        '#448ab0',
-                        '#5b99ba',
-                        '#73a7c4',
-                        '#8ab6cd',
-                        '#a1c5d7',
-                        '#b8d3e1',
-                        '#d0e2eb',
-                        'rgba(255,255,255,.2)'
-                    ],
-                    borderWidth: 1
-                }],
-                labels: labelRetVal
-            };
+            if(this.top_vendors === null) return [];
+            return this.top_vendors.map(vendor => {
+                return [vendor.data, Math.round(parseInt(vendor.count)*0.01)];
+            })
         }
     },
     beforeMount() {
@@ -108,16 +79,17 @@ export default {
             this.mails_sent = res.mails_sent;
             this.product_count = res.product_count;
             this.vendor_count = res.vendor_count;
-            this.top_vendors = res.top_vendors;
-            this.latest_products = res.latest_products.slice(0,5);
-            this.mails_details = res.mails_details.slice(0,5);
+            this.top_vendors = res.top_vendors.slice(0,15);
+            this.latest_products = res.latest_products && res.latest_products.length ? res.latest_products.slice(0,5) : [];
+            this.mails_details = res.mails_details && res.mails_details.length ? res.mails_details.slice(0,5) : [];
         }).catch( err => this.handleError(err) );
     },
     components: {
         KgpDoughnut,
         KgpLatestProducts,
         KgpTotalNumbers,
-        KgpLatestMails
+        KgpLatestMails,
+        KgpWordCloud
     },
     mixins:[handleError]
 };

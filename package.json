@@ -6,12 +6,19 @@
     "dev": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build:staging": "vue-cli-service build --mode staging",
+    "lint": "vue-cli-service lint",
+    "build-ios": "npx cross-env BUILD_OS=ios npm run build && cordova build --release ios",
+    "build-android": "npx cross-env BUILD_OS=android npm run build && cordova build --release android",
+    "build-web": "npx cross-env BUILD_OS=web npm run build",
+    "release-android": "~/Library/Android/sdk/build-tools/25.0.3/zipalign -v -p 4 ./platforms/android/build/outputs/apk/android-release-unsigned.apk ./platforms/android/build/outputs/apk/android-release-unsigned-aligned.apk && ~/Library/Android/sdk/build-tools/25.0.3/apksigner sign --ks ./platforms/android/build/outputs/apk/replaceplastic.jks --out ./platforms/android/build/outputs/apk/replaceplastic-release.apk ./platforms/android/build/outputs/apk/android-release-unsigned-aligned.apk",
+    "resources": "npx cordova-splash --config=config.xml --splash=./resources/splash.png && cordova-icon --config=config.xml --icon=./resources/icon.png"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "barcoder": "^2.0.1",
     "chart.js": "^2.7.2",
+    "cordova-plugin-launchscreen-storyboard": "^2.0.0",
     "countup.js": "^1.9.3",
     "date-fns": "^1.29.0",
     "quagga": "^0.12.1",
@@ -29,6 +36,7 @@
     "vue-scrollto": "^2.11.0",
     "vue-spinner": "^1.0.3",
     "vue2-animate": "^2.0.0",
+    "vuewordcloud": "^18.7.11",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -38,9 +46,18 @@
     "@vue/cli-service": "^3.0.0",
     "@vue/eslint-config-prettier": "^3.0.0",
     "babel-polyfill": "^6.26.0",
+    "cordova-icon": "^1.0.0",
+    "cordova-splash": "^1.0.0",
+    "cross-env": "^5.2.0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "style-resources-loader": "^1.2.1",
     "vue-template-compiler": "^2.5.17"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-launchscreen-storyboard": {},
+      "cordova-plugin-splashscreen": {}
+    }
   }
 }

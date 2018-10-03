@@ -3,6 +3,7 @@ import Vue from 'vue';
 export const handleError = Vue.mixin({
     methods: {
         handleError: function (err) {
+            console.log("ERR", err);
             let msg = err.hasOwnProperty('response') &&
                 err.response &&
                 err.response.hasOwnProperty('data') &&

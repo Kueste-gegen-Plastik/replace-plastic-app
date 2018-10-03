@@ -77,6 +77,7 @@
         </svg>
         <kgp-header></kgp-header>
         <kgp-nagscreen></kgp-nagscreen>
+        <kgp-lightbox></kgp-lightbox>
         <div class="main" id="main" v-show="!menuOpen && !nagscreen">
             <div class="main__logo">
                 <svg alt="ReplacePlastic" class="main__wortmarke" width="481.89px" height="175.75px" viewBox="0 0 481.89 175.75">
@@ -87,16 +88,16 @@
                 <router-view></router-view>
             </transition>
         </div>
-        <div v-if="!keyboardShown" class="foot-border"></div>
     </div>
 </template>
 
 <script>
 import KgpHeader from '@/components/shared/KgpHeader/KgpHeader';
 import KgpNagscreen from '@/components/shared/KgpNagscreen/KgpNagscreen';
+import KgpLightbox from '@/components/shared/KgpLightbox/KgpLightbox';
 
 export default {
-    components: { KgpHeader, KgpNagscreen },
+    components: { KgpHeader, KgpNagscreen, KgpLightbox },
     name: 'KgpApp',
     data() {
         return {
@@ -147,6 +148,9 @@ export default {
 body {
     font-size: 100%;
     overflow: hidden;
+    padding-top: constant(safe-area-inset-top); /* iOS 11.0 */
+    padding-top: env(safe-area-inset-top); /* iOS 11.2 */
+    margin: 0;
     @include bp(medium) {
         overflow: visible;
     }
@@ -202,13 +206,14 @@ body {
     }
 }
 .step {
-    height: 84vh;
     overflow: hidden;
     overflow-y: auto;
     margin-top: 2vh;
+    height: 84vh;
     @include bp(medium) {
         overflow: visible;
         overflow-y: visible;
+        height: auto;
     }
     transition: all .2s ease-in;
     &--flex {
@@ -219,7 +224,21 @@ body {
     }
     &__inner {
         margin: 4vw;
-        padding: 0 0 30px 0;
+        padding: 0 2vw 30px 2vw;
+        max-width: 980px;
+        margin: 4vw auto;
+        @include bp(medium) {
+            padding: 0 0 30px 0;
+        }
+        @at-root {
+            .left &,
+            .right & {
+                @include bp(medium) {
+                    max-width: auto;
+                    margin: 4vw;
+                }
+            }
+        }
     }
     &__number {
         position: absolute;

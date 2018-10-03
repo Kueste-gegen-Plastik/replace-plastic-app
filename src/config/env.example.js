@@ -1,5 +1,5 @@
-module.exports = {
-    username: 'foo',
-    password : '1234',
-    endpoint: 'http://localhost:8888',
+export const config = {
+    username: 'xyz',
+    password: '123',
+    endpoint: 'https://api.tld'
 };

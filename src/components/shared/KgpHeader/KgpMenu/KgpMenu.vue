@@ -93,6 +93,7 @@ export default {
   right: 0;
   height: 100%;
   top: 0;
+  top:env(safe-area-inset-top);
   height: 8vh;
   // code "stolen" from: https://github.com/jonsuh/hamburgers
   // thanks! :)

@@ -16,7 +16,7 @@
             <div class="product">
                 <div v-if="loading" class="product__loading">
                     <bounce-loader :loading="loading" color="#fff"></bounce-loader>
-                    Dein Vorschlag wird übermittelt...
+                    Danke für dein Feedback!
                 </div>
                 <kgp-error v-on:reset="submitEntry"></kgp-error>
                 <div v-if="!loading && !error" class="product__content">
@@ -26,9 +26,7 @@
                         </svg>
                     </div>
                     <p>
-                        Gemeinsam schaffen wir eine spürbare Nachfrage nach plastikfreien Verpackungen, die auch bei den Herstellern ankommt.
-                        Wir geben Deinen Wunsch an den Hersteller weiter. Der Hersteller wird spätestens nach vier Wochen benachrichtigt,
-                        oder wenn 20 weitere Personen dieses Produkt mit der ReplacePlastic-App gescannt haben.
+                        Gemeinsam schaffen wir eine spürbare Nachfrage nach plastikfreien Verpackungen, die auch bei den Anbietern und Herstellern ankommt. Wir geben deinen Wunsch an den Anbieter weiter. Er wird in der Regel nach vier Wochen benachrichtigt, oder wenn 20 weitere Personen dieses Produkt mit der ReplacePlastic-App eingesendet haben.
                     </p>
                     <button type="button" v-on:click.prevent="restartApp" class="form__button">
                         Ein weiteres Produkt scannen
@@ -42,7 +40,7 @@
 
 <script>
 import Api from '@/api';
-import config from '@/config';
+import { config } from '@/config';
 import BounceLoader from 'vue-spinner/src/BounceLoader';
 import KgpError from '@/components/shared/KgpError/KgpError';
 

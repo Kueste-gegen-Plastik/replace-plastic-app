@@ -42,7 +42,6 @@ export const actions = {
         commit('USER', {
             firstname: '',
             name: '',
-            email: '',
             zip: '',
             password: ''
         })
@@ -130,5 +129,15 @@ export const actions = {
         commit
     }, route) => {
         commit('LASTROUTE', route)
-    }
+    },
+    setLightboxContent: ({
+        commit
+    }, content) => {
+        commit('SETLIGHTBOXCONTENT', content)
+    },
+    resetLightboxContent: ({
+        commit
+    }) => {
+        commit('RESETLIGHTBOXCONTENT')
+    },
 }

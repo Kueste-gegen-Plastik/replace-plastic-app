@@ -1,5 +1,7 @@
 import axios from 'axios'
-import config from '../config'
+import {
+    config
+} from '@/config';
 
 export const HTTP = axios.create({
     baseURL: config.endpoint
@@ -29,7 +31,7 @@ class Api {
     }
 
     getStats() {
-        return HTTP.get(`/stats`).then(res => res.data)
+        return HTTP.get(`/stats/`).then(res => res.data)
     }
 
 }

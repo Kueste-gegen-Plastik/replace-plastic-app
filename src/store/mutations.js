@@ -53,5 +53,11 @@ export const mutations = {
         state.history = state.history.filter(
             itm => itm.barcode !== entry.barcode
         )
+    },
+    SETLIGHTBOXCONTENT(state, content) {
+        state.lightboxContent = content;
+    },
+    RESETLIGHTBOXCONTENT(state) {
+        state.lightboxContent = '';
     }
 };

@@ -1,6 +1,18 @@
 const path = require('path')
 
 module.exports = {
+    outputDir: path.resolve(__dirname, "./www"),
+    baseUrl: './',
+    pages: {
+        index: {
+            entry: 'src/main.js'
+        },
+        cordova: { 
+            entry: process.env.BUILD_OS === 'ios'
+                ? './platforms/ios/platform_www/cordova.js'
+                : './platforms/android/platform_www/cordova.js'
+        }
+    },
     configureWebpack: {
         resolve: {
             alias: {

@@ -3,18 +3,13 @@
         <form class="form" name="userdataform" v-on:submit="handleSubmit($event)">
             <fieldset class="form__fieldset">
                 <legend class="form__legend">
-                    Persönliche Daten eingeben
+                    Persönliche Daten
                 </legend>
                 <div class="step__inner">
                     <hr class="waves">
                     <div class="form__description">
                         <p>
-                            Wir benötigen Deine persönlichen Angaben, damit wir den Herstellern
-                            im Konfliktfall belegen können, dass Dein Feedback gültig
-                            ist, und dass wir diese Meldungen nicht selbst erzeugt haben.
-                        </p>
-                        <p>
-                            <strong>Wir geben Deine Daten nicht an Dritte weiter.</strong>
+                            Wir benötigen deine persönlichen Angaben, damit wir den Herstellern und Anbietern im Konfliktfall belegen können, dass wir die Meldungen  nicht selbst erzeugt haben und dass unterschiedliche Personen das Feedback gesendet haben. Bevor wir in einem Konfliktfall deine Daten an einen Anbieter übermitteln, anonymisieren wir sie durch Abkürzung des Nachnamens. Eine  Weitergabe an sonstige Dritte erfolgt nicht.
                         </p>
                     </div>
 
@@ -30,10 +25,6 @@
                             </label>
                             <input class="form__input" type="text" required="required" id="name" :value="name"  @input="updateUser($event, 'name')">
                         </div>
-                    </div>
-                    <div class="form__formrow">
-                        <label class="form__label" v-bind:class="{ 'form__label--filled' : email.length }" for="email">E-Mail<sup title="Pflichtfeld">*</sup></label>
-                        <input class="form__input" type="email" required="required" id="email" :value="email" @input="updateUser($event, 'email')">
                     </div>
                     <div class="form__formrow">
                         <label class="form__label" v-bind:class="{ 'form__label--filled' : zip.length }" for="zip">PLZ<sup title="Pflichtfeld">*</sup></label>
@@ -52,14 +43,13 @@
 </template>
 
 <script>
-import config from '@/config';
+import { config } from '@/config';
 
 const isUserValid = (usr) => {
     let isValid = false;
     do {
         if(!usr.firstname || usr.firstname == '' ||  usr.firstname.length < 2) break;
         if(!usr.name || usr.name == '' ||  usr.name.length < 2)  break;
-        if(!usr.email || usr.email == '' ||  usr.email.indexOf('@') < 0)  break;
         if(!usr.zip || usr.zip == '' ||  (usr.zip + '').length < 4)  break;
         isValid = true;
     } while(false);
@@ -77,9 +67,6 @@ export default {
        },
        name() {
            return this.$store.getters.user.name || '';
-       },
-       email() {
-           return this.$store.getters.user.email || '';
        },
        zip() {
            return this.$store.getters.user.zip || '';
@@ -143,6 +130,10 @@ export default {
     margin: 0 4vw;
     background: rgba(3, 60, 106, 0.5);
     padding: 2px 5px;
+  }
+  &__inline {
+      display: inline-block;
+      margin-left: 10px;
   }
   &__description {
     padding-left: 10px;

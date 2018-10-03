@@ -111,6 +111,7 @@ export default {
     height: 9vh;
     text-align: center;
     z-index: 20;
+    top:env(safe-area-inset-top);
     &__logo {
         max-width: 100%;
         height: 5.6vh;

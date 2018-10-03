@@ -4,21 +4,15 @@
 require('typeface-slabo-13px')
 require('typeface-slabo-27px')
 require('typeface-lato')
-
-import './registerServiceWorker'
-
+if (process.env.BUILD_OS === 'web') {
+    import('./registerServiceWorker');
+}
 import Vue from 'vue'
 
 import VueScrollTo from 'vue-scrollto'
 import VueMq from 'vue-mq'
 Vue.use(VueScrollTo)
-/*
 
-$small-breakpoint:  468px;
-$medium-breakpoint: 980px;
-$large-breakpoint:  1280px;
-$xlarge-breakpoint: 1920px;
-*/
 Vue.use(VueMq, {
     breakpoints: {
         small: 468,

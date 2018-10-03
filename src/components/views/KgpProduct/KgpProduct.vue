@@ -33,8 +33,21 @@
                     <transition-group name="item-list" tag="ul" class="item-list">
                         <li class="item-list__item" v-for="product in products" v-bind:key="product.barcode">
                             <strong>Name:</strong> {{ product.name }}<span v-if="product.detailname">: {{ product.detailname }}</span><br>
-                            <strong>Hersteller:</strong> {{ product.vendor }}<br>
+                            <strong>Anbieter:</strong> {{ product.vendor }}<br>
                             <strong>Barcode:</strong> {{ barcode }}
+                            <span  v-if="product.additional_information">
+                                <br />
+                                <a class="item-list__info" v-on:click.prevent="openLightbox($event, product)">
+                                    Wichtige Informationen zum Produkt
+                                </a>
+                            </span>
+                            <div class="item-list__hint item-list__hint--info" v-if="product.vendor_wants_contact">
+                                <h3 class="headline headline--tertiary">Hinweis:</h3>
+                                Dieser Hersteller wünscht eine persönliche Kontaktaufnahme durch Kunden.<br />
+                                Bitte melden Sie sich bei Interesse unter:<br />
+                                <address class="item-list__address" v-html="product.vendor_contact_address">
+                                </address>
+                            </div>
                         </li>
                     </transition-group>
                 </div>
@@ -42,11 +55,7 @@
                     <div class="product__content">
                         <h3 class="headline headline--tertiary">Das macht aber nichts...</h3>
                         <p>
-                            Du kannst uns helfen, die Daten zu verbessern, indem Du deinen Verbesserungswunsch trotzdem sendest. Über die Barcode-Nummer <strong>{{ barcode }}</strong>
-                            können wir das Produkt finden.
-                        </p>
-                        <p>
-                            Dein Wunsch wird natürlich trotzdem an den Hersteller gesendet.
+                            Du kannst uns helfen, die Daten zu verbessern, indem Du deinen Verbesserungswunsch trotzdem sendest.  Über die Barcode-Nummer  können wir versuchen, das Produkt finden. Wenn das gelingt, wird dein Wunsch an den Anbieter gesendet.
                         </p>
                     </div>
                 </div>
@@ -80,7 +89,9 @@
                                     <span v-if="products.length > 1">
                                         die Produkte
                                     </span>
-                                </span><span v-if="!products">Ihr Produkt</span> in einer Verpackung ohne Plastik/mit weniger Plastik wünschen.
+                                </span>
+                                <span v-if="!products || products.length === 0">Ihr Produkt</span>
+                                in einer Verpackung ohne Plastik/mit weniger Plastik wünschen.
                         </h3>
                         <p>
                             Plastikmüll in den Meeren stellt ein großes Problem dar, weshalb immer mehr Verbraucher ein
@@ -88,7 +99,7 @@
                             Aus diesem Grund senden wir Ihnen heute die Wünsche der Verbraucher zu Ihrem Produkt.
                         </p>
                         <p>
-                            Wir hoffen, dass diese Information über die Wünsche und Werte Ihrer Zielgruppen
+                            Wir hoffen, dass diese Information über die Wünsche und Werte Ihrer Zielgruppen für
                             Sie hilfreich ist, um bessere Lösungen für Ihre Kunden zu verwirklichen.
                         </p>
                         <p>
@@ -97,10 +108,9 @@
                         </p>
                         <p>
                             Küste gegen Plastik e.V.<br>
-                            Reimersbude 12<br>
-                            25889 Witzwort<br>
-                            Tel.:  0176 68280364 (Jennifer Timrott, Vorsitzende)<br>
-                            Mail: <i>post@kueste-gegen-plastik.de</i>
+                            Eiderweg 33<br>
+                            25826 St. Peter-Ording<br>
+                            Mail: <i><a href="mailto:post@kueste-gegen-plastik.de">post@kueste-gegen-plastik.de</a></i>
                         </p>
                     </div>
                 </div>
@@ -117,9 +127,10 @@
 
 <script>
 import Api from '@/api';
-import config from '@/config';
+import { config } from '@/config';
 import BounceLoader from 'vue-spinner/src/BounceLoader';
 import KgpError from '@/components/shared/KgpError/KgpError';
+import { messages } from '@/config/constants';
 
 export default {
     name: 'kgp-product',
@@ -165,8 +176,16 @@ export default {
             return Api.searchEan(this.$store.state.barcode).then(res => {
                 this.loading = false;
                 let retVal = [];
+                let hasTitle = true;
                 for(var key in res) {
-                    retVal.push(res[key]);
+                    let crnt = res[key];
+                    if(crnt.descr == '' && crnt.name == '') {
+                        hasTitle = false;
+                    }
+                    retVal.push(crnt);
+                }
+                if(!hasTitle) {
+                    this.$store.dispatch('setLightboxContent', messages.empty_product);
                 }
                 this.$store.dispatch('setProducts', retVal);
             })
@@ -180,7 +199,7 @@ export default {
             this.msg = 'Melde mich am Server an...';
             this.$store.dispatch('resetProducts');
             if(localStorage.getItem('kgp_token')) {
-                this.searchEan(this.$store.state.barcode).then(res => {
+                this.searchEan(this.$store.state.barcode).then(() => {
 
                 }).catch(err => {
                     if(err.hasOwnProperty('response') && err.response.hasOwnProperty('status') && err.response.status === 401) {
@@ -193,6 +212,9 @@ export default {
             } else {
                 return this.login().catch(this.handleErr.bind(this));
             }
+        },
+        openLightbox($event, product) {
+            this.$store.dispatch('setLightboxContent', product.additional_information);
         },
         doSubmit() {
             if(!this.$store.getters.products.length) {
@@ -240,6 +262,15 @@ export default {
                 flex-wrap: nowrap;
             }
         }
+        &__info {
+            text-decoration: underline;
+            background: #fff;
+            color: rgb(12, 104, 154);
+            padding: 2px 5px 5px 5px;
+            display: inline-block;
+            margin-top: 5px;
+            cursor: pointer;
+        }
         &__product {
             font-size: 1.2rem;
             margin-bottom: 5px;
@@ -247,6 +278,15 @@ export default {
         &__icon {
             position: relative;
             top: 7px;
+        }
+        &__hint {
+            background: #fff;
+            padding: 5px 25px 10px 25px;
+            margin-top: 25px;
+            color: #0e6899;
+        }
+        &__address {
+            font-style: normal;
         }
         &__date {
             width: 22%;
@@ -258,6 +298,10 @@ export default {
             background: rgba(255,255,255,.1);
             padding: 5px;
             margin-right: 5%;
+            span {
+                width: 100%;
+                display: block;
+            }
         }
         &__time {
             width: 100%;
@@ -377,6 +421,5 @@ export default {
     &--open {
         max-height: 1500px;
     }
-
 }
 </style>

@@ -1,8 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { actions } from './actions';
-import { mutations } from './mutations';
-import { getters } from './getters';
+import {
+    actions
+} from './actions';
+import {
+    mutations
+} from './mutations';
+import {
+    getters
+} from './getters';
 
 Vue.use(Vuex);
 
@@ -14,7 +20,6 @@ const state = {
     user: {
         firstname: '',
         name: '',
-        email: '',
         zip: ''
     },
     step: 1,
@@ -22,7 +27,8 @@ const state = {
     userSet: false,
     menuOpen: false,
     nagscreen: false,
-    lastRoute: ''
+    lastRoute: '',
+    lightboxContent: ''
 };
 
 // A Vuex instance is created by combining the state, mutations, actions,

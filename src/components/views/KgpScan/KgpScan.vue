@@ -54,7 +54,7 @@
                         <button class="form__button" type="submit">
                             Produkt suchen
                         </button>
-                        <mq-layout :mq="['small','medium']">
+                        <mq-layout class="form__inline" :mq="['small','medium']">
                             <router-link class="form__button  form__button--delete" v-bind:to="{ name : 'Statistiken' }">
                                 Statistiken ansehen
                             </router-link>
