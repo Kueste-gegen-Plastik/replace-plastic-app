@@ -124,7 +124,7 @@ export default {
     color: #fff;
     text-align: center;
     font-family: 'Slabo 27px';
-    font-size: 23px;
+    @include fluid-type(23px, 32px);
     border: none;
     padding: 0;
     margin: 0 4vw;
@@ -139,7 +139,7 @@ export default {
     padding-left: 10px;
     border-left: 5px solid rgba(255, 255, 255, 0.6);
     font-style: italic;
-    font-size: 14px;
+    @include fluid-type(14px, 19px);
   }
   &__fieldset {
     border: none;
@@ -170,6 +170,7 @@ export default {
     left: 20px;
     top: 1.5rem;
     transition: all .2s ease-out;
+    @include fluid-type(17px, 23px);
     sup {
       color: #f76259;
     }
@@ -180,16 +181,16 @@ export default {
         /* text-shadow: 0 0 2px #ffffff; */
         color: #ffffff;
         text-transform: uppercase;
-        font-size: 13px;
+        @include fluid-type(13px, 17px);
     }
   }
   &__input {
-    height: 42px;
+    height: 2.2em;
     width: calc(100% - 30px);
     border: none;
     color: #fff;
     border-bottom: 2px solid rgba(3, 60, 106, 0.55);
-    font-size: 17px;
+    @include fluid-type(17px, 23px);
     padding: 0 15px;
     font-family: 'Slabo 27px';
     background: rgba(255, 255, 255, 0.23);
@@ -198,7 +199,7 @@ export default {
     background: #f86259;
     color: #fff;
     font-family: 'Slabo 27px';
-    font-size: 18px;
+    @include fluid-type(18px, 25px);
     border: none;
     text-decoration: none;
     border-bottom: 5px solid rgba(0,0,0,.17);

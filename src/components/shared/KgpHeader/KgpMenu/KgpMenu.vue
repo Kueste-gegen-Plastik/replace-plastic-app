@@ -233,6 +233,7 @@ export default {
     text-transform: uppercase;
     font-family: 'Slabo 27px', sans-serif;
     padding: 3.5vh 0;
+    @include fluid-type(16px, 22px);
     border-bottom: 1px solid #fff;
     text-decoration: none;
   }

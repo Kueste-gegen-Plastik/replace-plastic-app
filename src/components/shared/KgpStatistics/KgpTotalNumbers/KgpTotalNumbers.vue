@@ -187,6 +187,7 @@ export default {
         display: block;
         width: 100%;
         margin-bottom: 10px;
+        @include fluid-type(16px, 22px);
     }
     span {
         font-size: 25px;

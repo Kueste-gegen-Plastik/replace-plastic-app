@@ -269,16 +269,16 @@ body {
     &--primary {
         text-align: center;
         font-family: 'Slabo 27px';
-        font-size: 25px;
+        @include fluid-type(25px, 36px);
         border: none;
         padding: 0 4vw;
         margin: 0 auto;
     }
     &--secondary {
-        font-size: 20px;
+        @include fluid-type(20px, 30px);
     }
     &--tertiary {
-        font-size: 18px;
+        @include fluid-type(18px, 25px);
     }
     &__inner {
         &--primary {

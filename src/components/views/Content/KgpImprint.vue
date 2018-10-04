@@ -133,11 +133,12 @@ export default {
 
 <style lang="scss">
 .content {
+    line-height: 1.4;
     a {
         color: #fff;
     }
     p, ul {
-        font-size: 14px;
+        @include fluid-type(14px, 20px);
     }
 }
 </style>
