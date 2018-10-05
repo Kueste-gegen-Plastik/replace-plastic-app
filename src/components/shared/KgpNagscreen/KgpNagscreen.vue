@@ -89,11 +89,11 @@ export default {
     &__inner {
         position: fixed;
         text-align: center;
-        left: 10vw;
+        left: 0;
         top: 10vh;
         box-sizing: border-box;
-        width: 80vw;
-        height: 80vh;
+        width: 100vw;
+        height: 90vh;
         background: url('../../../KgpApp.png') center center no-repeat;
         background-size: cover;
         padding: 10vh 4vw;

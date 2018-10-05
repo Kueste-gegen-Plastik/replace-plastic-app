@@ -21,6 +21,10 @@
                 <p>
                     Wir danken: Tanja Lücker, Stephan Schakulat, Mike Schindler, Klara Aylin Wenten.
                 </p>
+                <p>Unterstützt durch Teilnehmer der:</p>
+                <p>
+                    <img src="img/dpl_logo.png" alt="Deutsche Postcode Lotterie" />
+                </p>
             </div>
         </div>
     </div>

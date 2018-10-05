@@ -114,6 +114,7 @@
                     <li><a href="https://thenounproject.com/search/?q=postcards&i=1080191">"postcard" by artworkbean from the Noun Project</a></li>
                     <li><a href="https://thenounproject.com/search/?q=envelope&i=1071783">"envelope" by Icon Depot from the Noun Project</a></li>
                     <li><a href="https://thenounproject.com/search/?q=factory&i=1778310">Factory Building by iconsphere from the Noun Project</a></li>
+                    <li><a href="https://thenounproject.com/search/?q=share&i=1973669">Share by Remco Homberg from the Noun Project</a></li>
                 </ul>
 
             </div>
@@ -139,6 +140,10 @@ export default {
     }
     p, ul {
         @include fluid-type(14px, 20px);
+    }
+    img {
+        max-width: 100%;
+        height: auto;
     }
 }
 </style>

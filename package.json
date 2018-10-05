@@ -19,8 +19,10 @@
     "barcoder": "^2.0.1",
     "chart.js": "^2.7.2",
     "cordova-plugin-launchscreen-storyboard": "^2.0.0",
+    "cordova-plugin-x-socialsharing": "^5.4.1",
     "countup.js": "^1.9.3",
     "date-fns": "^1.29.0",
+    "es6-promise-plugin": "^4.2.2",
     "quagga": "^0.12.1",
     "register-service-worker": "^1.0.0",
     "typeface-lato": "0.0.54",
@@ -57,7 +59,8 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-launchscreen-storyboard": {},
-      "cordova-plugin-splashscreen": {}
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-x-socialsharing": {}
     }
   }
 }

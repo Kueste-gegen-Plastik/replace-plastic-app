@@ -209,7 +209,6 @@ body {
     overflow: hidden;
     overflow-y: auto;
     margin-top: 2vh;
-    height: 84vh;
     @include bp(medium) {
         overflow: visible;
         overflow-y: visible;
@@ -224,7 +223,7 @@ body {
     }
     &__inner {
         margin: 4vw;
-        padding: 0 2vw 30px 2vw;
+        padding: 0 4vw 30px 4vw;
         max-width: 980px;
         margin: 4vw auto;
         @include bp(medium) {

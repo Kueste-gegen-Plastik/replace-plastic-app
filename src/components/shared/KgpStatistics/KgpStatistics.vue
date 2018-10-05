@@ -29,6 +29,9 @@
                 <h2 class="headline headline--secondary headline--centered">Kürzlich versandte Mails</h2>
                 <kgp-latest-mails :mails="mails_details"></kgp-latest-mails>
             </div>
+            <div v-if="loading" class="stats-loading">
+                <bounce-loader :loading="loading" color="#fff"></bounce-loader>
+            </div>
         </div>
     </div>
 </template>
@@ -40,6 +43,7 @@ import KgpDoughnut from './charts/KgpDoughnut/KgpDoughnut'
 import KgpWordCloud from './KgpWordCloud/KgpWordCloud'
 import KgpLatestProducts from './KgpLatestProducts/KgpLatestProducts'
 import KgpLatestMails from './KgpLatestMails/KgpLatestMails'
+import BounceLoader from 'vue-spinner/src/BounceLoader';
 import { handleError } from '@/mixins/handleError'
 
 export default {
@@ -53,6 +57,7 @@ export default {
             latest_products: [],
             mails_details: [],
             top_vendors: null,
+            loading: true,
             chartOptions: {
                 legend: {
                     position: 'bottom',
@@ -81,21 +86,42 @@ export default {
             this.vendor_count = res.vendor_count;
             this.top_vendors = res.top_vendors.slice(0,15);
             this.latest_products = res.latest_products && res.latest_products.length ? res.latest_products.slice(0,5) : [];
-            this.mails_details = res.mails_details && res.mails_details.length ? res.mails_details.slice(0,5) : [];
-        }).catch( err => this.handleError(err) );
+            this.mails_details = res.mails_details && res.mails_details.length ? res.mails_details.slice(0,5) : []; 
+            this.loading = false;
+        }).catch( err => {
+            this.handleError(err) 
+            this.loading = false;
+        });
     },
     components: {
         KgpDoughnut,
         KgpLatestProducts,
         KgpTotalNumbers,
         KgpLatestMails,
-        KgpWordCloud
+        KgpWordCloud,
+        BounceLoader
     },
     mixins:[handleError]
 };
 </script>
 <style>
+.kgp-statistics {
+    position: relative;
+}
 .stats-container {
     margin-bottom: 40px;
+}
+.stats-loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>

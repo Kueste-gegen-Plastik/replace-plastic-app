@@ -38,8 +38,7 @@
         <allow-intent href="itms-apps:*" />
         <splash src="www/img/Default@2x~universal~anyany.png" />
     </platform>
-    
-    <preference name="FadeSplashScreen" value="true"/>
+    <preference name="FadeSplashScreen" value="true" />
     <preference name="AutoHideSplashScreen" value="true" />
     <plugin name="phonegap-plugin-barcodescanner" spec="~6.0.6" />
     <plugin name="cordova-plugin-android-permissions" spec="~0.11.0" />
@@ -50,4 +49,5 @@
     <variable name="MICROPHONE_USAGE_DESCRIPTION" value="This app needs microphone access" />
     <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="This app needs photo library access" />
     <plugin name="cordova-plugin-splashscreen" spec="~4.0.3" />
+    <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.1" />
 </widget>
