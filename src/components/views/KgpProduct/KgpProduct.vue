@@ -43,7 +43,7 @@
                             </span>
                             <div class="item-list__hint item-list__hint--info" v-if="product.vendor_wants_contact">
                                 <h3 class="headline headline--tertiary">Hinweis:</h3>
-                                Dieser Hersteller wünscht eine persönliche Kontaktaufnahme durch Kunden.<br />
+                                Dieser Anbieter wünscht eine persönliche Kontaktaufnahme durch Kunden.<br />
                                 Bitte melden Sie sich bei Interesse unter:<br />
                                 <address class="item-list__address" v-html="product.vendor_contact_address">
                                 </address>
@@ -65,7 +65,7 @@
                     <div class="letter__inner">
                         <h2 class="headline">
                             <span class="headline__inner">
-                                Diese E-Mail wird der Hersteller erhalten:
+                                Diese E-Mail wird der Anbieter erhalten:
                             </span>
                         </h2>
                         <h3 class="headline headline--tertiary">Sehr geehrte Damen und Herren,</h3>

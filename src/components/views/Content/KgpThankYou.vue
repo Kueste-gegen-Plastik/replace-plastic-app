@@ -16,7 +16,7 @@
                     Neuwerk Rechtsanwälte, Michael Pfeiffer-Härtl, Achim Schmacks, Frank Timrott, Jennifer Timrott, Felix Wahner.
                 </p>
                 <p>
-                    Das Konzept zu dieser App ist im Rahmen des Wissenschaftsjahres Meere und Ozeane bei der Ozeanwerkstatt Kiel auf der MS Wissenschaft entstanden. Inspiriert durch einen Kurzvortrag unseres Vereins Küste gegen Plastik e.V. und unsere Idee, mit einer App durch einen Barcode-Scan die Stimme des Kunden zum Hersteller zu bringen, fand sich auf dem Schiff ein Team, das die Idee voranbringen wollte und zwei Tage lang ein Konzept ausgearbeitet hat. Für das vorgestellte Konzept haben wir bei der Ozeanwerkstatt den ersten Preis, die Goldene Kieler Sprotte, gewonnen.
+                    Das Konzept zu dieser App ist im Rahmen des Wissenschaftsjahres Meere und Ozeane bei der Ozeanwerkstatt Kiel auf der MS Wissenschaft entstanden. Inspiriert durch einen Kurzvortrag unseres Vereins Küste gegen Plastik e.V. und unsere Idee, mit einer App durch einen Barcode-Scan die Stimme des Kunden zum Anbieter zu bringen, fand sich auf dem Schiff ein Team, das die Idee voranbringen wollte und zwei Tage lang ein Konzept ausgearbeitet hat. Für das vorgestellte Konzept haben wir bei der Ozeanwerkstatt den ersten Preis, die Goldene Kieler Sprotte, gewonnen.
                 </p>
                 <p>
                     Wir danken: Tanja Lücker, Stephan Schakulat, Mike Schindler, Klara Aylin Wenten.

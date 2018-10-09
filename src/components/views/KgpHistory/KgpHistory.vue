@@ -16,7 +16,7 @@
                         <li class="producitemt-list__item" v-for="product in history" v-bind:key="product.barcode">
                             <button title="Eintrag löschen" class="item-list__delete" type="button" @click.prevent="deleteEntry(product)">X</button>
                             <strong>Name:</strong> {{ product.name }}<span v-if="product.detailname">: {{ product.detailname }}</span><br>
-                            <strong>Hersteller:</strong> {{ product.vendor }}<br>
+                            <strong>Anbieter:</strong> {{ product.vendor }}<br>
                             <strong>Barcode:</strong> {{ product.barcode }}
                         </li>
                     </ul>

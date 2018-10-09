@@ -19,13 +19,13 @@
                     Es gibt zu viele Plastikverpackungen für Produkte des täglichen Bedarfs.
                 </slide>
                 <slide>
-                    Hersteller sagen: „Der Verbraucher will es so.“<br>Das sehen wir anders.
+                    Hersteller und Anbieter sagen: „Der Verbraucher will es so.“<br>Das sehen wir anders.
                 </slide>
                 <slide>
-                    Mit dieser App scannst du die Barcodes von Produkten, die du verwenden oder kaufen würdest, um dem Hersteller mitzuteilen, dass du dir dafür Verpackungen ohne Plastik wünschst.
+                    Mit dieser App scannst du die Barcodes von Produkten, die du verwenden oder kaufen würdest, um dem Anbieter mitzuteilen, dass du dir dafür Verpackungen ohne Plastik wünschst.
                 </slide>
                 <slide>
-                    Ein Feedback wird von uns an die Produzenten weitergeleitet.
+                    Dein Feedback wird von uns weitergeleitet.
                 </slide>
             </carousel>
             <div class="nagscreen__button">

@@ -69,11 +69,11 @@ export default {
     methods: {
         isApp() {
             return process.env.BUILD_OS !== 'web';
-        },  
+        },
         share() {
             if(typeof window.plugins !== 'undefined') {
                 window.plugins.socialsharing.shareWithOptions({
-                    message: 'Mit dieser App wollen wir den Herstellern von Produkten sagen, dass wir uns andere Verpackungen wünschen. Damit sie endlich anfangen, beim Produktdesign auf umweltverträgliche Verpackungen zu achten und die Entwicklung von abbaubaren Materialien voranzutreiben.',
+                    message: 'Mit dieser App wollen wir den Anbietern von Produkten sagen, dass wir uns andere Verpackungen wünschen. Damit sie endlich anfangen, beim Produktdesign auf umweltverträgliche Verpackungen zu achten und die Entwicklung von abbaubaren Materialien voranzutreiben.',
                     subject: 'Sieh dir die App ReplacePlastic an!',
                     url: 'https://www.replaceplastic.de',
                 });

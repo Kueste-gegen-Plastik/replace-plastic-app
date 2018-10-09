@@ -6,7 +6,7 @@
                 </div>
                 <div class="item-list__content">
                 <strong class="item-list__product">{{ product.name }}<span v-if="product.detailname">: {{ product.detailname }}</span></strong><br>
-                <strong>Hersteller:</strong> {{ product.vendor }}<br>
+                <strong>Anbieter:</strong> {{ product.vendor }}<br>
                 <strong>Barcode:</strong> {{ product.barcode }}
                 </div>
             </li>

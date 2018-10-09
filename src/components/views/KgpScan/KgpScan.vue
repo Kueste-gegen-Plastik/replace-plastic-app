@@ -123,7 +123,7 @@ export default {
             // handle native app scanning
             if (typeof window.cordova !== 'undefined' && Object.prototype.hasOwnProperty.call(window.cordova.plugins, 'barcodeScanner')) {
                 // android 6+ has a new permission system. hooray.
-                if (device.platform == 'Android' && parseInt(device.version.substr(0, 1)) >= 6) {
+                if (window.cordova.platformId == 'Android' && parseInt(window.cordova.platformVersion.substr(0, 1)) >= 6) {
                     var permissions = cordova.plugins.permissions;
                     // first check if the camera permission was already granted
                     permissions.checkPermission(permissions.CAMERA, (status) => {

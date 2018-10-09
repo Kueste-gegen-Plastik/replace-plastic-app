@@ -116,7 +116,7 @@
                                     V971.665z"/>
                             </g>
                         </svg>
-                        <div class="count-items__headline">Hersteller verzeichnet:</div>
+                        <div class="count-items__headline">Anbieter verzeichnet:</div>
                         <ICountUp
                             :startVal="0"
                             :endVal="vendorCount"
