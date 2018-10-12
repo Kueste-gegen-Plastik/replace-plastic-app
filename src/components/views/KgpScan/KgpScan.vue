@@ -28,7 +28,13 @@
         <div class="left">
             <div class="step__inner step__inner--scan">
                 <h2 class="headline headline--primary">
-                    <span class="headline__inner headline__inner--primary">
+                    <span class="headline__inner headline__inner--primary scan__headline">
+                        <button title="Worum geht`s?" v-if="!nagscreen" class="helper" @click="showNagscreen">
+
+                            <span class="helper__icon">
+                                ?
+                            </span>
+                        </button>
                         Produkt scannen
                     </span>
                 </h2>
@@ -61,6 +67,22 @@
                         </mq-layout>
                     </div>
                 </form>
+                <div class="sponsors">
+                    <hr class="waves" />
+                    <h5 class="headline headline--centered headline--tertiary">Gefördert durch:</h5>
+                    <div class="sponsors__list">
+                        <div class="sponsors__item">
+                            <a href="https://www.postcode-lotterie.de/" target="_blank">
+                                <img src="img/dpl_logo.png" alt="Deutsche Postcode Lotterie" />
+                            </a>
+                        </div>
+                        <div class="sponsors__item">
+                            <a href="https://www.neuwaerts.de/" target="_blank">
+                                <img src="img/neuwaerts.png" alt="neuwaerts GmbH" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div v-show="webScanActive" class="scan__container">
                 <button v-on:click.prevent="closeWebAppScan()" class="scan__close form__button">Scanner schließen</button>
@@ -105,9 +127,15 @@ export default {
         },
         error() {
             return this.$store.getters.error
+        },
+        nagscreen() {
+            return this.$store.getters.nagscreen;
         }
     },
     methods: {
+        showNagscreen() {
+            this.$store.dispatch('nagscreen', true);
+        },
         handleError(code) {
             this.$store.dispatch('setError', code)
         },
@@ -271,9 +299,67 @@ export default {
 </script>
 
 <style lang="scss">
+.sponsors {
+    padding: 20px 0;
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+    &__item {
+        width: 20%;
+        padding: 10px;
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+}
+.helper {
+    $context: &;
+    position: absolute;
+    border: none;
+    background: transparent;
+    font-family: 'Slabo 27px';
+    font-weight: normal;
+    font-size: 20px;
+    outline: none;
+    display: flex;
+    top: -20px;
+    right: -20px;
+    &__title {
+        overflow: hidden;
+        display: inline-block;
+        max-width: 0px;
+        color: #f86259;
+        white-space: nowrap;
+        transition: all .3s ease-in;
+        text-decoration: underline;
+        background: rgba(255, 255, 255, .95);
+        #{$context}:hover & {
+            max-width: 300px;
+            padding: 0 5px;
+        }
+    }
+    &__icon {
+        font-family: 'Slabo 27px';
+        background: rgba(#f86259,.8);
+        top: 11vh;
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        font-size: 23px;
+        display: inline-block;
+        border-radius: 50%;
+    }
+}
 .scan {
     text-align: center;
     margin-top: 10px;
+    &__headline {
+        position: relative;
+    }
     &__button {
         background-color: #f76259;
         width: 40vw;

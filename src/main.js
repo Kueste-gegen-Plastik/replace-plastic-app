@@ -7,6 +7,7 @@ require('typeface-lato')
 if (process.env.BUILD_OS === 'web') {
     import('./registerServiceWorker');
 }
+
 import Vue from 'vue'
 
 import VueScrollTo from 'vue-scrollto'

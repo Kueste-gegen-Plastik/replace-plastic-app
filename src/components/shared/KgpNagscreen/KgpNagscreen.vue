@@ -111,6 +111,10 @@ export default {
     font-weight: normal;
     display: block;
     width: 80%;
-    margin-left: 10%;
+    max-width: 980px;
+    margin: 0 auto;
+    &-slide {
+        @include fluid-type(14px, 20px);
+    }
 }
 </style>

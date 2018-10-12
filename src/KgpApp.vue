@@ -151,9 +151,6 @@ body {
     padding-top: constant(safe-area-inset-top); /* iOS 11.0 */
     padding-top: env(safe-area-inset-top); /* iOS 11.2 */
     margin: 0;
-    @include bp(medium) {
-        overflow: visible;
-    }
 }
 .symbols {
     display: none;
@@ -161,12 +158,11 @@ body {
 .app {
     background: url('./KgpApp.png') no-repeat;
     background-size: cover;
-    min-height: 100vh;
     font-family: 'Lato', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #fff;
-    padding-top: 13vh;
+    padding-top: calc(10vh + 30px);
     will-change: background-position;
     transition: all .5s ease-in;
     &--step-2 {
@@ -187,7 +183,6 @@ body {
     height: 100%;
     width: 100%;
     position: relative;
-    margin: 0 auto;
     @include bp(medium) {
         overflow: visible;
     }
@@ -208,12 +203,9 @@ body {
 .step {
     overflow: hidden;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     margin-top: 2vh;
-    @include bp(medium) {
-        overflow: visible;
-        overflow-y: visible;
-        height: auto;
-    }
+    height: 80.4vh;
     transition: all .2s ease-in;
     &--flex {
         @include bp(medium) {

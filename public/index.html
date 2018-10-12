@@ -8,23 +8,29 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <title>ReplacePlastic</title>
-    <script>
-      var crdva = document.createElement('script');
-      crdva.setAttribute('src','./cordova.js');
-      document.head.appendChild(crdva);
-    </script>
-    <script>
-      var crdva = document.createElement('script');
-      crdva.setAttribute('src','./js/SocialSharing.js');
-      document.head.appendChild(crdva);
-    </script>
-    <script>
-      document.addEventListener("deviceready", function() {
-          if(typeof window.LaunchScreen !== 'undefined') {
-              window.LaunchScreen.hide();
-          }
-      }, false);
-    </script>
+        <script>
+            if(document.URL.indexOf('http') === -1) {
+                var crdva = document.createElement('script');
+                crdva.setAttribute('src','./cordova.js');
+                document.head.appendChild(crdva);
+            }
+        </script>
+        <script>
+            if(document.URL.indexOf('http') === -1) {
+                var crdva = document.createElement('script');
+                crdva.setAttribute('src','./js/SocialSharing.js');
+                document.head.appendChild(crdva);
+            }
+        </script>
+        <script>
+            if(document.URL.indexOf('http') === -1) {
+                document.addEventListener("deviceready", function() {
+                    if(typeof window.LaunchScreen !== 'undefined') {
+                        window.LaunchScreen.hide();
+                    }
+                }, false);
+            }
+        </script>
   </head>
   <body>
     <noscript>

@@ -8,9 +8,9 @@
     "build": "vue-cli-service build",
     "build:staging": "vue-cli-service build --mode staging",
     "lint": "vue-cli-service lint",
-    "build-ios": "npx cross-env BUILD_OS=ios npm run build && cordova build --release ios",
-    "build-android": "npx cross-env BUILD_OS=android npm run build && cordova build --release android",
-    "build-web": "npx cross-env BUILD_OS=web npm run build",
+    "build-ios": "npx cross-env-shell BUILD_OS=ios npm run build && cordova build --release ios",
+    "build-android": "npx cross-env-shell BUILD_OS=android npm run build && cordova build --release android",
+    "build-web": "npx cross-env-shell BUILD_OS=web npm run build",
     "release-android": "./release-android.sh",
     "resources": "npx cordova-splash --config=config.xml --splash=./resources/splash.png && npx cordova-icon --config=config.xml --icon=./resources/icon.png"
   },
