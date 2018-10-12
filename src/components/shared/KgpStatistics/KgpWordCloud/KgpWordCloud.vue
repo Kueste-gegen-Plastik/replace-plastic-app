@@ -15,10 +15,7 @@ export default {
     components: {
         [VueWordCloud.name]: VueWordCloud,
     },
-    props: ['data'],
-    mounted() {
-        console.log("DATA", this.data);
-    }
+    props: ['data']
 }
 </script>
 <style lang="scss">

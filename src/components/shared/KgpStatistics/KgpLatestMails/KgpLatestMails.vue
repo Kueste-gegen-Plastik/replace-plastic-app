@@ -41,7 +41,7 @@ export default {
     filters: {
         formatDate(value) {
             if (!value) return '';
-            value = parse(value);
+            value = new Date(parseInt(value)*1000);
             let dmy = format(value,'DD.MM.YYYY'),
                 time = format(value, 'HH:mm')
             return `

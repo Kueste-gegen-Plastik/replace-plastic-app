@@ -114,7 +114,7 @@ export default {
     max-width: 980px;
     margin: 0 auto;
     &-slide {
-        @include fluid-type(14px, 20px);
+        @include fluid-type(16px, 20px);
     }
 }
 </style>

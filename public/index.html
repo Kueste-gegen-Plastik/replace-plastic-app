@@ -2,39 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi, viewport-fit=cover" />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <meta name="format-detection" content="telephone=no" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <meta name="msapplication-tap-highlight" content="no" />
-    <title>ReplacePlastic</title>
-        <script>
-            if(document.URL.indexOf('http') === -1) {
-                var crdva = document.createElement('script');
-                crdva.setAttribute('src','./cordova.js');
-                document.head.appendChild(crdva);
-            }
-        </script>
-        <script>
-            if(document.URL.indexOf('http') === -1) {
-                var crdva = document.createElement('script');
-                crdva.setAttribute('src','./js/SocialSharing.js');
-                document.head.appendChild(crdva);
-            }
-        </script>
-        <script>
-            if(document.URL.indexOf('http') === -1) {
-                document.addEventListener("deviceready", function() {
-                    if(typeof window.LaunchScreen !== 'undefined') {
-                        window.LaunchScreen.hide();
-                    }
-                }, false);
-            }
-        </script>
+    <meta name="theme-color" content="#259ecc" />
+    <title>ReplacePlastic - Scanne Barcodes von Produkten die mit zu viel Plastik verpackt sind.</title>
+    <script>
+        if(document.URL.indexOf('http') === -1) {
+            var crdva = document.createElement('script');
+            crdva.setAttribute('src','./cordova.js');
+            document.head.appendChild(crdva);
+        }
+    </script>
+    <script>
+        if(document.URL.indexOf('http') === -1) {
+            var crdva = document.createElement('script');
+            crdva.setAttribute('src','./js/SocialSharing.js');
+            document.head.appendChild(crdva);
+        }
+    </script>
+    <script>
+        if(document.URL.indexOf('http') === -1) {
+            document.addEventListener("deviceready", function() {
+                if(typeof window.LaunchScreen !== 'undefined') {
+                    window.LaunchScreen.hide();
+                }
+            }, false);
+        }
+    </script>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but replaceplastic doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>Um die ReplacePlastic-App richtig darstellen zu können, muss in deinem Browser JavaScript aktiviert sein.</strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
