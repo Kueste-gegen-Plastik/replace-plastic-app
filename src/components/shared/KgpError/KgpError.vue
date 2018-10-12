@@ -40,6 +40,7 @@ export default {
 
 <style lang="scss">
 .error {
+    z-index: 6;
     position: fixed;
     left: 0;
     top: 10vh;
@@ -67,6 +68,7 @@ export default {
         border: 1px solid rgba(248, 98, 89, 0.32);;
         color: #fff;
         padding: 10px;
+        background: rgb(3, 60, 106);
         border-radius: 10px;
         border: 1px solid #fff;
         margin: 20px 0;

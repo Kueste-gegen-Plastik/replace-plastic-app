@@ -1,6 +1,8 @@
 <template>
-    <div class="step__inner">
-        <kgp-statistics></kgp-statistics>
+    <div class="step">
+        <div class="step__inner">
+            <kgp-statistics></kgp-statistics>
+        </div>
     </div>
 </template>
 
