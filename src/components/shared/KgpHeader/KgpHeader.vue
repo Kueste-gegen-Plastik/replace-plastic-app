@@ -105,6 +105,7 @@ export default {
 .header {
     background: #fff;
     position: fixed;
+
     top: 0;
     left: 0;
     right: 0;

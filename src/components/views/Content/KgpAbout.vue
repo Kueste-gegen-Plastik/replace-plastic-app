@@ -7,6 +7,7 @@
         </h2>
         <div class="step__inner">
             <div class="content">
+                <img src="img/header_uber_uns.jpg" alt="Plastikmüll" />
                 <p>
                     Der Plastikmüll im Meer hat dramatische Ausmaße angenommen. Jede Verpackung und jedes Stück Plastik, das in die Umwelt gelangt, kann dort Jahrhunderte überdauern. Plastik kann in der Umwelt nicht abgebaut werden, es wird nur immer weiter zerkleinert und bedroht zahlreiche Lebewesen.
                 </p>
@@ -16,6 +17,10 @@
                 <p>
                     Hersteller und Anbieter sagen oft: „Der Verbraucher will es so.“ Das sehen wir anders. Mit dieser App wollen wir den Anbietern von Produkten mitteilen, dass wir uns andere Verpackungen wünschen, damit sie anfangen, die Entwicklung von abbaubaren Materialien voranzutreiben und Alternativen bereitzustellen. Mit der App kannst du Produkte scannen, die du verwendest oder kaufen würdest, um mitzuteilen, dass du dir für diese Produkte Verpackungen ohne Plastik wünschst. Dieses Feedback wird von uns weitergeleitet.
                 </p>
+
+                <button type="button" v-on:click.prevent="goHome" class="form__button">
+                    Jetzt loslegen und Produkte scannen
+                </button>
             </div>
         </div>
     </div>
@@ -27,6 +32,11 @@ export default {
     name: 'kgp-about',
     data() {
         return {}
+    },
+    methods: {
+        goHome() {
+            this.$router.push('/');
+        }
     }
 };
 </script>

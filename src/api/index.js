@@ -1,10 +1,7 @@
 import axios from 'axios'
-import {
-    config
-} from '@/config';
 
 export const HTTP = axios.create({
-    baseURL: config.endpoint
+    baseURL: process.env.VUE_APP_API_ENDPOINT
 })
 
 HTTP.interceptors.request.use(interceptorConfig => {

@@ -10,22 +10,34 @@
             </h2>
             <carousel :perPage="1" paginationActiveColor="#033c6a">
                 <slide>
-                    Plastikmüll im Meer verursacht enorme Probleme. Ein großer Teil gelangt vom Land her über die Flüsse ins Meer.
+                    <span class="nagscreen__headline">
+                        Plastikmüll im Meer verursacht enorme Probleme. Ein großer Teil gelangt vom Land her über die Flüsse ins Meer.
+                    </span>
                 </slide>
                 <slide>
+                    <span class="nagscreen__headline">
                     Verpackungen spielen dabei eine große Rolle.
+                    </span>
                 </slide>
                 <slide>
+                    <span class="nagscreen__headline">
                     Es gibt zu viele Plastikverpackungen für Produkte des täglichen Bedarfs.
+                    </span>
                 </slide>
                 <slide>
+                    <span class="nagscreen__headline">
                     Hersteller und Anbieter sagen: „Der Verbraucher will es so.“<br>Das sehen wir anders.
+                    </span>
                 </slide>
                 <slide>
+                    <span class="nagscreen__headline">
                     Mit dieser App scannst du die Barcodes von Produkten, die du verwenden oder kaufen würdest, um dem Anbieter mitzuteilen, dass du dir dafür Verpackungen ohne Plastik wünschst.
+                    </span>
                 </slide>
                 <slide>
+                    <span class="nagscreen__headline">
                     Dein Feedback wird von uns weitergeleitet.
+                    </span>
                 </slide>
             </carousel>
             <div class="nagscreen__button">
@@ -71,6 +83,22 @@ export default {
     box-sizing: border-box;
     background: rgba(#fff, .96);
     align-items: center;
+    &__headline {
+        position: relative;
+        z-index: 2;
+        color: #033c6a;
+    }
+    &__image {
+        opacity: .4;
+        position: absolute;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
     &__button {
         text-align: center;
     }
@@ -108,13 +136,17 @@ export default {
 }
 .VueCarousel {
     font-family: 'Slabo 27px';
-    font-weight: normal;
     display: block;
     width: 80%;
     max-width: 980px;
     margin: 0 auto;
     &-slide {
-        @include fluid-type(16px, 20px);
+        object-fit: cover;
+        @include fluid-type(18px, 22px);
+        min-height: 20vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 </style>

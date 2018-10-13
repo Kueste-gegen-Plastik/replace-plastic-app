@@ -4,33 +4,41 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi, viewport-fit=cover" />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <link rel="icon" href="https://www.replaceplastic.de/favicon.ico" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="theme-color" content="#259ecc" />
-    <title>ReplacePlastic - Scanne Barcodes von Produkten die mit zu viel Plastik verpackt sind.</title>
-    <script>
-        if(document.URL.indexOf('http') === -1) {
+    <meta name="description" content="Mit dieser App scannst du die Barcodes von Produkten, um dem Hersteller mitzuteilen, dass du dir dafür Verpackungen ohne Plastik wünschst.">
+    <meta itemprop="name" content="ReplacePlastic - Teile Herstellern mit, dass Du dir Verpackungen ohne Plastik wünschst.">
+    <meta itemprop="description" content="Mit dieser App scannst du die Barcodes von Produkten, um dem Hersteller mitzuteilen, dass du dir dafür Verpackungen ohne Plastik wünschst.">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="ReplacePlastic - Teile Herstellern mit, dass Du dir Verpackungen ohne Plastik wünschst.">
+    <meta name="twitter:description" content="Mit dieser App scannst du die Barcodes von Produkten, um dem Hersteller mitzuteilen, dass du dir dafür Verpackungen ohne Plastik wünschst.">
+    <meta name="og:title" content="ReplacePlastic - Teile Herstellern mit, dass Du dir Verpackungen ohne Plastik wünschst.">
+    <meta name="og:description" content="Mit dieser App scannst du die Barcodes von Produkten, um dem Hersteller mitzuteilen, dass du dir dafür Verpackungen ohne Plastik wünschst.">
+    <meta name="og:image" content="https://www.replaceplastic.de/img/sharing/share.png">
+    <meta name="og:url" content="https://www.replaceplastic.de/">
+    <meta name="og:site_name" content="ReplacePlastic.de">
+    <meta name="og:locale" content="de_DE">
+    <meta name="og:type" content="app">
+    <%if (process.env.VUE_APP_TARGET_OS === 'android' || process.env.VUE_APP_TARGET_OS === 'ios') { %>
+        <script>
             var crdva = document.createElement('script');
             crdva.setAttribute('src','./cordova.js');
             document.head.appendChild(crdva);
-        }
-    </script>
-    <script>
-        if(document.URL.indexOf('http') === -1) {
+        </script>
+        <script>
             var crdva = document.createElement('script');
             crdva.setAttribute('src','./js/SocialSharing.js');
             document.head.appendChild(crdva);
-        }
-    </script>
-    <script>
-        if(document.URL.indexOf('http') === -1) {
+        </script>
+        <script>
             document.addEventListener("deviceready", function() {
                 if(typeof window.LaunchScreen !== 'undefined') {
                     window.LaunchScreen.hide();
                 }
             }, false);
-        }
-    </script>
+        </script>
+    <% } %>
   </head>
   <body>
     <noscript>

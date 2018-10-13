@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import { config } from '@/config';
 
 const isUserValid = (usr) => {
     let isValid = false;
@@ -94,11 +93,11 @@ export default {
 
             this.$store.dispatch('setUserKey', {
                 type: 'password',
-                val: config.password
+                val: process.env.VUE_APP_API_PASSWORD
             });
             this.$store.dispatch('setUserKey', {
                 type: 'username',
-                val: config.username
+                val: process.env.VUE_APP_API_USERNAME
             })
             var storedUser = localStorage.getItem('kgp_user');
             var nextRoute = !storedUser || !isUserValid(JSON.parse(storedUser)) ? '/scan' : '/send';
@@ -117,6 +116,9 @@ export default {
     background-size: contain;
     margin: 0;
     padding: 0;
+    &--dark {
+        background-image: url('./waves_dark.svg');
+    }
 }
 .form {
 
@@ -199,15 +201,27 @@ export default {
     background: #f86259;
     color: #fff;
     font-family: 'Slabo 27px';
+    cursor: pointer;
     @include fluid-type(18px, 25px);
     border: none;
     text-decoration: none;
     border-bottom: 5px solid rgba(0,0,0,.17);
     padding: 1.7vh 4vw;
     margin-top: 2vh;
+    position: relative;
+    transform: translateY(0);
+    transition: all .2s ease-in;
+    &:hover {
+        background: darken( #f86259, 10);
+        transform: translateY(-2px);
+    }
     &--error {
         background: #fff;
         color: #033c6a;
+        &:hover {
+            background: darken( #fff, 10);
+            transform: translateY(-2px);
+        }
     }
     &--error-outline {
         background: transparent;
@@ -217,6 +231,10 @@ export default {
     }
     &--delete {
         background: #ccc;
+        &:hover {
+            background: darken( #ccc, 10);
+            transform: translateY(-2px);
+        }
     }
   }
 }

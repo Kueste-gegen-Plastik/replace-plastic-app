@@ -127,7 +127,6 @@
 
 <script>
 import Api from '@/api';
-import { config } from '@/config';
 import BounceLoader from 'vue-spinner/src/BounceLoader';
 import KgpError from '@/components/shared/KgpError/KgpError';
 import { messages } from '@/config/constants';
@@ -164,8 +163,8 @@ export default {
         },
         login(retry = false) {
             return Api.login({
-                username: config.username,
-                password: config.password
+                username: process.env.VUE_APP_API_USERNAME,
+                password: process.env.VUE_APP_API_PASSWORD
             }).then(res => {
                 this.$store.dispatch('setToken', res.data.token);
                 this.msg = 'Durchsuche die Produktdatenbank...';

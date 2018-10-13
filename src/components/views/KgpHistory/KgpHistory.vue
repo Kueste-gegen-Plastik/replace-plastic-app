@@ -38,7 +38,6 @@
 
 <script>
 import Api from '@/api';
-import { config } from '@/config';
 import KgpError from '@/components/shared/KgpError/KgpError';
 
 export default {

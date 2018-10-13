@@ -4,16 +4,23 @@
 require('typeface-slabo-13px')
 require('typeface-slabo-27px')
 require('typeface-lato')
-if (process.env.BUILD_OS === 'web') {
+if (process.env.VUE_APP_TARGET_OS === 'web') {
     import('./registerServiceWorker');
 }
 
 import Vue from 'vue'
 
+if (process.env.NODE_ENV === 'production') {
+    Vue.config.productionTip = false
+}
+
 import VueScrollTo from 'vue-scrollto'
 import VueMq from 'vue-mq'
-Vue.use(VueScrollTo)
+import VueTour from 'vue-tour'
+import 'vue-tour/dist/vue-tour.css'
 
+Vue.use(VueScrollTo)
+Vue.use(VueTour)
 Vue.use(VueMq, {
     breakpoints: {
         small: 468,
@@ -26,8 +33,6 @@ Vue.use(VueMq, {
 import KgpApp from './KgpApp'
 import router from './router'
 import store from './store'
-
-Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 const ReplacePlasticApp = new Vue({

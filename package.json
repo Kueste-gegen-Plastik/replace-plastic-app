@@ -8,9 +8,9 @@
     "build": "vue-cli-service build",
     "build:staging": "vue-cli-service build --mode staging",
     "lint": "vue-cli-service lint",
-    "build-ios": "npx cross-env-shell BUILD_OS=ios npm run build && cordova build --release ios",
-    "build-android": "npx cross-env-shell BUILD_OS=android npm run build && cordova build --release android",
-    "build-web": "npx cross-env-shell BUILD_OS=web npm run build",
+    "build-ios": "vue-cli-service build --mode ios && cordova build --release ios",
+    "build-android": "vue-cli-service build --mode android && cordova build --release android",
+    "build-web": "vue-cli-service build --mode production",
     "release-android": "./release-android.sh",
     "resources": "npx cordova-splash --config=config.xml --splash=./resources/splash.png && npx cordova-icon --config=config.xml --icon=./resources/icon.png"
   },
@@ -44,6 +44,7 @@
     "vue-router": "^3.0.1",
     "vue-scrollto": "^2.11.0",
     "vue-spinner": "^1.0.3",
+    "vue-tour": "^1.0.1",
     "vue2-animate": "^2.0.0",
     "vuewordcloud": "^18.7.11",
     "vuex": "^3.0.1"

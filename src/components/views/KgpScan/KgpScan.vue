@@ -67,22 +67,6 @@
                         </mq-layout>
                     </div>
                 </form>
-                <div class="sponsors">
-                    <hr class="waves" />
-                    <h5 class="headline headline--centered headline--tertiary">Gefördert durch:</h5>
-                    <div class="sponsors__list">
-                        <div class="sponsors__item">
-                            <a href="https://www.postcode-lotterie.de/" target="_blank">
-                                <img src="img/dpl_logo.png" alt="Deutsche Postcode Lotterie" />
-                            </a>
-                        </div>
-                        <div class="sponsors__item">
-                            <a href="https://www.neuwaerts.de/" target="_blank">
-                                <img src="img/neuwaerts.png" alt="neuwaerts GmbH" />
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div v-show="webScanActive" class="scan__container">
                 <button v-on:click.prevent="closeWebAppScan()" class="scan__close form__button">Scanner schließen</button>
@@ -94,6 +78,7 @@
                 <kgp-statistics></kgp-statistics>
             </mq-layout>
         </div>
+        <kgp-sponsors></kgp-sponsors>
     </div>
 </template>
 
@@ -103,12 +88,13 @@ import Api from '@/api'
 import Barcoder from 'barcoder'
 import KgpError from '@/components/shared/KgpError/KgpError'
 import KgpStatistics from '@/components/shared/KgpStatistics/KgpStatistics'
-
+import KgpSponsors from '@/components/shared/KgpSponsors/KgpSponsors'
 export default {
     name: 'kgp-scan',
     components: {
         KgpError,
-        KgpStatistics
+        KgpStatistics,
+        KgpSponsors
     },
     data() {
         return {
@@ -116,10 +102,13 @@ export default {
             isValidEan: false,
             isWeb: false,
             webScanActive: false
+
         };
     },
     beforeCreate() {
         this.$store.dispatch('setStep', 1)
+    },
+    mounted() {
     },
     computed: {
         barcode() {
@@ -194,7 +183,6 @@ export default {
             let detectionHash = {};
             const errorHandler = (err) => {
                 if (err) {
-                    console.log("ERRR!!!");
                     this.handleError('42');
                     return;
                 }
@@ -299,23 +287,7 @@ export default {
 </script>
 
 <style lang="scss">
-.sponsors {
-    padding: 20px 0;
-    &__list {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-    }
-    &__item {
-        width: 20%;
-        padding: 10px;
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-    }
-}
+
 .helper {
     $context: &;
     position: absolute;
@@ -371,9 +343,15 @@ export default {
         outline: none;
         border: 10px solid rgba(0, 0, 0, .17);
         margin: 2vh 0;
-        transition: background-color .2s ease-in;
+        transition: all .2s ease-in;
+        transform: translateY(0) scale(1);
+        cursor: pointer;
         &:active, &:focus {
             background-color: #fff;
+        }
+        &:hover {
+            background: darken( #f86259, 10);
+            transform: translateY(-2px) scale(1.05);
         }
     }
     &__icon {

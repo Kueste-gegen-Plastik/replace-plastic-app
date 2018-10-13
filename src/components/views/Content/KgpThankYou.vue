@@ -21,31 +21,20 @@
                 <p>
                     Wir danken: Tanja Lücker, Stephan Schakulat, Mike Schindler, Klara Aylin Wenten.
                 </p>
-                <div class="sponsors">
-                    <hr class="waves" />
-                    <h5 class="headline headline--centered headline--tertiary">Gefördert durch:</h5>
-                    <div class="sponsors__list">
-                        <div class="sponsors__item">
-                            <a href="https://www.postcode-lotterie.de/" target="_blank">
-                                <img src="img/dpl_logo.png" alt="Deutsche Postcode Lotterie" />
-                            </a>
-                        </div>
-                        <div class="sponsors__item">
-                            <a href="https://www.neuwaerts.de/" target="_blank">
-                                <img src="img/neuwaerts.png" alt="neuwaerts GmbH" />
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
+        <kgp-sponsors></kgp-sponsors>
     </div>
 </template>
 
 
 <script>
+import KgpSponsors from '@/components/shared/KgpSponsors/KgpSponsors'
 export default {
     name: 'kgp-thankyou',
+    components: {
+        KgpSponsors
+    },
     data() {
         return {}
     }

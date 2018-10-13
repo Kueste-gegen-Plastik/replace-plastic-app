@@ -19,7 +19,7 @@
                 </router-link>
             </li>
         </ul>
-        <button v-if="isApp()" v-on:click="share()" class="menu__share">
+        <button v-if="canShare()" v-on:click="share()" class="menu__share">
             <span class="menu__shareinner">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 125" version="1.1" x="0px" y="0px">
                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><path d="M65.63645,75.10205 C61.86695,75.10205 58.80095,72.03555 58.80095,68.26605 C58.80095,64.49705 61.86695,61.43055 65.63645,61.43055 C69.40595,61.43055 72.47245,64.49705 72.47245,68.26605 C72.47245,72.03555 69.40595,75.10205 65.63645,75.10205 M27.87795,51.18905 C27.87795,47.41955 30.94445,44.35305 34.71345,44.35305 C38.48295,44.35305 41.54945,47.41955 41.54945,51.18905 C41.54945,54.95805 38.48295,58.02455 34.71345,58.02455 C30.94445,58.02455 27.87795,54.95805 27.87795,51.18905 M65.63645,25.37805 C69.40595,25.37805 72.47245,28.44455 72.47245,32.21355 C72.47245,35.98305 69.40595,39.04955 65.63645,39.04955 C61.86695,39.04955 58.80095,35.98305 58.80095,32.21355 C58.80095,28.44455 61.86695,25.37805 65.63645,25.37805 M65.63645,55.05255 C61.47495,55.05255 57.75845,56.98855 55.33445,60.00505 L47.03545,55.95205 C47.60945,54.47305 47.92745,52.86805 47.92745,51.18905 C47.92745,49.45905 47.58995,47.80755 46.98245,46.29155 L56.09445,41.34005 C58.50145,43.85555 61.88795,45.42705 65.63645,45.42705 C72.92245,45.42705 78.85045,39.49955 78.85045,32.21355 C78.85045,24.92755 72.92245,19.00005 65.63645,19.00005 C58.35045,19.00005 52.42295,24.92755 52.42295,32.21355 C52.42295,33.45805 52.59945,34.66205 52.92295,35.80455 L43.21295,41.08205 C40.91345,39.14505 37.94845,37.97505 34.71345,37.97505 C27.42745,37.97505 21.49995,43.90305 21.49995,51.18905 C21.49995,58.47455 27.42745,64.40255 34.71345,64.40255 C37.98745,64.40255 40.98495,63.20305 43.29545,61.22355 L52.65795,65.79605 C52.50545,66.59655 52.42295,67.42205 52.42295,68.26605 C52.42295,75.55205 58.35045,81.48005 65.63645,81.48005 C72.92245,81.48005 78.85045,75.55205 78.85045,68.26605 C78.85045,60.98055 72.92245,55.05255 65.63645,55.05255" fill="#004d8e"/>
@@ -67,16 +67,28 @@ export default {
         };
     },
     methods: {
-        isApp() {
-            return process.env.BUILD_OS !== 'web';
+        canShare() {
+            // in App
+            if(process.env.VUE_APP_TARGET_OS !== 'web' || navigator.share) {
+                return true;
+            }
+            return false;
         },
         share() {
-            if(typeof window.plugins !== 'undefined') {
-                window.plugins.socialsharing.shareWithOptions({
-                    message: 'Mit dieser App wollen wir den Anbietern von Produkten sagen, dass wir uns andere Verpackungen wünschen. Damit sie endlich anfangen, beim Produktdesign auf umweltverträgliche Verpackungen zu achten und die Entwicklung von abbaubaren Materialien voranzutreiben.',
-                    subject: 'Sieh dir die App ReplacePlastic an!',
+            if(navigator.share) {
+                navigator.share({
+                    title: 'Sieh dir die App "ReplacePlastic" an!',
+                    text: 'ReplacePlastic - Teile Herstellern mit, dass Du dir Verpackungen ohne Plastik wünschst.',
                     url: 'https://www.replaceplastic.de',
                 });
+            } else {
+                if(typeof window.plugins !== 'undefined') {
+                    window.plugins.socialsharing.shareWithOptions({
+                        text: 'ReplacePlastic - Teile Herstellern mit, dass Du dir Verpackungen ohne Plastik wünschst.',
+                        subject: 'Sieh dir die App "ReplacePlastic" an!',
+                        url: 'https://www.replaceplastic.de',
+                    });
+                }
             }
         },
         toggleMenu() {

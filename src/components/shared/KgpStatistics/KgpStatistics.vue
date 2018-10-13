@@ -85,7 +85,9 @@ export default {
             this.product_count = res.product_count;
             this.vendor_count = res.vendor_count;
             this.top_vendors = res.top_vendors.slice(0,16).filter(itm => itm != '--');
-            this.latest_products = res.latest_products && res.latest_products.length ? res.latest_products.slice(0,5) : [];
+            this.latest_products = res.latest_products && res.latest_products.length ? res.latest_products.slice(0,5).filter(function(item, pos, self) {
+                return self.indexOf(item) == pos;
+            }) : [];
             this.mails_details = res.mails_details && res.mails_details.length ? res.mails_details.slice(0,5) : [];
             this.loading = false;
         }).catch( err => {

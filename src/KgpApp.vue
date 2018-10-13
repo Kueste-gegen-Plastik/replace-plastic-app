@@ -88,6 +88,30 @@
                 <router-view></router-view>
             </transition>
         </div>
+        <v-tour name="kgp-scan" :steps="steps" :callbacks="tourCallbacks">
+            <template slot-scope="tour">
+                <transition name="fade">
+                <v-step
+                    v-if="tour.currentStep === index"
+                    v-for="(step, index) of tour.steps"
+                    :key="index"
+                    :step="step"
+                    :previous-step="tour.previousStep"
+                    :next-step="tour.nextStep"
+                    :stop="tour.stop"
+                    :isFirst="tour.isFirst"
+                    :isLast="tour.isLast"
+                >
+                    <template>
+                        <div slot="actions">
+                            <button @click.prevent="tour.nextStep" v-if="!tour.isLast" class="v-step__button">nächster Tip</button>
+                            <button @click.prevent="tour.stop" v-if="tour.isLast" class="v-step__button">Tour beenden</button>
+                        </div>
+                    </template>
+                </v-step>
+                </transition>
+            </template>
+        </v-tour>
     </div>
 </template>
 
@@ -103,7 +127,37 @@ export default {
         return {
             transition : 'slideUp',
             keyboardShown : false,
-            hasSeenNagscreen : true
+            hasSeenNagscreen : true,
+            tourCallbacks: {
+                onStop: this.tourStopCallback
+            },
+            steps: [
+                {
+                    target: '.scan__button',
+                    content: `Drücken Sie den <strong>Scan-Button</strong> um den Barcode-Scanner zu öffnen. Halten sie danach den Barcode des Produktes vor die Kamera.`,
+                    params: {
+                        placement: 'top'
+                    }
+                },
+                {
+                    target: '#ean',
+                    content: 'Alternativ können Sie auch <strong>selber einen Barcode eingeben</strong>.'
+                },
+                {
+                    target: '.menu',
+                    content: 'Das <strong>Menü</strong> beeinhaltet weitere Informationen zur App sowie eine Übersicht der bereits von Ihnen gescannten Produkte.',
+                },
+                {
+                    target: '.helper__icon',
+                    content: 'Um die <strong>Einführung zu App</strong> erneut anzusehen, berühren Sie das Fragezeichen-Icon.'
+                },
+
+            ]
+        }
+    },
+    methods: {
+        tourStopCallback() {
+            localStorage.setItem('kgp_tour', true);
         }
     },
     computed: {
@@ -119,7 +173,8 @@ export default {
     },
     mounted() {
         var usr = localStorage.getItem('kgp_user'),
-            history = localStorage.getItem('kgp_history');
+            history = localStorage.getItem('kgp_history'),
+            seenTour = localStorage.getItem('kgp_tour');
         if(usr) {
             this.$store.dispatch('setUser', JSON.parse(usr));
         }
@@ -127,6 +182,9 @@ export default {
             this.$store.dispatch('setHistory', JSON.parse(history));
         }
         localStorage.removeItem('kgp_token');
+        if(!seenTour) {
+            this.$tours['kgp-scan'].start();
+        }
     },
     watch: {
         '$route' (to, from) {
@@ -155,6 +213,25 @@ body {
 .symbols {
     display: none;
 }
+.v-tour {
+    .v-step {
+        -webkit-filter: drop-shadow(0 0 10px rgba(0,0,0,.5));
+        filter: drop-shadow(0 0 10px rgba(0,0,0,.5));
+        z-index: 20;
+        color: #033c6a;
+        font-family: 'Slabo 27px';
+        background: #fff;
+        .v-step__arrow {
+            border-color: #fff;
+        }
+        .v-step__button {
+            color: #fff;
+            border-color:  transparent;
+            background: #f76259;
+        }
+    }
+}
+
 .app {
     background: url('./KgpApp.png') no-repeat;
     background-size: cover;
@@ -270,6 +347,9 @@ body {
     }
     &--tertiary {
         @include fluid-type(18px, 25px);
+    }
+    &--dark {
+        color: rgb(3, 60, 106);
     }
     &__inner {
         &--primary {

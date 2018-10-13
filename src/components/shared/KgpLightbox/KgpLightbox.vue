@@ -9,8 +9,6 @@
 
 
 <script>
-import { config } from '@/config';
-import errors from '@/config/constants';
 import { mapState } from 'vuex';
 
 export default {

@@ -14,7 +14,6 @@
 
 
 <script>
-import { config } from '@/config';
 import errors from '@/config/constants';
 
 export default {
