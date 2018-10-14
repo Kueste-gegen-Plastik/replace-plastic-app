@@ -158,6 +158,7 @@ export default {
     methods: {
         tourStopCallback() {
             localStorage.setItem('kgp_tour', true);
+            this.$store.dispatch('setSeenTour', localStorage.getItem('kgp_tour'))
         }
     },
     computed: {
@@ -169,12 +170,15 @@ export default {
         },
         nagscreen() {
             return this.$store.getters.nagscreen;
+        },
+        seenTour() {
+            return this.$store.getters.seenTour;
         }
     },
     mounted() {
         var usr = localStorage.getItem('kgp_user'),
-            history = localStorage.getItem('kgp_history'),
-            seenTour = localStorage.getItem('kgp_tour');
+            history = localStorage.getItem('kgp_history');
+        this.$store.dispatch('setSeenTour', localStorage.getItem('kgp_tour'));
         if(usr) {
             this.$store.dispatch('setUser', JSON.parse(usr));
         }
@@ -182,7 +186,7 @@ export default {
             this.$store.dispatch('setHistory', JSON.parse(history));
         }
         localStorage.removeItem('kgp_token');
-        if(!seenTour) {
+        if(!this.$store.getters.seenTour) {
             this.$tours['kgp-scan'].start();
         }
     },
@@ -195,7 +199,12 @@ export default {
                 });
                 this.transition = ['Scan','Product','Form','Submit'].indexOf(to.name) > routeNames.indexOf(from.name) ?  'slideLeft' : 'slideRight';
             } else {
-                this.transition = ['Impressum','Datenschutz','Ueber'].indexOf(to.name) ? 'slideLeft' : 'slideRight';
+                this.transition = ['Impressum','Datenschutz','Ueber', 'History','Thankyou','Statistiken'].indexOf(to.name) ? 'slideLeft' : 'slideRight';
+            }
+        },
+        'seenTour' (newValue, oldValue) {
+            if(!!newValue === false) {
+                this.$tours['kgp-scan'].start();
             }
         }
     }

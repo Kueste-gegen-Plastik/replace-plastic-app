@@ -92,16 +92,16 @@ export default {
             }
         },
         toggleMenu() {
-            if(!this.menuOpen) {
+/*             if(!this.menuOpen) {
                 // save the last state to jump back there later on
                 if(['Scan','Product','Form','Submit'].indexOf(this.$route.name) > -1) {
                     this.$store.dispatch('setLastRoute', this.$route.path);
                 }
-            }
+            } */
             this.$store.dispatch('menuOpen', !this.menuOpen);
-            if(!this.menuOpen) {
+  /*           if(!this.menuOpen) {
                 this.$router.push(this.$store.getters.lastRoute);
-            }
+            } */
         },
         closeMenu() {
             this.$store.dispatch('menuOpen', false);

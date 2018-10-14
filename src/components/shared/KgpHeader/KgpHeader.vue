@@ -38,47 +38,14 @@ export default {
             let to = '';
             switch(this.$route.name) {
                 case 'Form':
-                    if(localStorage.getItem('kgp_user')) {
-                        to = this.$store.getters.lastRoute;
+                    if(this.$store.getters.barcode != '') {
+                        to = 'Product';
                     } else {
-                        if (navigator.app) {
-                            navigator.app.exitApp();
-                        } else if (navigator.device) {
-                            navigator.device.exitApp();
-                        } else {
-                            window.close();
-                        }
+                        to = 'Scan';
                     }
-                break;
-                case 'Scan':
-                    if(localStorage.getItem('kgp_user')) {
-                        if (navigator.app) {
-                            navigator.app.exitApp();
-                        } else if (navigator.device) {
-                            navigator.device.exitApp();
-                        } else {
-                            window.close();
-                        }
-                    } else {
-                        to = 'Form';
-                    }
-                break;
-                case 'Product':
-                    to = 'Scan';
-                break;
-                case 'Send':
-                    to = 'Scan';
                 break;
                 default:
-                    if(this.$store.getters.lastRoute) {
-                        to = this.$store.getters.lastRoute;
-                    } else {
-                        if(localStorage.getItem('kgp_user')) {
-                            to = 'Scan';
-                        } else {
-                            to = 'Form';
-                        }
-                     }
+                    to = 'Scan';
                 break;
             }
             this.$router.push(to);
@@ -91,7 +58,7 @@ export default {
     },
     watch: {
         '$route' (to, from) {
-            if(to.name == 'Send') {
+            if(to.name == 'Send' || to.name == 'Scan') {
                 this.showBack = false;
             } else {
                 this.showBack = true;

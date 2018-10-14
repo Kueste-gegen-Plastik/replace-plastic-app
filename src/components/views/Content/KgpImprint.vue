@@ -144,6 +144,8 @@ export default {
     img {
         max-width: 100%;
         height: auto;
+        box-shadow: 0 0 10px rgba(0,0,0,.2);
+        border: 3px solid rgba(255,255,255,.2);
     }
 }
 </style>

@@ -124,6 +124,7 @@ export default {
     methods: {
         showNagscreen() {
             this.$store.dispatch('nagscreen', true);
+            this.$store.dispatch('setSeenTour', false);
         },
         handleError(code) {
             this.$store.dispatch('setError', code)
@@ -367,6 +368,7 @@ export default {
         position: absolute;
         right: 0;
         top: 12vh;
+        z-index: 60;
     }
     &__container {
         position: fixed;
@@ -380,7 +382,7 @@ export default {
     }
     &__video {
         position: absolute;
-        top: 22vh;
+        top: 0;
         left: 0;
         bottom: 0;
         right: 0;
@@ -395,7 +397,7 @@ export default {
             top: 0;
             bottom: 0;
             right: 0;
-            z-index: 999;
+            z-index: 50;
         }
     }
 }

@@ -17,6 +17,9 @@ export const mutations = {
     RESETBARCODE(state) {
         state.barcode = ''
     },
+    SEENTOUR(state, seenTour) {
+        state.seenTour = seenTour;
+    },
     STEP(state, step) {
         state.step = step
     },

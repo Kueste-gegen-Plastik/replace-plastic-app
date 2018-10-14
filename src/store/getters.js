@@ -18,5 +18,6 @@ export const getters = {
     step: state => state.step,
     token: state => state.token,
     lastRoute: state => state.lastRoute,
-    nagscreen: state => state.nagscreen
+    nagscreen: state => state.nagscreen,
+    seenTour: state => state.seenTour
 };

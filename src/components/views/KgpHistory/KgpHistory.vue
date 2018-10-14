@@ -13,7 +13,7 @@
             <div class="product">
                 <div v-if="history.length" class="product__content">
                      <ul class="item-list">
-                        <li class="producitemt-list__item" v-for="product in history" v-bind:key="product.barcode">
+                        <li class="item-list__item" v-for="product in history" v-bind:key="product.barcode">
                             <button title="Eintrag löschen" class="item-list__delete" type="button" @click.prevent="deleteEntry(product)">X</button>
                             <strong>Name:</strong> {{ product.name }}<span v-if="product.detailname">: {{ product.detailname }}</span><br>
                             <strong>Anbieter:</strong> {{ product.vendor }}<br>
@@ -27,8 +27,8 @@
                 <p>
                     Sobald du Produkte gescannt und eingesendet hast, tauchen Sie hier auf.
                 </p>
-                <button v-if="!history.length" type="button" v-on:click.prevent="goHome" class="form__button">
-                    Jetzt loslegen und Produkte scannen
+                <button type="button" v-on:click.prevent="goHome" class="form__button">
+                    Jetzt loslegen und {{ history.length ? 'weitere Produkte' : 'Produkte' }} scannen
                 </button>
             </div>
         </div>

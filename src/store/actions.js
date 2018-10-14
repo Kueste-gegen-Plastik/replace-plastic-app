@@ -125,6 +125,11 @@ export const actions = {
     }, isOpen) => {
         commit('NAGSCREEN', isOpen)
     },
+    setSeenTour: ({
+        commit
+    }, seenTour) => {
+        commit('SEENTOUR', seenTour)
+    },
     setLastRoute: ({
         commit
     }, route) => {

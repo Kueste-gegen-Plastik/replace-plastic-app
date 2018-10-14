@@ -27,6 +27,7 @@ const state = {
     userSet: false,
     menuOpen: false,
     nagscreen: false,
+    seenTour: false,
     lastRoute: '',
     lightboxContent: ''
 };
