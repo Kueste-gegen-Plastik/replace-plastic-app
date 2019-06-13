@@ -75,6 +75,9 @@
             c3.416,4.235,8.151,6.344,14.211,6.332c5.071-0.01,10.634-1.535,16.688-4.576L478.089,168.728z" />
             </symbol>
         </svg>
+        <loading :active.sync="isLoading"
+            :can-cancel="false"
+            :is-full-page="true"></loading>
         <kgp-header></kgp-header>
         <kgp-nagscreen></kgp-nagscreen>
         <kgp-lightbox></kgp-lightbox>
@@ -119,9 +122,10 @@
 import KgpHeader from '@/components/shared/KgpHeader/KgpHeader';
 import KgpNagscreen from '@/components/shared/KgpNagscreen/KgpNagscreen';
 import KgpLightbox from '@/components/shared/KgpLightbox/KgpLightbox';
-
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
-    components: { KgpHeader, KgpNagscreen, KgpLightbox },
+    components: { KgpHeader, KgpNagscreen, KgpLightbox, Loading },
     name: 'KgpApp',
     data() {
         return {
@@ -173,6 +177,9 @@ export default {
         },
         seenTour() {
             return this.$store.getters.seenTour;
+        },
+        isLoading() {
+            return this.$store.state.isLoading;
         }
     },
     mounted() {
@@ -189,6 +196,7 @@ export default {
         if(!this.$store.getters.seenTour) {
             this.$tours['kgp-scan'].start();
         }
+        this.$store.dispatch('setLoading', false);
     },
     watch: {
         '$route' (to, from) {
@@ -200,6 +208,9 @@ export default {
                 this.transition = ['Scan','Product','Form','Submit'].indexOf(to.name) > routeNames.indexOf(from.name) ?  'slideLeft' : 'slideRight';
             } else {
                 this.transition = ['Impressum','Datenschutz','Ueber', 'History','Thankyou','Statistiken'].indexOf(to.name) ? 'slideLeft' : 'slideRight';
+            }
+           if(to.name.indexOf('scan') <= -1) {
+                this.$tours['kgp-scan'].stop();
             }
         },
         'seenTour' (newValue, oldValue) {

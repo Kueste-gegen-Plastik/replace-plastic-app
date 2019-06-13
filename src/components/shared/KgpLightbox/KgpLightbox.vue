@@ -57,13 +57,14 @@ export default {
         text-align: left;
         border: 1px solid rgba(248, 98, 89, 0.32);
         color: #fff;
-        padding: 20px;
-        border-radius: 10px;
+        padding: 30px;
         border: 1px solid #fff;
         margin: 20px 0;
         box-shadow: 2px 5px 0 #fff;
-        background: rgba(255,255,255,.8);
+        background: rgba(255,255,255,.9);
         color: #033c6a;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         @include bp('medium') {
             max-width: 980px;
             margin: 0 auto;

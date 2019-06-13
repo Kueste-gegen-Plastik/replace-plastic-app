@@ -31,6 +31,7 @@ export default {
     },
     methods: {
         goHome() {
+            this.$store.dispatch('resetState');
             this.$store.dispatch('menuOpen', false);
             this.$router.push('/');
         },

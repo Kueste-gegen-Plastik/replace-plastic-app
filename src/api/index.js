@@ -14,7 +14,6 @@ HTTP.interceptors.request.use(interceptorConfig => {
 }, (error) => Promise.reject(error))
 
 class Api {
-
     login(params) {
         return HTTP.post('/auth/local', params)
     }
@@ -28,9 +27,12 @@ class Api {
     }
 
     getStats() {
-        return HTTP.get(`/stats/`).then(res => res.data)
+        return HTTP.get(`/stats`).then(res => res.data)
     }
 
+    submitDraft(data) {
+        return HTTP.post(`/draft-products`, data).then(res => res.data)
+    }
 }
 
 const api = new Api()

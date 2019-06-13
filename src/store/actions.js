@@ -93,6 +93,18 @@ export const actions = {
         state.step = 1
         state.userSet = false
         state.menuOpen = false
+        state.draft = {
+            text_marke: '',
+            text_product: '',
+            text_productdetails: '',
+            text_amount: '',
+            text_descr: ''
+        };
+    },
+    setDraft: ({
+        commit
+    }, draft) => {
+        commit('DRAFT', draft)
     },
     setBarcode: ({
         commit
@@ -144,5 +156,10 @@ export const actions = {
         commit
     }) => {
         commit('RESETLIGHTBOXCONTENT')
+    },
+    setLoading: ({
+        commit
+    }, isLoading) => {
+        commit('LOADING', isLoading);
     },
 }

@@ -15,6 +15,11 @@ export const getters = {
     history: state => state.history,
     error: state => state.error,
     barcode: state => state.barcode,
+    isDraftValid: (state) => {
+        return ['text_marke', 'text_product', 'text_amount'].filter(itm => {
+            return typeof state.draft[itm] === 'undefined' || state.draft[itm] === '';
+        }).length === 0;
+    },
     step: state => state.step,
     token: state => state.token,
     lastRoute: state => state.lastRoute,

@@ -2,8 +2,8 @@
     <div class="sponsors">
         <hr class="waves waves--dark" />
         <div class="sponsors__border"></div>
-        <h5 class="headline headline--centered headline--dark headline--tertiary sponsors__headline">Auch als App verfügbar:</h5>
-        <div class="sponsors__list">
+        <h5 v-if="isWeb" class="headline headline--centered headline--dark headline--tertiary sponsors__headline">Auch als App verfügbar:</h5>
+        <div v-if="isWeb" class="sponsors__list">
             <div class="sponsors__item">
                 <a class="sponsors__link" href="https://play.google.com/store/apps/details?id=com.kuestegegenplastik.replaceplastic" target="_blank">
                     <img class="sponsors__image sponsors__image--google" src="img/google-play-badge.png" alt="replaceplastic jetzt bei Google Play" />
@@ -15,16 +15,16 @@
                 </a>
             </div>
         </div>
-        <hr class="waves waves--dark" />
+        <hr v-if="isWeb"  class="waves waves--dark" />
         <h5 class="headline headline--centered headline--dark headline--tertiary sponsors__headline">Gefördert durch:</h5>
         <div class="sponsors__list">
             <div class="sponsors__item">
-                <a class="sponsors__link" href="https://www.postcode-lotterie.de/" target="_blank">
+                <a class="sponsors__link" @click.prevent="openExternalLink('https://www.postcode-lotterie.de/')"  href="https://www.postcode-lotterie.de/" target="_blank">
                     <img class="sponsors__image sponsors__image--pc" src="img/dpl_logo.png" alt="Deutsche Postcode Lotterie" />
                 </a>
             </div>
             <div class="sponsors__item">
-                <a class="sponsors__link" href="https://www.bewegungsstiftung.de/" target="_blank">
+                <a class="sponsors__link" @click.prevent="openExternalLink('https://www.bewegungsstiftung.de/')" href="https://www.bewegungsstiftung.de/" target="_blank">
                     <img class="sponsors__image sponsors__image--bs" src="img/bs_logo.png" alt="Bewegungsstiftung - Anstöße für soziale Bewegungen" />
                 </a>
             </div>
@@ -33,7 +33,7 @@
         <h5 class="headline headline--centered headline--dark headline--tertiary sponsors__headline">Design & Umsetzung:</h5>
         <div class="sponsors__list">
             <div class="sponsors__item">
-                <a class="sponsors__link" href="https://www.neuwaerts.de/" target="_blank">
+                <a class="sponsors__link" @click.prevent="openExternalLink('https://www.neuwaerts.de/')" href="https://www.neuwaerts.de/" target="_blank">
                     <img class="sponsors__image sponsors__image--nw" src="img/neuwaerts.png" alt="neuwaerts GmbH" />
                 </a>
             </div>
@@ -41,8 +41,15 @@
     </div>
 </template>
 <script>
+import { openExternalLink } from '@/mixins/openExternalLink';
 export default {
     name: 'kgp-sponsors',
+    mixins: [openExternalLink],
+    computed: {
+        isWeb() {
+            return process.env.VUE_APP_TARGET_OS === 'web';
+        }
+    },
     data() {
         return {}
     }

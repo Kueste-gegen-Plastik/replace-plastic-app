@@ -121,7 +121,6 @@ export default {
     }
 }
 .form {
-
   &__legend {
     color: #fff;
     text-align: center;
@@ -132,17 +131,34 @@ export default {
     margin: 0 4vw;
     background: rgba(3, 60, 106, 0.5);
     padding: 2px 5px;
+    &--dark {
+        color: rgb(3, 60, 106);
+        background: transparent;
+        @include fluid-type(30px, 35px);
+    }
   }
-  &__inline {
-      display: inline-block;
-      margin-left: 10px;
-  }
-  &__description {
-    padding-left: 10px;
-    border-left: 5px solid rgba(255, 255, 255, 0.6);
-    font-style: italic;
-    @include fluid-type(14px, 19px);
-  }
+    &__inline {
+        display: inline-block;
+        margin-left: 10px;
+    }
+    &__hint {
+        display: block;
+        @include fluid-type(12px, 14px);
+        padding: 3px;
+        background: #fff;
+        font-style: italic;
+        color: #033c6a;
+        transition: all .2s ease-out;
+        &--filled {
+            opacity: .5;
+        }
+    }
+    &__description {
+        padding-left: 10px;
+        border-left: 5px solid rgba(255, 255, 255, 0.6);
+        font-style: italic;
+        @include fluid-type(14px, 19px);
+    }
   &__fieldset {
     border: none;
     margin: 0;
@@ -151,7 +167,7 @@ export default {
 
   &__formrow {
     position: relative;
-    padding: 2.5vh 0;
+    padding: 2vh 0;
     &--wrap {
         display: flex;
         flex-wrap: nowrap;
@@ -180,10 +196,12 @@ export default {
         top: -11px;
         left: 0;
         padding: 2px 5px;
-        /* text-shadow: 0 0 2px #ffffff; */
         color: #ffffff;
         text-transform: uppercase;
         @include fluid-type(13px, 17px);
+    }
+    &--dark {
+        color: rgb(3, 60, 106);
     }
   }
   &__input {
@@ -196,6 +214,13 @@ export default {
     padding: 0 15px;
     font-family: 'Slabo 27px';
     background: rgba(255, 255, 255, 0.23);
+    &--dark {
+        background: #fff;
+        color: rgb(3, 60, 106);
+    }
+    &--textarea {
+        height: 4.4em;
+    }
   }
   &__button {
     background: #f86259;

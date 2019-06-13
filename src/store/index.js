@@ -29,7 +29,16 @@ const state = {
     nagscreen: false,
     seenTour: false,
     lastRoute: '',
-    lightboxContent: ''
+    lightboxContent: '',
+    isLoading: true,
+    draft: {
+        text_marke: '',
+        text_product: '',
+        text_productdetails: '',
+        text_amount: '',
+        text_descr: ''
+    },
+    sentDraft: false
 };
 
 // A Vuex instance is created by combining the state, mutations, actions,

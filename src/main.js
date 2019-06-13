@@ -6,6 +6,12 @@ require('typeface-slabo-27px')
 require('typeface-lato')
 if (process.env.VUE_APP_TARGET_OS === 'web') {
     import('./registerServiceWorker');
+} else {
+    document.addEventListener("deviceready", () => {
+        if (typeof window.cordova !== 'undefined' && Object.prototype.hasOwnProperty.call(window.cordova.plugins, 'InAppBrowser')) {
+            window.open = window.cordova.InAppBrowser.open;
+        }
+    }, false);
 }
 
 import Vue from 'vue'
@@ -17,9 +23,11 @@ if (process.env.NODE_ENV === 'production') {
 import VueScrollTo from 'vue-scrollto'
 import VueMq from 'vue-mq'
 import VueTour from 'vue-tour'
+import Toasted from 'vue-toasted'
 import 'vue-tour/dist/vue-tour.css'
 
 Vue.use(VueScrollTo)
+Vue.use(Toasted)
 Vue.use(VueTour)
 Vue.use(VueMq, {
     breakpoints: {

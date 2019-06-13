@@ -62,5 +62,14 @@ export const mutations = {
     },
     RESETLIGHTBOXCONTENT(state) {
         state.lightboxContent = '';
-    }
+    },
+    TOGGLE_DRAFT_FORM(state) {
+        state.showDraftForm = !state.showDraftForm;
+    },
+    DRAFT(state, draft) {
+        state.draft = draft;
+    },
+    LOADING(state, isLoading) {
+        state.isLoading = isLoading;
+    },
 };

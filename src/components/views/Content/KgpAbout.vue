@@ -21,6 +21,36 @@
                 <button type="button" v-on:click.prevent="goHome" class="form__button">
                     Jetzt loslegen und Produkte scannen
                 </button>
+
+                <br />
+                <br />
+                <hr class="waves">
+                <br />
+                <br />
+
+                <h2 class="headline headline--primary">
+                    <span class="headline__inner headline__inner--primary">
+                        Lizenz
+                    </span>
+                </h2>
+                <br />
+                <br />
+                <div style="text-align:center;">
+                    <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
+                        <img alt="Creative Commons Lizenzvertrag" style="border-width:0; margin: 0 auto;" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+                    </a>
+                </div>
+                <br />
+                <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Dataset" property="dct:title" rel="dct:type">ReplacePlastic App</span>
+                von <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Küste gegen Plastik e.V.</span>
+                ist lizenziert unter einer
+                <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
+                    Creative Commons Namensnennung-Nicht kommerziell 4.0 International Lizenz
+                </a>.
+
+                <p>Wenn Ihr selbst etwas Ähnliches wie ReplacePlastic für andere Anliegen machen und unsere App als Vorlage nutzen möchtet oder wenn Ihr diese App als Instrument für den Kampf gegen Plastikmüll in Eurem Land verwenden möchtet, nehmt bitte gerne Kontakt zu uns auf: <a href="mailto:post@kueste-gegen-plastic.de">post@kueste-gegen-plastic.de</a>. Wir freuen uns, zusammen die Welt ein wenig besser machen zu können.</p>
+
+                <p>If you want to do something similar like ReplacePlastic for different purposes or use this App as an instrument for your fight against plastic waste in your country, please contact us: <a href="mailto:post@kueste-gegen-plastic.de">post@kueste-gegen-plastic.de</a>. We are glad to be able to make the world a little better together.</p>
             </div>
         </div>
     </div>

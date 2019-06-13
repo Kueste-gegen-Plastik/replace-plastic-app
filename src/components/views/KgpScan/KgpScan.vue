@@ -30,7 +30,6 @@
                 <h2 class="headline headline--primary">
                     <span class="headline__inner headline__inner--primary scan__headline">
                         <button title="Worum geht`s?" v-if="!nagscreen" class="helper" @click="showNagscreen">
-
                             <span class="helper__icon">
                                 ?
                             </span>
@@ -67,6 +66,17 @@
                         </mq-layout>
                     </div>
                 </form>
+                <br />
+                <br />
+                <hr class="waves" />
+                <a href="https://www.kueste-gegen-plastik.de/andersmacher/" @click.prevent="openExternalLink('https://www.kueste-gegen-plastik.de/andersmacher/')" target="_blank" class="success-stories">
+                    <h2 class="headline headline--primary">Andersmacher</h2>
+                    <p class="success-stories__text">
+                        Unternehmen, die sich das Plastikproblem zu Herzen genommen haben, finden Sie auf unserer Website <u>www.kueste-gegen-plastik.de</u>.
+                    </p>
+                    <div class="success-stories__arrow">→</div>
+                </a>
+
             </div>
             <div v-show="webScanActive" class="scan__container">
                 <button v-on:click.prevent="closeWebAppScan()" class="scan__close form__button">Scanner schließen</button>
@@ -84,11 +94,24 @@
 
 <script>
 import Quagga from 'quagga'
-import Api from '@/api'
+import api from '@/api'
 import Barcoder from 'barcoder'
 import KgpError from '@/components/shared/KgpError/KgpError'
 import KgpStatistics from '@/components/shared/KgpStatistics/KgpStatistics'
 import KgpSponsors from '@/components/shared/KgpSponsors/KgpSponsors'
+import { handleError } from '@/mixins/handleError';
+import { openExternalLink } from '@/mixins/openExternalLink';
+
+const createError = (code) => {
+    return {
+        response: {
+            data: {
+                code: code
+            }
+        }
+    };
+}
+
 export default {
     name: 'kgp-scan',
     components: {
@@ -96,6 +119,7 @@ export default {
         KgpStatistics,
         KgpSponsors
     },
+    mixins: [handleError, openExternalLink],
     data() {
         return {
             cantScan: false,
@@ -107,8 +131,6 @@ export default {
     },
     beforeCreate() {
         this.$store.dispatch('setStep', 1)
-    },
-    mounted() {
     },
     computed: {
         barcode() {
@@ -125,9 +147,6 @@ export default {
         showNagscreen() {
             this.$store.dispatch('nagscreen', true);
             this.$store.dispatch('setSeenTour', false);
-        },
-        handleError(code) {
-            this.$store.dispatch('setError', code)
         },
         updateBarcode(e) {
             this.$store.dispatch('setBarcode', e.target.value)
@@ -156,16 +175,15 @@ export default {
                                     this.nativeScan();
                                 }, () => {
                                     // permission rejected
-                                    this.handleError('007');
+                                    this.handleError(createError('007'));
                                 });
                             } catch(err) {
-                                this.handleError('007');
+                                this.handleError(createError('007'));
                             }
                         }
                     }, (err) => {
                         // error while requesting permission status
-                        console.log(err);
-                        this.handleError('007');
+                        this.handleError(createError('007'));
                     });
                 } else {
                     this.nativeScan();
@@ -184,7 +202,7 @@ export default {
             let detectionHash = {};
             const errorHandler = (err) => {
                 if (err) {
-                    this.handleError('42');
+                    this.handleError(createError('42'));
                     return;
                 }
                 Quagga.start();
@@ -245,6 +263,7 @@ export default {
             }, errorHandler);
         },
         handleBarcodeSubmit() {
+            this.$store.dispatch('setLoading', true);
             if (Barcoder.validate(this.barcode)) {
                 var history = this.$store.getters.history;
                 var found = 0;
@@ -254,13 +273,15 @@ export default {
                     }).length;
                 }
                 if(!found > 0) {
-                    this.$router.push('/product');
+                    this.loadProduct();
                 } else {
-                    this.handleError('88');
+                    this.$store.dispatch('setLoading', false);
+                    this.handleError(createError('88'));
                 }
                 return true;
             } else {
-                this.handleError('0815');
+                this.$store.dispatch('setLoading', false);
+                this.handleError(createError('0815'));
                 return false;
             }
         },
@@ -270,7 +291,7 @@ export default {
                 this.$store.dispatch('setBarcode', result.text)
                 this.handleBarcodeSubmit()
             }, (error) => {
-                this.handleError('42')
+                this.handleError(createError('42'))
             }, {
                 preferFrontCamera: false, // iOS and Android
                 showFlipCameraButton: true, // iOS and Android
@@ -282,13 +303,109 @@ export default {
                 disableAnimations: true, // iOS
                 disableSuccessBeep: false // iOS
             });
-        }
+        },
+        login(retry = false) {
+            this.$store.dispatch('setLoading', true);
+            return api.login({
+                username: process.env.VUE_APP_API_USERNAME,
+                password: process.env.VUE_APP_API_PASSWORD
+            }).then(res => {
+                this.$store.dispatch('setToken', res.data.token);
+                return this.searchEan();
+            }).catch((err) => {
+                this.handleError(err);
+                this.$store.dispatch('setLoading', false);
+            });
+        },
+        searchEan() {
+            return api.searchEan(this.$store.state.barcode).then(res => {
+                this.loading = false;
+                let retVal = [];
+                let isFinished = false;
+                for(var key in res) {
+                    let crnt = res[key];
+                    isFinished = ['name', 'vendor', 'detailname', 'barcode'].filter(itm => {
+                        return typeof crnt[itm] === 'undefined' || crnt[itm] === '';
+                    }).length === 0;
+                    retVal.push(crnt);
+                }
+                this.$store.dispatch('setLoading', false);
+                if(!isFinished) {
+                    this.$router.push({
+                        name: 'EmptyProduct'
+                    });
+                } else {
+                    this.$store.dispatch('setProducts', retVal);
+                    this.$router.push({
+                        name: 'Product'
+                    });
+                }
+            }).catch(err => {
+                this.$store.dispatch('setLoading', false);
+                if(typeof err !== 'undefined' && err.hasOwnProperty('response') && err.response.hasOwnProperty('status') && err.response.status === 404) {
+                    this.$router.push({
+                        name: 'EmptyProduct'
+                    });
+                } else {
+                    throw new Error(err);
+                }
+            });
+        },
+        loadProduct(){
+            this.$store.dispatch('setLoading', true);
+            this.$store.dispatch('resetProducts');
+            if(localStorage.getItem('kgp_token')) {
+                this.searchEan(this.$store.state.barcode).then(res => {
+                    return res;
+                }).catch(err => {
+                    if(typeof err !== 'undefined' && err.hasOwnProperty('response') && err.response.hasOwnProperty('status') && err.response.status === 401) {
+                        localStorage.removeItem('kgp_token');
+                        return this.login();
+                    } else if(typeof err !== 'undefined' && err.response.status === 404) {
+                        // neues Produkt
+                        this.$router.push({
+                            name: 'EmptyProduct'
+                        });
+                    } else {
+                        this.handleError(err)
+                        this.$store.dispatch('setLoading', false);
+                    }
+                });
+            } else {
+                return this.login().catch((err) => {
+                    this.handleError(err)
+                    this.$store.dispatch('setLoading', false);
+                });
+            }
+        },
     }
 };
 </script>
 
 <style lang="scss">
-
+.success-stories {
+    $context: &;
+    padding: 20px;
+    margin-top: 40px;
+    border-radius: 10px;
+    background: rgba(#033c6a, .15);
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+    &:hover {
+        background: rgba(#033c6a, .3);
+    }
+    &__arrow {
+        font-size: 1.5em;
+        transition: all .3s ease-in;
+    }
+    &:hover {
+        #{$context}__arrow {
+            font-size: 2em;
+        }
+    }
+}
 .helper {
     $context: &;
     position: absolute;

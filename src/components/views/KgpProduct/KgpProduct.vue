@@ -1,32 +1,16 @@
 <template>
     <div class="step step--3" id="step_3">
-        <h2 class="headline headline--primary" v-if="loading">
-            <span class="headline__inner headline__inner--primary">
-                Einen kleinen Moment Geduld:
-            </span>
-        </h2>
+
         <h2 class="headline headline--primary" v-if="!loading && products.length && !error">
             <span class="headline__inner headline__inner--primary">
                 Wir haben Produkte in unserer Datenbank gefunden:
             </span>
         </h2>
-        <div v-if="!loading && !products.length && !error">
-            <h2 class="headline headline--primary" >
-                <span class="headline__inner headline__inner--primary">
-                    Dieses Produkt ist leider noch nicht in unserer Datenbank
-                </span>
-            </h2>
-        </div>
 
         <div class="step__inner">
             <hr class="waves">
             <div class="product">
-                <div v-if="loading" class="product__loading">
-                    <bounce-loader :loading="loading" color="#fff"></bounce-loader>
-                    {{ msg }}
-                </div>
-                <kgp-error v-on:reset="loadProduct"></kgp-error>
-                <div v-if="!loading && products.length && !error" class="product__content">
+                <div class="product__content">
                     <p>
                         <em>"Ich wünsche mir diese<span v-if="products.length<2">s</span> Produkt<span v-if="products.length>1">e</span> in einer Verpackung ohne Plastik / mit weniger Plastik":</em>
                     </p>
@@ -48,77 +32,18 @@
                                 <address class="item-list__address" v-html="product.vendor_contact_address">
                                 </address>
                             </div>
+                            <div class="item-list__hint item-list__hint--info" v-if="product.vendor_no_contact_allowed">
+                                <h3 class="headline headline--tertiary">Hinweis:</h3>
+                                <div class="item-list__address" v-html="decodeHTML(product.vendor_no_contact_allowed_text)">
+                                </div>
+                            </div>
                         </li>
                     </transition-group>
                 </div>
-                <div v-if="!loading &&  !error && !products.length">
-                    <div class="product__content">
-                        <h3 class="headline headline--tertiary">Das macht aber nichts...</h3>
-                        <p>
-                            Du kannst uns helfen, die Daten zu verbessern, indem Du deinen Verbesserungswunsch trotzdem sendest.  Über die Barcode-Nummer  können wir versuchen, das Produkt finden. Wenn das gelingt, wird dein Wunsch an den Anbieter gesendet.
-                        </p>
-                    </div>
-                </div>
-                <a v-if="!loading && !error" class="item-list__mail-link" @click.prevent="toggleMail">{{ showMail ? '▲' : '►' }} Beispiel E-Mail {{ showMail ? 'ausblenden' : 'ansehen' }}</a>
-
-                <div v-on:click.prevent="toggleMail" class="letter" v-bind:class="{ 'letter--open' : showMail }" v-if="!loading && !error">
-                    <div class="letter__inner">
-                        <h2 class="headline">
-                            <span class="headline__inner">
-                                Diese E-Mail wird der Anbieter erhalten:
-                            </span>
-                        </h2>
-                        <h3 class="headline headline--tertiary">Sehr geehrte Damen und Herren,</h3>
-                        <p>
-                            wir wenden uns heute an Sie, weil Sie
-                            <span v-if="products && products.length">
-                                <span v-if="products.length === 1">das Produkt</span><span v-if="products.length > 1">die Produkte</span>"<strong v-for="product in products" v-bind:key="product.name"> {{ product.name }}
-                                    <span v-if="product.detailname">: {{ product.detailname }}</span>
-                                </strong>"
-                            </span>
-                            <span v-if="!products || !products.length">
-                                Das Produkt mit dem Barcode {{ barcode }}
-                            </span> anbieten.
-                        </p>
-                        <h3 class="headline">
-                                20 Verbraucher haben über unsere App ReplacePlastic angegeben, dass sie sich
-                                <span v-if="products && products.length">
-                                    <span v-if="products.length === 1">
-                                        das Produkt
-                                    </span>
-                                    <span v-if="products.length > 1">
-                                        die Produkte
-                                    </span>
-                                </span>
-                                <span v-if="!products || products.length === 0">Ihr Produkt</span>
-                                in einer Verpackung ohne Plastik/mit weniger Plastik wünschen.
-                        </h3>
-                        <p>
-                            Plastikmüll in den Meeren stellt ein großes Problem dar, weshalb immer mehr Verbraucher ein
-                            Bewusstsein für dieses Thema zeigen. Viele Menschen wünschen sich plastikfreie Verpackungen.
-                            Aus diesem Grund senden wir Ihnen heute die Wünsche der Verbraucher zu Ihrem Produkt.
-                        </p>
-                        <p>
-                            Wir hoffen, dass diese Information über die Wünsche und Werte Ihrer Zielgruppen für
-                            Sie hilfreich ist, um bessere Lösungen für Ihre Kunden zu verwirklichen.
-                        </p>
-                        <p>
-                            Für mehr Informationen zu unserem Projekt besuchen Sie gern unsere Website <u>ReplacePlastic.de.</u><br><br>
-                            <i>Mit freundlichen Grüßen, das Team vom Verein Küste gegen Plastik e.V.</i><br><br>
-                        </p>
-                        <p>
-                            Küste gegen Plastik e.V.<br>
-                            Eiderweg 33<br>
-                            25826 St. Peter-Ording<br>
-                            Mail: <i><a href="mailto:post@kueste-gegen-plastik.de">post@kueste-gegen-plastik.de</a></i>
-                        </p>
-                    </div>
-                </div>
-
-                <button v-if="!loading && !error" v-on:click.prevent="doSubmit" class="form__button">
+                <kgp-mail-preview></kgp-mail-preview>
+                <button v-if="!error" v-on:click.prevent="doSubmit" class="form__button">
                     Verbesserungswunsch senden
                 </button>
-
             </div>
         </div>
     </div>
@@ -126,9 +51,10 @@
 
 
 <script>
-import Api from '@/api';
+import api from '@/api';
 import BounceLoader from 'vue-spinner/src/BounceLoader';
 import KgpError from '@/components/shared/KgpError/KgpError';
+import KgpMailPreview from '@/components/shared/KgpMailPreview/KgpMailPreview';
 import { messages } from '@/config/constants';
 
 export default {
@@ -136,12 +62,9 @@ export default {
     data() {
         return {
             loading: true,
-            showMail: false,
-            msg: ''
+            msg: '',
+            showDraftForm: false
         }
-    },
-    mounted() {
-        this.loadProduct();
     },
     beforeCreate() {
         this.$store.dispatch('setStep', 2);
@@ -158,78 +81,23 @@ export default {
         }
     },
     methods: {
-        toggleMail() {
-            this.showMail = !this.showMail;
-        },
-        login(retry = false) {
-            return Api.login({
-                username: process.env.VUE_APP_API_USERNAME,
-                password: process.env.VUE_APP_API_PASSWORD
-            }).then(res => {
-                this.$store.dispatch('setToken', res.data.token);
-                this.msg = 'Durchsuche die Produktdatenbank...';
-                return this.searchEan();
-            });
-        },
-        searchEan() {
-            return Api.searchEan(this.$store.state.barcode).then(res => {
-                this.loading = false;
-                let retVal = [];
-                let hasTitle = true;
-                for(var key in res) {
-                    let crnt = res[key];
-                    if(crnt.descr == '' && crnt.name == '') {
-                        hasTitle = false;
-                    }
-                    retVal.push(crnt);
-                }
-                if(!hasTitle) {
-                    this.$store.dispatch('setLightboxContent', messages.empty_product);
-                }
-                this.$store.dispatch('setProducts', retVal);
-            })
-        },
-        handleErr(err) {
-            var msg = err.hasOwnProperty('response') && err.response && err.response.hasOwnProperty('data') && err.response.data.hasOwnProperty('code') ? err.response.data.code : 4711;
-            this.$store.dispatch('setError', msg);
-            this.loading = false;
-        },
-        loadProduct(){
-            this.msg = 'Melde mich am Server an...';
-            this.$store.dispatch('resetProducts');
-            if(localStorage.getItem('kgp_token')) {
-                this.searchEan(this.$store.state.barcode).then(() => {
-
-                }).catch(err => {
-                    if(err.hasOwnProperty('response') && err.response.hasOwnProperty('status') && err.response.status === 401) {
-                        localStorage.removeItem('kgp_token');
-                        return this.login();
-                    } else {
-                        this.handleErr(err)
-                    }
-                });
-            } else {
-                return this.login().catch(this.handleErr.bind(this));
-            }
-        },
         openLightbox($event, product) {
             this.$store.dispatch('setLightboxContent', product.additional_information);
         },
         doSubmit() {
-            if(!this.$store.getters.products.length) {
-                this.$store.dispatch('setProducts', [{
-                    barcode: this.$store.getters.barcode,
-                    vendor: 'Unbekannt',
-                    name: 'Unbekannt',
-                    descr: 'Unbekannt',
-                }]);
-            }
             this.$router.push('/send');
+        },
+        decodeHTML(html) {
+            var txt = document.createElement('textarea');
+            txt.innerHTML = html;
+            return txt.value;
         }
+
     },
     components: {
         BounceLoader,
-        KgpError
+        KgpError,
+        KgpMailPreview
     }
 };
 </script>
@@ -349,76 +217,5 @@ export default {
         }
     }
 }
-.letter {
-    $context: &;
-    background: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    margin: 26px auto 0;
-    padding: 0;
-    position: relative;
-    color: #033c6a;
-    margin: 0 10px;
-    font-style: italic;
-    font-size: 14px;
-    max-height: 0;
-    transition: max-height .2s ease-in;
 
-    &:before,
-    &:after {
-        content: "";
-        height: 98%;
-        position: absolute;
-        width: 100%;
-        z-index: 0;
-    }
-    &:before {
-        background: #fafafa;
-        box-shadow: 0 0 8px rgba(0,0,0,0.2);
-        left: 5px;
-        top: 2px;
-        transform: rotate(-1.5deg);
-    }
-    &:after {
-        background: #f6f6f6;
-        box-shadow: 0 0 3px rgba(0,0,0,0.2);
-        right: -3px;
-        top: 1px;
-        transform: rotate(1.4deg);
-    }
-
-    &--open {
-        padding: 24px;
-        max-height: 2000px;
-    }
-    &__preview {
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        line-height: 90px;
-        font-size: 18px;
-        color: #d00;
-        z-index: 2;
-        text-align: center;
-        #{$context}--open & {
-            opacity: 0;
-        }
-    }
-    &__inner {
-        opacity: .2;
-        position: relative;
-        z-index: 2;
-        overflow: hidden;
-        max-height: 0;
-        #{$context}--open & {
-            opacity: 1;
-            max-height: 2000px;
-        }
-    }
-    &--open {
-        max-height: 1500px;
-    }
-}
 </style>

@@ -1,0 +1,40 @@
+{
+	"folders": [
+		{
+			"path": "replaceplastic-api-processwire"
+		},
+		{
+			"path": "replaceplastic-new"
+		}
+	],
+	"launch": {
+		"configurations": [
+			{
+				"type": "chrome",
+				"request": "launch",
+				"name": "Launch Chrome against localhost",
+				"url": "http://localhost:8081",
+				"sourceMaps": true,
+				"webRoot": "${workspaceRoot}"
+			},
+			{
+				"type": "chrome",
+				"request": "attach",
+				"name": "Attach to Chrome",
+				"port": 9222,
+				"sourceMaps": true,
+				"webRoot": "${workspaceRoot}"
+			}
+		]
+	},
+	"settings": {
+		"workbench.colorCustomizations": {
+			"titleBar.activeForeground": "#000",
+			"titleBar.inactiveForeground": "#000000CC",
+			"titleBar.activeBackground": "#259ecc",
+			"titleBar.inactiveBackground": "#259ecc",
+			"statusBar.background": "#259ecc",
+			"statusBar.foreground": "#000"
+		}
+	},
+}

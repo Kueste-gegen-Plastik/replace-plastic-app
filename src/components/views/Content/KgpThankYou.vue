@@ -12,7 +12,7 @@
                     die es ermöglicht, den Anbietern von Produkten schnell und einfach Feedback zu ihren Plastikverpackungen zu geben:
                 </p>
                 <p>
-                    Deutsche Postcode Lotterie, Thomas Daußmann, HALasersystems, Claudia Kerpa, Ralph Kerpa, neuwaerts GmbH,
+                    Deutsche Postcode Lotterie, Bewegungsstiftung, Thomas Daußmann, HALasersystems, Claudia Kerpa, Ralph Kerpa, neuwaerts GmbH,
                     Neuwerk Rechtsanwälte, Michael Pfeiffer-Härtl, Achim Schmacks, Frank Timrott, Jennifer Timrott, Felix Wahner.
                 </p>
                 <p>

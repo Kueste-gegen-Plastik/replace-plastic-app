@@ -11,6 +11,7 @@ import KgpAbout from '@/components/views/Content/KgpAbout'
 import KgpStats from '@/components/views/KgpStats/KgpStats'
 import KgpThankYou from '@/components/views/Content/KgpThankYou'
 import KgpPrivacy from '@/components/views/Content/KgpPrivacy'
+import KgpEmptyProduct from '@/components/views/KgpEmptyProduct/KgpEmptyProduct'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ const router = new Router({
             path: '/product',
             name: 'Product',
             component: KgpProduct
+        },
+        {
+            path: '/empty-product',
+            name: 'EmptyProduct',
+            component: KgpEmptyProduct
         },
         {
             path: '/send',
