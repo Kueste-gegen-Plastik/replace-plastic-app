@@ -121,6 +121,9 @@ export default {
     }
 }
 .form {
+    &--emptyproduct {
+        padding-bottom: 100px;
+    }
   &__legend {
     color: #fff;
     text-align: center;
@@ -212,6 +215,7 @@ export default {
     border-bottom: 2px solid rgba(3, 60, 106, 0.55);
     @include fluid-type(17px, 23px);
     padding: 0 15px;
+    pointer-events: auto;
     font-family: 'Slabo 27px';
     background: rgba(255, 255, 255, 0.23);
     &--dark {

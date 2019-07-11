@@ -23,10 +23,14 @@ export const mutations = {
     STEP(state, step) {
         state.step = step
     },
+    
     USERKEY(state, val) {
         if (typeof val === 'object' && val.hasOwnProperty('type')) {
             state.user[val.type] = val.val
         }
+    },
+    RESETUSERSET(state) {
+        state.userSet = false;
     },
     USER(state, val) {
         state.user = val
@@ -68,6 +72,15 @@ export const mutations = {
     },
     DRAFT(state, draft) {
         state.draft = draft;
+    },
+    RESETDRAFT(state) {
+        state.draft = {
+            text_marke: '',
+            text_product: '',
+            text_productdetails: '',
+            text_amount: '',
+            text_descr: ''
+        };
     },
     LOADING(state, isLoading) {
         state.isLoading = isLoading;

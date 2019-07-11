@@ -27,7 +27,7 @@ class Api {
     }
 
     getStats() {
-        return HTTP.get(`/stats`).then(res => res.data)
+        return HTTP.get(`/stats/`).then(res => res.data)
     }
 
     submitDraft(data) {

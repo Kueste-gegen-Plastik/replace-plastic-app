@@ -89,7 +89,7 @@ const router = new Router({
     ]
 })
 
-router.beforeEach(function (to, from, next) {
+router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0)
     switch (to.name) {
         case 'Product':

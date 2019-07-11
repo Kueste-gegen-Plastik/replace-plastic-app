@@ -80,10 +80,10 @@ export default {
     },
     beforeMount() {
         Api.getStats().then(res => {
-            this.entry_count = res.entry_count;
-            this.mails_sent = res.mails_sent;
-            this.product_count = res.product_count;
-            this.vendor_count = res.vendor_count;
+            this.entry_count = isNaN(parseInt(res.entry_count)) ? 0 : parseInt(res.entry_count);
+            this.mails_sent = isNaN(parseInt(res.mails_sent)) ? 0 :  parseInt(res.mails_sent);
+            this.product_count =  isNaN(parseInt(res.product_count)) ? 0 : parseInt(res.product_count);
+            this.vendor_count = isNaN(parseInt(res.vendor_count)) ? 0 : parseInt(res.vendor_count);
             this.top_vendors = res.top_vendors.slice(0,16).filter(itm => itm != '--');
             let tmpProducts = [];
             this.latest_products = res.latest_products && res.latest_products.length ? res.latest_products.filter(function(item, pos, self) {

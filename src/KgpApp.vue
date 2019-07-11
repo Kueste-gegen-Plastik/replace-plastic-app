@@ -223,6 +223,9 @@ export default {
 </script>
 
 <style lang="scss">
+body, html, #app {
+    height: 100%;
+}
 body {
     font-size: 100%;
     overflow: hidden;

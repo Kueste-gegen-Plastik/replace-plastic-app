@@ -8,38 +8,21 @@
             <h2 class="headline headline--secondary">
                 Darum geht's:
             </h2>
-            <carousel :perPage="1" paginationActiveColor="#033c6a">
-                <slide>
-                    <span class="nagscreen__headline">
-                        Plastikmüll im Meer verursacht enorme Probleme. Ein großer Teil gelangt vom Land her über die Flüsse ins Meer.
-                    </span>
-                </slide>
-                <slide>
-                    <span class="nagscreen__headline">
-                    Verpackungen spielen dabei eine große Rolle.
-                    </span>
-                </slide>
-                <slide>
-                    <span class="nagscreen__headline">
-                    Es gibt zu viele Plastikverpackungen für Produkte des täglichen Bedarfs.
-                    </span>
-                </slide>
-                <slide>
-                    <span class="nagscreen__headline">
-                    Hersteller und Anbieter sagen: „Der Verbraucher will es so.“<br>Das sehen wir anders.
-                    </span>
-                </slide>
-                <slide>
-                    <span class="nagscreen__headline">
-                    Mit dieser App scannst du die Barcodes von Produkten, die du verwenden oder kaufen würdest, um dem Anbieter mitzuteilen, dass du dir dafür Verpackungen ohne Plastik wünschst.
-                    </span>
-                </slide>
-                <slide>
-                    <span class="nagscreen__headline">
-                    Dein Feedback wird von uns weitergeleitet.
-                    </span>
-                </slide>
-            </carousel>
+            <div class="glide-outer">
+                <vue-glide :perView="1" :autoplay="4000" v-model="active">
+                    <vue-glide-slide v-for="(item, i) in items" :key="i">
+                        <span class="nagscreen__headline" v-html="item">
+                            
+                        </span>
+                    </vue-glide-slide>
+                    <template slot="control">
+                        <button type="button" :class="{
+                            'glide__bullet': true,
+                            'glide__bullet--active': active == i
+                        }"  v-for="(item, i) in items" :key="i" :data-glide-dir="'='+i"></button>
+                    </template>
+                </vue-glide>
+            </div>
             <div class="nagscreen__button">
                 <button class="form__button form__button--error" v-on:click.prevent="closeNagscreen" type="button">Okay, los geht's!</button>
             </div>
@@ -49,12 +32,26 @@
 
 
 <script>
-import { Carousel, Slide } from 'vue-carousel';
+import { Glide, GlideSlide } from 'vue-glide-js'
+import 'vue-glide-js/dist/vue-glide.css'
 
 export default {
     components: {
-        Carousel,
-        Slide
+      [Glide.name]: Glide,
+      [GlideSlide.name]: GlideSlide
+    },
+    data: () => {
+        return {
+            active: 0,
+            items: [
+                'Plastikmüll im Meer verursacht enorme Probleme. Ein großer Teil gelangt vom Land her über die Flüsse ins Meer.',
+                'Verpackungen spielen dabei eine große Rolle.',
+                'Es gibt zu viele Plastikverpackungen für Produkte des täglichen Bedarfs.',
+                'Hersteller und Anbieter sagen: „Der Verbraucher will es so.“<br>Das sehen wir anders.',
+                ' Mit dieser App scannst du die Barcodes von Produkten, die du verwenden oder kaufen würdest, um dem Anbieter mitzuteilen, dass du dir dafür Verpackungen ohne Plastik wünschst.',
+                'Dein Feedback wird von uns weitergeleitet.'
+            ]
+        }
     },
     beforeMount() {
         this.$store.dispatch('nagscreen', localStorage.getItem('kgp_seen_nagscreen') === null);
@@ -134,19 +131,41 @@ export default {
         }
     }
 }
-.VueCarousel {
-    font-family: 'Slabo 27px';
-    display: block;
-    width: 80%;
-    max-width: 980px;
-    margin: 0 auto;
-    &-slide {
-        object-fit: cover;
+
+.glide {
+    &__slide {
         @include fluid-type(18px, 22px);
         min-height: 20vh;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    &-outer {
+        font-family: 'Slabo 27px';
+        display: block;
+        width: 80%;
+        max-width: 980px;
+        margin: 0 auto;
+        margin-bottom: 30px;
+    }
+    &__bullet {
+        background-color: rgba(255,255,255,.2);
+        border: 0;
+        outline: 0;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        cursor: pointer;
+        &:hover {
+            background-color: #d5d5d5
+        }
+        &+.glide__bullet {
+            margin-left: 10px
+        }
+        &--active,
+        &--active:hover {
+            background-color: #fff
+        }
     }
 }
 </style>

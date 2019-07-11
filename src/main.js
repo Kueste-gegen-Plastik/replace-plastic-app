@@ -1,17 +1,31 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import 'polyfill-array-includes'
+import 'array-findindex-polyfill'
+import 'array-from-polyfill'
 
 require('typeface-slabo-13px')
 require('typeface-slabo-27px')
 require('typeface-lato')
+
 if (process.env.VUE_APP_TARGET_OS === 'web') {
-    import('./registerServiceWorker');
+    import('./registerServiceWorker')
 } else {
-    document.addEventListener("deviceready", () => {
-        if (typeof window.cordova !== 'undefined' && Object.prototype.hasOwnProperty.call(window.cordova.plugins, 'InAppBrowser')) {
-            window.open = window.cordova.InAppBrowser.open;
-        }
-    }, false);
+    document.addEventListener(
+        'deviceready',
+        () => {
+            if (
+                typeof window.cordova !== 'undefined' &&
+                Object.prototype.hasOwnProperty.call(
+                    window.cordova.plugins,
+                    'InAppBrowser'
+                )
+            ) {
+                window.open = window.cordova.InAppBrowser.open
+            }
+        },
+        false
+    )
 }
 
 import Vue from 'vue'

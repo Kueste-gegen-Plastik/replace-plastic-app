@@ -93,15 +93,16 @@ export default {
                     this.$store.dispatch('resetBarcode');
                 }
                 return res;
-            }).catch(this.handleError);
+            }).catch((err) => this.handleError)
         },
         submitDraft() {
             let data = Object.assign({}, this.draft);
             data.barcode = this.barcode;
             return api.submitDraft(data).then(res => {
                 this.$store.dispatch('resetBarcode');
+                this.$store.dispatch('resetDraft');
                 return res;
-            }).catch(this.handleError)
+            }).catch((err) => this.handleError)
         },
         restartApp() {
             this.$store.dispatch('resetState');

@@ -10,7 +10,7 @@
 
         <div class="step__inner">
             <hr class="waves">
-            <form class="form" v-on:submit.prevent="doSubmit">
+            <form class="form form--emptyproduct" v-on:submit.prevent="doSubmit">
                 <fieldset class="form__fieldset">
                     <div class="form__description">
                         <p>
@@ -66,22 +66,29 @@ import { handleError } from '@/mixins/handleError';
 import { messages } from '@/config/constants';
 import { mapState } from 'vuex';
 
+const resetDraft = () => {
+    return {
+        text_marke: '',
+        text_product: '',
+        text_productdetails: '',
+        text_amount: '',
+        text_descr: ''
+    };
+}
+
 export default {
     name: 'kgp-product',
     data() {
         return {
             msg: '',
-            draft: {
-                text_marke: '',
-                text_product: '',
-                text_productdetails: '',
-                text_amount: '',
-                text_descr: ''
-            }
+            draft: resetDraft()
         }
     },
     beforeCreate() {
         this.$store.dispatch('setStep', 2);
+    },
+    beforeMount() {
+        this.draft = resetDraft()
     },
     computed : {
         products() {

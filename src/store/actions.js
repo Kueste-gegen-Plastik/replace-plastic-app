@@ -85,26 +85,26 @@ export const actions = {
         commit('REMOVEHISTORY', entry)
     },
     resetState: ({
-        state
+        state, 
+        commit
     }) => {
-        state.products = []
-        state.error = false
-        state.barcode = ''
-        state.step = 1
-        state.userSet = false
-        state.menuOpen = false
-        state.draft = {
-            text_marke: '',
-            text_product: '',
-            text_productdetails: '',
-            text_amount: '',
-            text_descr: ''
-        };
+        commit('RESETPRODUCTS');
+        commit('RESETERROR');
+        commit('RESETBARCODE');
+        commit('STEP', 1);
+        commit('RESETUSERSET');
+        commit('MENUOPEN', false);
+        commit('RESETDRAFT');
     },
     setDraft: ({
         commit
     }, draft) => {
         commit('DRAFT', draft)
+    },
+    resetDraft: ({
+        commit
+    }) => {
+        commit('RESETDRAFT');
     },
     setBarcode: ({
         commit
