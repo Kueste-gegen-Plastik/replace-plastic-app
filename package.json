@@ -73,7 +73,7 @@
     "cordova-plugin-x-socialsharing": "^5.4.1",
     "cordova-splash": "^1.0.0",
     "cross-env": "^5.2.0",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.13.1",
     "phonegap-plugin-barcodescanner": "^8.0.0",
     "sass-loader": "^7.0.1",
     "style-resources-loader": "^1.2.1",
