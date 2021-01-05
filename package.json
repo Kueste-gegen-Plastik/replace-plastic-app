@@ -18,7 +18,7 @@
     "@babel/polyfill": "^7.4.4",
     "array-findindex-polyfill": "^0.1.0",
     "array-from-polyfill": "^1.0.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "barcoder": "^2.0.1",
     "chart.js": "^2.7.2",
     "cordova-android": "^8.0.0",
