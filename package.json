@@ -20,7 +20,7 @@
     "array-from-polyfill": "^1.0.1",
     "axios": "^0.18.0",
     "barcoder": "^2.0.1",
-    "chart.js": "^2.7.2",
+    "chart.js": "^2.9.4",
     "cordova-android": "^8.0.0",
     "cordova-ios": "^4.5.5",
     "cordova-plugin-android-permissions": "^1.0.0",
